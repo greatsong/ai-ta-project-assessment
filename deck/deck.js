@@ -70,7 +70,7 @@
   // 크기 맞추기
   function fit() {
     var k = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
-    stage.style.transform = 'scale(' + k + ')';
+    stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
   }
   window.addEventListener('resize', fit);
   fit();

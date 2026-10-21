@@ -13,8 +13,8 @@ html, body { margin: 0; height: 100%; background: var(--frame); color: var(--ink
 button { font: inherit; color: inherit; }
 
 /* 무대 */
-#viewport { position: fixed; inset: 0; display: grid; place-items: center; }
-#stage { width: 1600px; height: 900px; position: relative; background: var(--paper); transform-origin: center center; box-shadow: 0 20px 80px rgba(0,0,0,.45); overflow: hidden; }
+#viewport { position: fixed; inset: 0; overflow: hidden; }
+#stage { width: 1600px; height: 900px; position: absolute; left: 50%; top: 50%; background: var(--paper); transform-origin: center center; box-shadow: 0 20px 80px rgba(0,0,0,.45); overflow: hidden; }
 .slide { position: absolute; inset: 0; padding: 92px 88px 70px; display: none; flex-direction: column; }
 .slide.cur { display: flex; }
 
