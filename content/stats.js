@@ -1,6 +1,6 @@
 // 자동 생성 — scripts/update_stats.py. 직접 고치지 않는다
 window.STATS = {
- "updated": "2026-10-22 08:12",
+ "updated": "2026-10-22 08:58",
  "oral": {
   "classes": [
    "B반",
