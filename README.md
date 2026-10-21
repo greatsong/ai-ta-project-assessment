@@ -49,7 +49,8 @@ scripts/              캡처·집계·점검 스크립트
 7. 내용: `content/slides.js`에서 진행 예정이던 회차를 실시로 바꾸고, 결과 장을 더한다(아래 목록)
 8. 검토 문서: `content/review.md`를 고친 뒤 `python3 scripts/build_review.py`
 9. 점검: `python3 -m http.server 4065` 를 띄우고 `python3 scripts/check_slides.py` → `raw/qa/`의 모든 장·단계 캡처를 눈으로 본다
-10. 개인정보 점검(아래) 뒤 커밋·푸시하면 GitHub Pages가 갱신된다
+10. `index.html`의 `?v=` 번호를 올린다(브라우저가 예전 파일을 쓰지 않게)
+11. 개인정보 점검(아래) 뒤 커밋·푸시하면 GitHub Pages가 갱신된다
 
 ### 끝난 뒤 더할 장(지금은 빈 자리)
 
