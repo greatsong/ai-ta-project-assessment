@@ -25,7 +25,7 @@
 
   { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: function () {
     var F = function (f, st) { return '<img alt="" src="assets/art/' + f + '.webp" style="' + (st || '') + '">'; };
-    return ttl('프로젝트 수업의 오래된 두 어려움') +
+    return ttl('프로젝트 수업의 두 가지 어려움') +
     '<p class="lead"><b>AI가 결과물을 함께 만드는 지금</b>, 두 어려움은 더 커졌다.</p>' +
     '<div class="body" style="gap:26px">' +
       '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:10px;padding:16px 20px"><h3 class="pain-h">① AI 시대의 구술평가,<br>좋은 건 알지만 어떻게 해야 하지?</h3>' +
