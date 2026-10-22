@@ -80,7 +80,7 @@
     '<p class="lead">공통 수업 뒤 <b>5주 팀 프로젝트</b>. 그 과정에서 <b>구술 인터뷰를 여섯 번</b> 합니다.</p>' +
     '<div class="c4">' +
       '<div class="c4-facts"><span><b>2</b>개 반</span><span><b>' + (teams(S, 'E반') || 12) + '</b>팀 · 2~3인</span><span>팀마다 깃허브 저장소 하나</span></div>' +
-      '<div class="c4-line"><div class="c4-start"><img alt="" src="assets/art/fig_students.webp"><b>실습실</b><small>예시 대화로 미리 본다</small></div><i class="c4-go"></i>' +
+      '<div class="c4-line"><div class="c4-start"><img alt="" src="assets/art/fig_students.webp"><b>실습실</b><small>프로젝트 과정 살펴보기</small></div><i class="c4-go"></i>' +
         '<div class="c4-bar"><div class="c4-lab">5주 팀 프로젝트 · 구술 인터뷰 여섯 번</div><div class="c4-ms">' + marks + '</div></div></div>' +
     '</div>'; },
     notes: '사례를 간단히 소개합니다. 두 학급이 공통 수업을 마친 뒤 5주 동안 2~3명씩 팀 프로젝트를 합니다. 팀마다 깃허브 저장소 하나를 씁니다.\n프로젝트 전에 학생은 실습실에서 한 팀이 AI와 대화하며 모델을 고르고, AI의 그럴듯한 오류를 바로잡는 예시를 봅니다.\n막대 위가 구술 인터뷰 여섯 번입니다. 과정 다섯 번과 최종 포스터 문답입니다. 이제 한 회차가 실제로 어떻게 도는지 실제 화면으로 따라가 보겠습니다.' },
