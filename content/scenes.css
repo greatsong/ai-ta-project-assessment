@@ -395,3 +395,10 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 .f2-merge span { position: absolute; left: 50%; top: calc(50% - 40px); transform: translateX(-50%); font-size: 18px; font-weight: 900; color: var(--teacher); white-space: nowrap; }
 .f2-st.in { justify-content: center; }
 .f2-merge span { top: 19%; }
+.c4 { gap: 40px; }
+.c4-start { flex-basis: 220px; padding: 20px 12px; } .c4-start img { height: 130px; } .c4-start b { font-size: 28px; } .c4-start small { font-size: 18px; }
+.c4-bar { padding: 22px 24px 28px; } .c4-lab { font-size: 21px; margin-bottom: 20px; }
+.c4-ms::before { top: 35px; }
+.c4-m span { width: 74px; height: 74px; font-size: 30px; } .c4-m.fin span { border-radius: 37px; font-size: 22px; }
+.c4-m b { font-size: 21px; } .c4-m em { font-size: 16px; padding: 3px 12px; }
+.c4-facts span { font-size: 26px; padding: 10px 26px; } .c4-facts b { font-size: 40px; }
