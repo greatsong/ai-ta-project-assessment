@@ -48,15 +48,16 @@
 
   // 이슈 화면 위에 단계별 표시
   var MARKS = [
-    { x: .005, y: .015, w: .16, h: .075, l: 'AI 작성 표기' },
-    { x: .01, y: .315, w: .84, h: .255, l: '강점' },
-    { x: .01, y: .585, w: .80, h: .235, l: '가이드' },
-    { x: .01, y: .83, w: .80, h: .05, l: 'AI 검증 안내' }
+    // 캡처(G1)에서 실측한 글줄 위치(비율). 캡처를 바꾸면 다시 잰다
+    { x: -.006, y: .024, w: .157, h: .072, l: 'AI 작성 표기' },
+    { x: .012, y: .316, w: .83, h: .254, l: '강점' },
+    { x: .012, y: .588, w: .80, h: .232, l: '가이드' },
+    { x: .012, y: .836, w: .81, h: .044, l: 'AI 검증 안내' }
   ];
   W.marks = function (el) {
     var box = el.querySelector('#issueBox'), img = box.querySelector('img');
     var wrap = document.createElement('div');
-    wrap.style.cssText = 'position:relative;display:inline-block;max-height:590px';
+    wrap.style.cssText = 'position:relative;display:inline-block;line-height:0';
     img.parentNode.insertBefore(wrap, img); wrap.appendChild(img);
     MARKS.forEach(function (m, i) {
       var d = document.createElement('div');
