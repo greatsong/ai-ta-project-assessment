@@ -12,6 +12,7 @@
   // 한 바퀴 네 장의 진행 표시
   var LOOP = ['① 교실', '② 기록', '③ 교사 결정', '④ 학생에게'];
   var ttlL = function (t, k) { return '<div class="ttl"><h2>' + t + '</h2><div class="lp">' + LOOP.map(function (x, i) { return '<span class="' + (i + 1 === k ? 'on' : i + 1 < k ? 'done' : '') + '">' + x + '</span>'; }).join('<i>→</i>') + '</div></div>'; };
+  var esc = function (x) { return String(x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var credit = '<div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>';
 
   window.SLIDES = [
@@ -56,7 +57,9 @@
           '<div class="f2-in"><img alt="" src="' + A('cycle_1_sq') + '"><b>음성</b></div>' +
           '<div class="f2-in"><img alt="" src="' + A('cycle_2_sq') + '"><b>깃허브 기록</b></div>' +
           '<div class="f2-in"><img alt="" class="fig" src="' + A('fig_teacher_read') + '"><b>교사의 관찰</b></div></div>' +
-        arr('모아서', 2) +
+        '<div class="f2-merge" data-s="2"><span>모아서</span><svg viewBox="0 0 78 600" preserveAspectRatio="none">' +
+          ['M0,176 C42,176 36,308 78,308', 'M0,308 C40,308 38,308 78,308', 'M0,440 C42,440 36,308 78,308'].map(function (d, i) {
+            return '<path d="' + d + '"/><circle r="5"><animateMotion dur="1.8s" begin="' + (i * 0.4) + 's" repeatCount="indefinite" path="' + d + '"/></circle>'; }).join('') + '</svg></div>' +
         '<div class="f2-st org" data-s="2"><em>정리</em><div class="f2-pic"><img alt="" src="' + A('fig_mona') + '" style="height:120px"><img alt="" src="' + A('fig_ai') + '"></div><b class="f2-w">깃허브 + AI 조교</b><p>받아 적고, 요약하고, 초안을 쓴다</p></div>' +
         arr('보고', 3) +
         '<div class="f2-st tc" data-s="3"><em>결정</em><div class="f2-pic"><img alt="" src="' + A('fig_teacher_read') + '"><span class="pb-talk"><i></i><i></i><em>⇄</em></span><img alt="" class="ai" src="' + A('fig_ai') + '"></div><b class="f2-w">교사</b>' +
@@ -67,17 +70,21 @@
     notes: '먼저 해결의 흐름을 설명드리겠습니다. 입력은 세 갈래로 나뉩니다. 구술 인터뷰의 음성, 학생이 깃허브에 남긴 활동 기록, 그리고 교사의 관찰 내용입니다.\n이 세 가지 입력은 깃허브와 AI 조교가 정리합니다. AI 조교는 음성 녹음 파일을 텍스트로 옮기고, 저장소의 변화 이력을 요약하며, 학생의 강점과 다음 단계를 위한 가이드 초안을 작성합니다. 이 과정에서 학생별 근거는 시간순으로 모아 정리됩니다.\n정리된 결과는 교사에게 보고됩니다. 교사는 AI 조교와 내용을 함께 검토하며, 원문 그대로 반영할지, 수정해 반영할지, 혹은 반영하지 않을지 최종 판단합니다.\n교사가 확정한 내용만 깃허브의 이슈와 댓글을 통해 학생에게 전달됩니다. 학생은 전달된 가이드를 확인하며 스스로 점검하고, 다음 단계로 나아갑니다.' },
 
   // ── 사례 ─────────────────────────────────────────────
-  { sec: '사례', title: '이 사례', widget: 'rounds', html: function (S) { return '' +
-    ttl('이 사례: 5주 팀 프로젝트', '2026 2학기 『데이터 과학』') +
+  { sec: '사례', title: '이 사례', html: function (S) {
+    var o = S.oral || {}, rs = o.rounds || [];
+    var marks = rs.map(function (r) {
+      var d = Object.keys(r.done || {}).reduce(function (a, c) { return a + (r.done[c] || 0); }, 0);
+      var no = { '①': 1, '②': 2, '③': 3, '④': 4, '⑤': 5 }[r.no] || r.no;
+      return '<div class="c4-m' + (d ? ' done' : '') + (r.no === '최종' ? ' fin' : '') + '"><span>' + no + '</span><b>' + esc(r.title) + '</b>' + (d ? '<em>실시</em>' : '') + '</div>';
+    }).join('');
+    return ttl('이 사례: 5주 팀 프로젝트', '2026 2학기 『데이터 과학』') +
     '<p class="lead">공통 수업 뒤 <b>5주 팀 프로젝트</b>. 평가는 코드가 아니라 <b>판단 4축</b>으로 한다.</p>' +
-    '<div class="body"><div class="col" style="flex:1.05;gap:16px">' +
-      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">' +
-        '<div class="card"><div class="big">2<small>개 반</small></div><p>약 27명씩</p></div>' +
-        '<div class="card"><div class="big">' + (teams(S, 'E반') || 12) + '<small>팀</small></div><p>2~3인, E반 기준</p></div>' +
-        '<div class="card"><div class="big">5<small>주</small></div><p>팀 저장소 하나</p></div></div>' +
-      '<div class="card"><h3>판단 4축</h3><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><span class="chip">질문 설정</span><span class="chip">데이터 감식</span><span class="chip">결과 해석</span><span class="chip">한계 인식</span></div></div>' +
-      '<div class="card lab" data-s="1"><div class="lab-img"><img alt="" src="' + C('C3a_AI오류_학생검증.png') + '"></div><div><h3>미리 보는 예시: 실습실</h3><p>AI와 대화하며 모델을 고르고, <b style="color:var(--ink)">AI의 그럴듯한 오류</b>를 학생이 바로잡는 장면을 먼저 본다.</p><a href="https://2026dgds.streamlit.app" target="_blank" rel="noopener" class="lab-link">실습실 열기 ↗</a></div></div>' +
-    '</div><div class="col" style="flex:1"><div class="card" style="flex:1"><h3>구술 인터뷰 여섯 번</h3><div id="rounds" style="display:grid;gap:10px;margin-top:12px"></div></div></div></div>'; },
+    '<div class="c4">' +
+      '<div class="c4-facts"><span><b>2</b>개 반</span><span><b>' + (teams(S, 'E반') || 12) + '</b>팀 · 2~3인</span><span>팀마다 깃허브 저장소 하나</span></div>' +
+      '<div class="c4-line"><div class="c4-start"><img alt="" src="assets/art/fig_ai.webp"><b>실습실</b><small>예시 대화로 미리 본다</small></div><i class="c4-go"></i>' +
+        '<div class="c4-bar"><div class="c4-lab">5주 팀 프로젝트 · 구술 인터뷰 여섯 번</div><div class="c4-ms">' + marks + '</div></div></div>' +
+      '<div class="c4-axes" data-s="1"><span>판단 4축</span><b>질문 설정</b><b>데이터 감식</b><b>결과 해석</b><b>한계 인식</b></div>' +
+    '</div>'; },
     notes: '사례를 간단히 소개합니다. 두 학급이 공통 수업을 마친 뒤 5주 동안 2~3명씩 팀 프로젝트를 합니다. 팀마다 깃허브 저장소 하나를 씁니다.\n평가 언어는 판단 4축입니다. 질문 설정, 데이터 감식, 결과 해석, 한계 인식입니다. AI가 코드를 쓰더라도 학생은 무엇을 왜 골랐는지 설명해야 합니다.\n프로젝트 전에 학생은 실습실에서 한 팀이 AI와 대화하며 모델을 고르고, AI의 그럴듯한 오류를 바로잡는 예시를 봅니다.\n오른쪽이 구술 인터뷰 여섯 번입니다. 과정 다섯 번과 최종 포스터 문답입니다. 이제 한 회차가 실제로 어떻게 도는지 한 팀으로 따라가 보겠습니다.' },
 
   // ── 한 바퀴 ───────────────────────────────────────────

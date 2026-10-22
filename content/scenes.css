@@ -363,3 +363,35 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 @media (prefers-reduced-motion: reduce) { .f2-arr i::after { animation: none; left: 30%; } .f2 .pic > img { animation: none; } }
 .f2-st .fl-stamps { display: flex; flex-direction: column; align-items: center; width: 100%; }
 .f2-st .fl-stamps .stamp { align-self: center; }
+
+/* 이 사례(간결판) */
+.c4 { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+.c4-facts { display: flex; gap: 14px; }
+.c4-facts span { font-size: 24px; font-weight: 700; color: var(--muted); background: var(--soft); border: 1px solid var(--line); border-radius: 99px; padding: 8px 22px; }
+.c4-facts b { font-size: 34px; font-weight: 900; color: var(--ink); margin-right: 4px; }
+.c4-line { display: flex; align-items: center; gap: 0; }
+.c4-start { flex: 0 0 190px; display: flex; flex-direction: column; align-items: center; text-align: center; background: #f2faf8; border: 1px solid #cfe9e3; border-radius: 20px; padding: 14px 10px; }
+.c4-start img { height: 96px; } .c4-start b { font-size: 24px; } .c4-start small { font-size: 16px; color: var(--muted); }
+.c4-go { flex: 0 0 46px; height: 4px; background: #cfe9e3; position: relative; }
+.c4-go::after { content: ''; position: absolute; right: -2px; top: -7px; border: 9px solid transparent; border-left-color: #cfe9e3; }
+.c4-bar { flex: 1; min-width: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 22px; padding: 16px 20px 20px; }
+.c4-lab { font-size: 18px; font-weight: 800; color: var(--muted); margin-bottom: 14px; }
+.c4-ms { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; position: relative; }
+.c4-ms::before { content: ''; position: absolute; left: 4%; right: 4%; top: 27px; height: 4px; border-radius: 4px; background: #e3e0f1; }
+.c4-m { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+.c4-m span { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; background: #fff; border: 3px solid #d8d4ec; color: var(--faint); position: relative; }
+.c4-m.fin span { width: auto; padding: 0 14px; border-radius: 29px; font-size: 19px; }
+.c4-m b { font-size: 18px; line-height: 1.35; word-break: keep-all; }
+.c4-m em { font-style: normal; font-size: 14px; font-weight: 800; color: #fff; background: var(--ok); border-radius: 99px; padding: 2px 10px; }
+.c4-m.done span { background: var(--ai); border-color: var(--ai); color: #fff; box-shadow: 0 0 0 6px rgba(239,93,60,.15); }
+.c4-axes { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.c4-axes span { font-size: 20px; font-weight: 800; color: var(--muted); margin-right: 6px; }
+.c4-axes b { font-size: 24px; font-weight: 800; background: #fff; border: 2px solid var(--teacher); color: var(--teacher); border-radius: 14px; padding: 8px 18px; }
+
+.f2-merge { position: relative; height: 500px; align-self: center; }
+.f2-merge svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.f2-merge path { fill: none; stroke: #d9d5ea; stroke-width: 4; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.f2-merge circle { fill: var(--ai); }
+.f2-merge span { position: absolute; left: 50%; top: calc(50% - 40px); transform: translateX(-50%); font-size: 18px; font-weight: 900; color: var(--teacher); white-space: nowrap; }
+.f2-st.in { justify-content: center; }
+.f2-merge span { top: 19%; }
