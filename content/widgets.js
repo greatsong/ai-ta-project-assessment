@@ -387,7 +387,7 @@
       box.querySelectorAll('.cy-seg').forEach(function (p) { p.classList.toggle('on', st >= 1 && st <= 5 && +p.dataset.seg === st - 1 && st > 1 || (st === 6 && p.dataset.seg === '0')); });
       box.querySelector('#cyChord').classList.toggle('on', st === 5 || st === 6);
       panel.classList.remove('in'); void panel.offsetWidth;
-      panel.innerHTML = n ? '<div class="cy-ban"><img alt="" src="assets/art/' + n.img + '.webp"></div><div class="cy-ph"><span class="cy-no">' + (st === 6 ? '↺' : st) + '</span><b>' + n.k + '</b><span class="cy-s">' + esc(n.s) + '</span>' + who(n.w) + '<em>' + esc(n.at) + '</em></div><div class="cy-body">' + n.body + '</div>' : overview();
+      panel.innerHTML = n ? '<div class="cy-top"><div class="cy-ban"><img alt="" src="assets/art/' + n.img + '.webp"></div><div class="cy-ph"><span class="cy-no">' + (st === 6 ? '↺' : st) + '</span><b>' + n.k + '</b><span class="cy-s">' + esc(n.s) + '</span><div class="cy-meta">' + who(n.w) + '<em>' + esc(n.at) + '</em></div></div></div><div class="cy-body">' + n.body + '</div>' : overview();
       panel.classList.add('in');
     }
     box.addEventListener('click', function (e) { var g = e.target.closest('.cy-node'); if (g) show(+g.dataset.n); });

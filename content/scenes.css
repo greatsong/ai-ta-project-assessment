@@ -250,3 +250,14 @@
 .scn-chip.wrap { white-space: normal; max-width: calc(100% - 28px); line-height: 1.4; }
 .fl-stamps .stamp { transform: scale(1.5); }
 .fl-stamps .stamp.on { transform: none; animation: none; }
+
+/* 한 바퀴: 장면을 원래 비율(3:2)로 왼쪽 위에, 제목은 오른쪽에 */
+.cy-top { display: grid; grid-template-columns: 300px 1fr; gap: 18px; align-items: center; margin-bottom: 12px; flex: none; }
+.cy-top .cy-ban { width: 300px; height: 200px; margin: 0; }
+.cy-top .cy-ban img { object-position: 50% 50%; }
+.cy-top .cy-ph { flex-direction: column; align-items: flex-start; gap: 6px; margin: 0; }
+.cy-top .cy-ph b { font-size: 30px; }
+.cy-top .cy-ph .cy-s { font-size: 18px; }
+.cy-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cy-meta em { font-style: normal; font-size: 15px; color: var(--faint); font-weight: 700; }
+.fl-st .scene-img { height: 230px; }
