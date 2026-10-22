@@ -30,7 +30,7 @@
   bar.id = 'bar';
   var secs = [];
   S.forEach(function (s, i) { if (s.sec && secs.indexOf(s.sec) === -1) secs.push(s.sec); });
-  bar.innerHTML = '<span class="brand">AI <b>TA</b> 프로젝트 평가</span>' + secs.map(function (x) {
+  bar.innerHTML = '<span class="brand">AI <b>조교</b> 프로젝트 평가</span>' + secs.map(function (x) {
     return '<button class="sec" type="button" data-sec="' + x + '">' + x + '</button>';
   }).join('') + '<span class="sp"></span><span class="upd">' + (ST.updated ? '수치 기준 ' + ST.updated : '') + '</span>';
   stage.appendChild(bar);

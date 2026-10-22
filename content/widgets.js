@@ -21,12 +21,12 @@
     { t: '실습실 예시 대화', who: '학생', ai: 'Claude 설계 · Solar 대사', img: 'C2b_모델마다_묻기.png', d: 'AI와 대화하며 모델을 고르고 검증하는 예시를 먼저 본다. 코드는 그 자리에서 실행된다.' },
     { t: '팀 저장소 작업 · log', who: '학생', ai: '학생이 쓰는 AI', img: 'G3_학생log.png', d: '팀원마다 네 줄 기록. AI 제안을 고치거나 버린 이유가 핵심이다.' },
     { t: '구술 인터뷰', who: '교사', ai: '', img: 'A3_인터뷰_질문.png', phone: true, d: '팀당 약 3분. 시작 질문, 꼬리질문, 지목, 루브릭.' },
-    { t: '받아 적기 · 초안', who: 'AI TA', ai: 'Gemini 전사 · Solar 문안', img: 'A5_기록상세_피드백.png', phone: true, d: '저장 약 20초 뒤 전사, 이어서 강점·다음 단계 가이드 초안.' },
+    { t: '받아 적기 · 초안', who: 'AI 조교', ai: 'Gemini 전사 · Solar 문안', img: 'A5_기록상세_피드백.png', phone: true, d: '저장 약 20초 뒤 전사, 이어서 강점·다음 단계 가이드 초안.' },
     { t: '교사 검토 → 이슈', who: '교사', ai: '팅커비스 표기', img: 'G1_이슈_강점가이드_1.png', d: '교사가 고친 문안만 팀 저장소 이슈로 올라간다.' },
-    { t: '매일 저장소 확인', who: 'AI TA', ai: 'Claude(팅커비스)', img: 'A7_깃허브초안.png', d: '수업 있는 날 18시, 바뀐 저장소에 댓글 초안. 올리기는 교사가.' },
-    { t: '세특 근거', who: 'AI TA → 교사', ai: '스크립트 수집', img: 'E1_세특근거.png', d: '구술 기록·이슈·log를 학생별 시간순으로. 학기말에 교사가 고른다.' }
+    { t: '매일 저장소 확인', who: 'AI 조교', ai: 'Claude(팅커비스)', img: 'A7_깃허브초안.png', d: '수업 있는 날 18시, 바뀐 저장소에 댓글 초안. 올리기는 교사가.' },
+    { t: '세특 근거', who: 'AI 조교 → 교사', ai: '스크립트 수집', img: 'E1_세특근거.png', d: '구술 기록·이슈·log를 학생별 시간순으로. 학기말에 교사가 고른다.' }
   ];
-  var WHO = { '학생': 'var(--student)', '교사': 'var(--teacher)', 'AI TA': 'var(--ai)', 'AI TA → 교사': 'var(--ai)' };
+  var WHO = { '학생': 'var(--student)', '교사': 'var(--teacher)', 'AI 조교': 'var(--ai)', 'AI 조교 → 교사': 'var(--ai)' };
   W.flow = function (el) {
     var nodes = el.querySelector('#flowNodes'), pane = el.querySelector('#flowPane');
     nodes.innerHTML = FLOW.map(function (f, i) {
@@ -157,7 +157,7 @@
     box.addEventListener('input', upd); upd();
   };
 
-  // 바꾼 것: 같은 5주를 지금까지 / AI TA와 함께로 비교
+  // 바꾼 것: 같은 5주를 지금까지 / AI 조교와 함께로 비교
   W.ba = function (el) {
     var grid = el.querySelector('#baGrid'), seg = el.querySelector('#baSeg'), cnt = el.querySelector('#baCount');
     var ROWS = [
@@ -165,7 +165,7 @@
       { k: '피드백', before: [0, 0, 0, 0, ['발표 뒤 한 번']], after: [['이슈: 강점·가이드', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['최종 문답']], c: 'var(--student)' },
       { k: '과정 기록', before: [['보이지 않음'], ['보이지 않음'], ['보이지 않음'], ['보이지 않음'], ['결과물']], after: [['커밋·log 4줄', '녹음·전사'], ['커밋·log', '녹음·전사'], ['커밋·log', '녹음·전사'], ['커밋·log', '녹음·전사'], ['포스터·README']], c: 'var(--ok)' },
       { k: '교사', before: [['순회'], ['순회'], ['순회'], ['순회'], ['채점·피드백 작성']], after: [['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인']], c: 'var(--teacher)' },
-      { k: 'AI TA', before: [0, 0, 0, 0, 0], after: [['받아 적기·초안'], ['받아 적기·초안'], ['저장소 확인'], ['근거 모으기'], ['근거 모으기']], c: 'var(--ai)' }
+      { k: 'AI 조교', before: [0, 0, 0, 0, 0], after: [['받아 적기·초안'], ['받아 적기·초안'], ['저장소 확인'], ['근거 모으기'], ['근거 모으기']], c: 'var(--ai)' }
     ];
     var COUNT = [['평가 기회', '1', '6'], ['피드백', '1번', '매주'], ['과정 근거', '결과물', '시간순 기록']];
     function draw(v) {
@@ -242,7 +242,7 @@
     box.innerHTML = '<div class="gt-nav">' + X.map(function (x, i) {
         return '<button type="button" data-a="' + i + '"><span class="no">' + (i + 1) + '</span><b>' + x.t + ' <span class="chip" style="font-size:12px;padding:2px 8px">' + x.by + '</span></b><small>' + esc(x.sub) + '</small></button>'; }).join('') +
         '<div class="fin">점수·등급은 <b>교사만</b> 매긴다. 어떤 초안에도 들어가지 않는다.</div></div>' +
-      '<div class="gt-flow"><div class="gt-h">' + art('fig_ai') + 'AI TA의 초안</div><span></span><div class="gt-h">' + art('fig_teacher_stamp') + '교사의 결정</div><span></span><div class="gt-h" id="gtOutH"></div>' +
+      '<div class="gt-flow"><div class="gt-h">' + art('fig_ai') + 'AI 조교의 초안</div><span></span><div class="gt-h">' + art('fig_teacher_stamp') + '교사의 결정</div><span></span><div class="gt-h" id="gtOutH"></div>' +
       '<div class="gt-c ai" id="gtA"></div><div class="gt-arrow" id="gtR1"><i></i></div><div class="gt-c tc" id="gtT"></div><div class="gt-arrow" id="gtR2"><i></i></div><div class="gt-c out" id="gtO"></div></div>';
     var $ = function (id) { return box.querySelector('#' + id); }, timers = [];
     var later = function (ms, f) { timers.push(setTimeout(f, ms)); };
@@ -341,17 +341,17 @@
     var G = (window.DATAFLOW || {}).gate || {}, C = G.cycle || {}, box = el.querySelector('#cyBox');
     var fmt = function (t) { return esc(String(t || '').replace(/\n-{3}\n<sub>[\s\S]*$/, '')).replace(/⟦가림⟧/g, '<span class="mk">가림가림</span>'); };
     var md = function (d) { return d ? d.slice(5).replace('-', '/') : ''; };
-    var who = function (w) { return w.map(function (x) { return '<span class="cy-who ' + ({ '학생': 's', '교사': 't', 'AI TA': 'a' })[x] + '">' + x + '</span>'; }).join(''); };
+    var who = function (w) { return w.map(function (x) { return '<span class="cy-who ' + ({ '학생': 's', '교사': 't', 'AI 조교': 'a' })[x] + '">' + x + '</span>'; }).join(''); };
     var stamp = function (c, t, s) { return '<span class="stamp on ' + c + '" style="font-size:20px;margin:2px 6px 2px 0;transform:rotate(-4deg)">' + t + ' <small>' + esc(s) + '</small></span>'; };
     var N = [
       { k: '교실', s: '구술 인터뷰', img: 'cycle_1', w: ['교사', '학생'], at: (C.interview_at || '') + ' · ' + Math.round((G.durationSec || 0) / 60) + '분',
         body: '<div class="cy-x">' + (G.scene || []).map(function (l) { return '<span class="ln' + (l.hl ? ' hl' : '') + '">' + fmt(l.text) + '</span>'; }).join('') + '</div>' +
           '<p class="cy-note">교사가 묻고 학생이 자기 말로 설명한다. 녹음은 교사의 아이폰 앱이 맡는다.</p>' },
-      { k: '기록', s: '받아 적기 · 깃허브 log', img: 'cycle_2', w: ['AI TA', '학생'], at: (C.first_log ? C.first_log.at : ''),
+      { k: '기록', s: '받아 적기 · 깃허브 log', img: 'cycle_2', w: ['AI 조교', '학생'], at: (C.first_log ? C.first_log.at : ''),
         body: '<div class="cy-two"><div><b>녹음 → 받아 적은 글</b><span>Gemini · ' + (G.transcript_lines || '') + '줄 · 교사만 본다</span></div>' +
           '<div><b>팀 log · ' + esc(C.first_log ? C.first_log.file.split('/').pop() : '') + '</b><span>학생이 쓴다 · 인터뷰 뒤 ' + esc(C.first_log ? C.first_log.at : '') + '</span></div></div>' +
           '<div class="cy-x" style="margin-top:8px">' + fmt(C.first_log ? C.first_log.text : '') + '</div>' },
-      { k: 'AI + 교사', s: '논의 → 결정', img: 'cycle_3', w: ['AI TA', '교사'], at: md(G.v1_closed) + ' ~ ' + md(G.v2_date),
+      { k: 'AI + 교사', s: '논의 → 결정', img: 'cycle_3', w: ['AI 조교', '교사'], at: md(G.v1_closed) + ' ~ ' + md(G.v2_date),
         body: '<div class="cy-seq"><div><small>' + esc(C.v1_at || '') + '</small><b>Solar 첫 판</b><span>잘한 점 · 보완할 점</span></div>' + stamp('no', '회수', md(G.v1_closed) + ' · ' + (G.v1_count || '') + '팀') +
           '<div><b>다시 설계</b><span>Claude가 저장소·데이터를 열어 확인 → Solar 집필</span></div>' + stamp('ok', '승인', md(G.v2_date)) + '</div>' +
           '<p class="cy-note"><q>수정할 곳이 너무 많네요.</q> 평가하지 않고, 장면과 의미, 다음에 할 일만 쓰도록 형식을 바꿨다.</p>' },
@@ -379,7 +379,7 @@
       '<path d="' + chord + '" class="cy-chord" id="cyChord"/><text x="' + (cx - 30) + '" y="' + (cy + 62) + '" class="cy-chord-t">매일 저장소 확인</text>' +
       '<circle r="9" class="cy-dot"><animateMotion dur="12s" repeatCount="indefinite" path="' + ring + '"/></circle>' +
       '<circle r="7" class="cy-dot2"><animateMotion dur="4s" repeatCount="indefinite" path="' + chord + '"/></circle>' +
-      '<text x="' + cx + '" y="' + (cy - 40) + '" class="cy-c1">한 바퀴 = 한 회차</text><text x="' + cx + '" y="' + (cy - 8) + '" class="cy-c2">초안은 AI TA · 결정은 교사</text>' +
+      '<text x="' + cx + '" y="' + (cy - 40) + '" class="cy-c1">한 바퀴 = 한 회차</text><text x="' + cx + '" y="' + (cy - 8) + '" class="cy-c2">초안은 AI 조교 · 결정은 교사</text>' +
       N.map(function (n, i) {
         return '<g class="cy-node" data-n="' + (i + 1) + '"><circle cx="' + P[i][0] + '" cy="' + P[i][1] + '" r="74" class="cy-bg"/>' +
           '<text x="' + P[i][0] + '" y="' + (P[i][1] + 8) + '" class="cy-num">' + (i + 1) + '</text>' +
@@ -408,6 +408,17 @@
     box.addEventListener('click', function (e) { var g = e.target.closest('.cy-node'); if (g) show(+g.dataset.n); });
     el.addEventListener('step', function (e) { show(e.detail || 0); });
     show(0);
+  };
+
+  // 해결의 흐름: 교사 칸이 보이면 도장을 하나씩 찍는다
+  W.solve = function (el) {
+    var timers = [];
+    el.addEventListener('step', function (e) {
+      timers.forEach(clearTimeout); timers = [];
+      var st = el.querySelectorAll('.fl-stamps .stamp');
+      st.forEach(function (s) { s.classList.remove('on'); });
+      if ((e.detail || 0) >= 3) st.forEach(function (s, i) { timers.push(setTimeout(function () { s.classList.add('on'); }, 450 + i * 550)); });
+    });
   };
 
   // 마지막 장의 QR(라이브러리가 없으면 주소만)
