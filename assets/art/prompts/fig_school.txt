@@ -1,0 +1,3 @@
+Reference image 1 is the TEACHER character: match its stylized 3D cartoon rendering style, materials and lighting exactly.
+Single object only, no people: a friendly modern Korean high school building in miniature (three floors, big windows with warm light, a round clock on the front, a small flag on the roof), and in front of it a neat stack of three colorful folders and a small board with a checklist of square checkboxes (no text, no letters). Cute, clean, trustworthy. Centered, transparent background, no ground, no shadow.
+{STYLE}

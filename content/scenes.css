@@ -402,3 +402,23 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 .c4-m span { width: 74px; height: 74px; font-size: 30px; } .c4-m.fin span { border-radius: 37px; font-size: 22px; }
 .c4-m b { font-size: 21px; } .c4-m em { font-size: 16px; padding: 3px 12px; }
 .c4-facts span { font-size: 26px; padding: 10px 26px; } .c4-facts b { font-size: 40px; }
+
+/* 의미와 가치(다시 만든 판) */
+.v3s { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; align-items: stretch; }
+.v3 { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 28px rgba(31,29,43,.06); }
+.v3-pic { height: 210px; display: flex; align-items: flex-end; justify-content: center; padding-top: 14px; }
+.v3.s .v3-pic { background: linear-gradient(180deg, #fff4e0, #fffaf2); }
+.v3.t .v3-pic { background: linear-gradient(180deg, #eeecff, #f8f7ff); }
+.v3.c .v3-pic { background: linear-gradient(180deg, #ffece6, #fff8f5); }
+.v3-pic img { max-height: 196px; max-width: 86%; object-fit: contain; display: block; }
+.v3-who { margin: 22px 28px 0; font-size: 18px; font-weight: 900; letter-spacing: .02em; }
+.v3.s .v3-who { color: #c27400; } .v3.t .v3-who { color: var(--teacher); } .v3.c .v3-who { color: var(--ai); }
+.v3 h3 { margin: 6px 28px 0; font-size: 31px; line-height: 1.32; font-weight: 900; letter-spacing: -.02em; color: var(--ink); }
+.v3 ul { list-style: none; margin: auto 28px 26px; padding: 18px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.v3 li { font-size: 19px; line-height: 1.45; color: var(--muted); padding-left: 18px; position: relative; }
+.v3 li::before { content: ''; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .5; }
+.v3s { align-content: center; align-items: start; }
+.v3 ul { margin: 22px 28px 28px; }
+.v3 h3 { font-size: 34px; }
+.v3-pic { height: 236px; } .v3-pic img { max-height: 222px; }
+.v3 li { font-size: 20px; }
