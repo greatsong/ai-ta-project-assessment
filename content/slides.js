@@ -35,7 +35,7 @@
         '<p style="font-size:22px;color:var(--muted);margin:0">AI 시대의 구술평가는 중요성과 실행의 간극이 크다.</p></div>' +
       '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:10px;padding:16px 20px"><h3 class="pain-h">② 학생마다<br>피드백하기 어렵다</h3>' +
         '<div class="pic" style="flex:1;min-height:0">' + F('pain_2', 'object-position:50% 45%') +
-          '<span class="scn-chip" style="left:14px;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span>' +
+          '<span class="scn-chip" style="left:14px;top:14px;color:#b46e00">반마다, 팀마다, 프로젝트 단계마다</span>' +
           '<span class="scn-chip wrap" style="left:14px;bottom:14px;color:var(--ai)">구술평가 내용도, 코드도, 문제해결과정도 자세히 쓰라고는 하는데 어떻게 일일이 피드백하지?</span></div></div>' +
     '</div>' +
     ''; },
