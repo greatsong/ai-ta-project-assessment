@@ -142,21 +142,6 @@
 
 
   // 두 어려움: 교사가 피드백을 직접 쓰면 드는 시간(가정 계산)
-  W.pain = function (el) {
-    var box = el.querySelector('#painCalc');
-    var F = [{ k: 't', l: '팀', min: 4, max: 15, v: 12, u: '팀' }, { k: 'r', l: '회차', min: 1, max: 6, v: 6, u: '회' }, { k: 'm', l: '팀당 작성', min: 3, max: 20, v: 10, u: '분' }];
-    box.innerHTML = '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span style="font-size:16px;color:var(--muted)">피드백을 <b style="color:var(--ink)">직접 쓴다면</b>(가정)</span><span id="painOut" style="font-size:20px;margin-left:auto"></span></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:6px">' + F.map(function (f) {
-        return '<label style="display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap;min-width:0">' + f.l + ' <b data-o="' + f.k + '" style="color:var(--student);font-size:18px;min-width:42px">' + f.v + f.u + '</b><input type="range" id="pain_' + f.k + '" min="' + f.min + '" max="' + f.max + '" value="' + f.v + '" data-k="' + f.k + '" style="accent-color:#e08a00;flex:1;min-width:0"></label>';
-      }).join('') + '</div>';
-    function upd() {
-      var v = {}; F.forEach(function (f) { v[f.k] = +box.querySelector('[data-k="' + f.k + '"]').value; box.querySelector('[data-o="' + f.k + '"]').textContent = v[f.k] + f.u; });
-      var min = v.t * v.r * v.m;
-      box.querySelector('#painOut').innerHTML = '한 반 <b style="font-size:30px;color:var(--ink)">' + (min / 60).toFixed(1) + '시간</b> <span style="color:var(--muted)">· 두 반 ' + (min * 2 / 60).toFixed(1) + '시간</span>';
-    }
-    box.addEventListener('input', upd); upd();
-  };
-
   // 바꾼 것: 같은 5주를 지금까지 / AI 조교와 함께로 비교
   W.ba = function (el) {
     var grid = el.querySelector('#baGrid'), seg = el.querySelector('#baSeg'), cnt = el.querySelector('#baCount');

@@ -23,7 +23,7 @@
     '</div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
     notes: '안녕하십니까. 당곡고등학교에서 데이터 과학을 가르치는 송석리입니다.\n오늘은 지금 진행 중인 팀 프로젝트 수업에서 AI를 조교로 두고 과정 중심 평가를 운영하는 사례를 실제 화면으로 보여 드리겠습니다.\n화면의 학생 정보는 모두 흐리게 처리했습니다. 수치는 오른쪽 위에 적힌 시각에 시스템에서 바로 모은 값입니다.' },
 
-  { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: function () {
+  { sec: '시작', title: '두 가지 어려움', html: function () {
     var F = function (f, st) { return '<img alt="" src="assets/art/' + f + '.webp" style="' + (st || '') + '">'; };
     return ttl('프로젝트 수업의 두 가지 어려움') +
     '<p class="lead"><b>AI가 결과물을 함께 만드는 지금</b>, 두 어려움은 더 커졌다.</p>' +
@@ -35,11 +35,11 @@
         '<p style="font-size:22px;color:var(--muted);margin:0">AI 시대의 구술평가는 중요성과 실행의 간극이 크다.</p></div>' +
       '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:10px;padding:16px 20px"><h3 class="pain-h">② 학생마다<br>피드백하기 어렵다</h3>' +
         '<div class="pic" style="flex:1;min-height:0">' + F('pain_2', 'object-position:50% 45%') +
-          '<span class="scn-chip" style="left:14px;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span></div>' +
-        '<div data-s="3" id="painCalc" class="nonext" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px"></div></div>' +
+          '<span class="scn-chip" style="left:14px;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span>' +
+          '<span class="scn-chip wrap" style="left:14px;bottom:14px;color:var(--ai)">구술평가 내용도, 코드도, 문제해결과정도 자세히 쓰라고는 하는데 어떻게 일일이 피드백하지?</span></div></div>' +
     '</div>' +
     ''; },
-    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, AI가 코드와 보고서를 함께 작성하면 결과물만으로는 학생의 이해 정도를 확인할 수 없습니다. 그래서 학생이 자기 말로 설명하는 구술평가가 필요하다는 점에는 모두 공감하시지만, 실제 운영에 들어가면 즉시 막히는 지점이 생깁니다. 한 반에 열두 팀 정도를 짧은 수업 시간 안에 모두 면담해야 하고, 회차별로 무엇을 물을지, 대화를 어떻게 기록해 근거로 남길지, 그 결과를 이후 피드백으로 어떻게 연결할지까지 막막해지기 때문입니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다. 아래 계산기로 보시면 한 반에만 몇 시간이 듭니다.' },
+    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, AI가 코드와 보고서를 함께 작성하면 결과물만으로는 학생의 이해 정도를 확인할 수 없습니다. 그래서 학생이 자기 말로 설명하는 구술평가가 필요하다는 점에는 모두 공감하시지만, 실제 운영에 들어가면 즉시 막히는 지점이 생깁니다. 한 반에 열두 팀 정도를 짧은 수업 시간 안에 모두 면담해야 하고, 회차별로 무엇을 물을지, 대화를 어떻게 기록해 근거로 남길지, 그 결과를 이후 피드백으로 어떻게 연결할지까지 막막해지기 때문입니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다.' },
 
   { sec: '시작', title: '해결의 흐름', widget: 'solve', steps: 5, html: function () {
     var A = function (f) { return 'assets/art/' + f + '.webp'; };

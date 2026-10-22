@@ -247,3 +247,4 @@
 .fl-next b { font-size: 19px; display: block; } .fl-next small { font-size: 14px; color: #c9c6d8; }
 .fl-in .fl-card span { display: block; word-break: keep-all; }
 .pain-h { font-size: 28px; line-height: 1.28; margin: 0; letter-spacing: -.01em; }
+.scn-chip.wrap { white-space: normal; max-width: calc(100% - 28px); line-height: 1.4; }
