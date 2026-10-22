@@ -1,0 +1,3 @@
+Reference image 1 is the TEACHER character: match its stylized 3D cartoon rendering style, materials and lighting exactly.
+Single object group only, no people: a laptop showing simple code lines (no readable text) and a small bug icon being caught by a magnifying glass. Cute, clean, friendly. Centered, transparent background, no ground, no shadow, no text or letters anywhere.
+{STYLE}

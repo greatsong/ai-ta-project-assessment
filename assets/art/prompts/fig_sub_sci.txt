@@ -1,0 +1,3 @@
+Reference image 1 is the TEACHER character: match its stylized 3D cartoon rendering style, materials and lighting exactly.
+Single object group only, no people: a set of lab glassware (beaker, flask, test tubes) with colorful liquids, a small notebook with a line graph. Cute, clean, friendly. Centered, transparent background, no ground, no shadow, no text or letters anywhere.
+{STYLE}

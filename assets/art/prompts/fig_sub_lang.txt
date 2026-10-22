@@ -1,0 +1,3 @@
+Reference image 1 is the TEACHER character: match its stylized 3D cartoon rendering style, materials and lighting exactly.
+Single object group only, no people: an open book with a pen and a few speech bubbles floating above it (bubbles contain only dots, no text). Cute, clean, friendly. Centered, transparent background, no ground, no shadow, no text or letters anywhere.
+{STYLE}

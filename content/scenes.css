@@ -422,3 +422,26 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 .v3 h3 { font-size: 34px; }
 .v3-pic { height: 236px; } .v3-pic img { max-height: 222px; }
 .v3 li { font-size: 20px; }
+
+.v3-top { margin-left: 8px; font-size: 13px; font-weight: 900; color: #fff; background: #d98a00; border-radius: 99px; padding: 3px 10px; vertical-align: 2px; letter-spacing: 0; }
+.v3 h3 { font-size: 30px; text-wrap: balance; }
+/* 다른 교과로(다시 만든 판) */
+.sb-band { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.sb-band > div { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--soft); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; }
+.sb-band > div.ch { background: #fff0eb; border-color: #ffd9cc; }
+.sb-band span { font-size: 16px; font-weight: 900; color: var(--muted); margin-right: 4px; } .sb-band .ch span { color: var(--ai); }
+.sb-band i { font-style: normal; font-size: 18px; font-weight: 700; background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; }
+.sbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; flex: 1; min-height: 0; }
+.sb { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 8px 22px rgba(31,29,43,.06); min-height: 0; }
+.sb-pic { height: 128px; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #f3f1fb, #fbfaff); padding: 10px; }
+.sb-pic img { max-height: 112px; max-width: 80%; object-fit: contain; }
+.sb-name { display: flex; align-items: baseline; gap: 8px; margin: 14px 20px 0; }
+.sb-name b { font-size: 27px; font-weight: 900; } .sb-name em { font-style: normal; font-size: 14px; font-weight: 800; color: var(--ok); }
+.sb q { display: block; margin: 10px 20px 0; font-size: 20px; font-weight: 800; line-height: 1.42; color: var(--teacher); quotes: none; word-break: keep-all; }
+.sb q::before { content: '“'; } .sb q::after { content: '”'; }
+.sb dl { margin: auto 20px 18px; padding-top: 12px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 62px 1fr; gap: 6px 8px; font-size: 16px; line-height: 1.4; }
+.sb dt { font-weight: 900; color: var(--faint); } .sb dd { margin: 0; color: var(--muted); word-break: keep-all; }
+.sbs { flex: 0 1 auto; align-items: stretch; margin: auto 0; }
+.sb-pic { height: 150px; } .sb-pic img { max-height: 132px; }
+.sb q { font-size: 21px; min-height: 3em; }
+.sb dl { margin: 16px 20px 20px; }

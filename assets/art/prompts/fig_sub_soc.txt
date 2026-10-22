@@ -1,0 +1,3 @@
+Reference image 1 is the TEACHER character: match its stylized 3D cartoon rendering style, materials and lighting exactly.
+Single object group only, no people: a small globe next to a bar chart board and a stack of documents with a magnifying glass over one page. Cute, clean, friendly. Centered, transparent background, no ground, no shadow, no text or letters anywhere.
+{STYLE}
