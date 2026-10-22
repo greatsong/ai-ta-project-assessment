@@ -30,8 +30,8 @@
     '<div class="body" style="gap:26px">' +
       '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:10px;padding:16px 20px"><h3 class="pain-h">① AI 시대의 구술평가,<br>좋은 건 알지만 어떻게 해야 하지?</h3>' +
         '<div class="pic" style="flex:1;min-height:0">' + F('pain_1', 'object-position:62% 30%') +
-          '<span class="scn-chip" style="left:14px;top:14px;color:var(--teacher)">결과물로는 이해가 보이지 않는다</span>' +
-          '<span class="scn-chip" style="left:14px;bottom:14px;color:var(--ai)">실제 운영은 시간·질문·기록이 막막하다</span></div>' +
+          '<span class="scn-chip" style="left:14px;top:14px;color:var(--teacher)">결과물로는 문제해결과정을 평가할 수 없음</span>' +
+          '<span class="scn-chip" style="left:14px;bottom:14px;color:var(--ai)">하지만 어떻게 구술평가 과정을 기록하고 정리하지?</span></div>' +
         '<p style="font-size:22px;color:var(--muted);margin:0">AI 시대의 구술평가는 중요성과 실행의 간극이 크다.</p></div>' +
       '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:10px;padding:16px 20px"><h3 class="pain-h">② 학생마다<br>피드백하기 어렵다</h3>' +
         '<div class="pic" style="flex:1;min-height:0">' + F('pain_2', 'object-position:50% 45%') +
