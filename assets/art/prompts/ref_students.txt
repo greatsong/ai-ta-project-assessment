@@ -1,0 +1,7 @@
+Character design sheet: a project team of three Korean high school students, designed to appear in the same animated film as the teacher character in the reference image (match his exact rendering style, proportions and lighting).
+- Student A: girl, long straight dark hair, bright and talkative, often gestures while explaining.
+- Student B: boy, short slightly tousled dark hair, thoughtful, chin-in-hand type.
+- Student C: girl, shoulder-length hair tied in a low ponytail, focused note-taker.
+All wear a generic Korean school uniform: white shirt, navy knit vest, dark navy skirt or trousers, simple sneakers; one has a small backpack.
+Layout on plain white background: the three standing side by side in full body (front view), plus a row of three close-up head portraits with friendly expressions. Same characters in both rows.
+{STYLE}

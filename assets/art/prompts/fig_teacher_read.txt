@@ -1,0 +1,3 @@
+Reference images: image 1 is the TEACHER character, image 2 is the three STUDENTS (A long hair girl, B boy, C ponytail girl), image 3 is the AI TA robot. Keep every character exactly on-model (face, hair, glasses, clothing, proportions, rendering style).
+Single character only: the teacher, waist-up, holding a tablet and reading it with a thoughtful small smile. Centered, transparent background, no other objects.
+{STYLE}

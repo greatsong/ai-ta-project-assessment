@@ -1,9 +1,0 @@
-teacher_magnifier|a friendly adult teacher (short dark hair, round glasses, indigo cardigan) leaning forward and peering through a big magnifying glass with a puzzled, curious face, full body standing
-student_team|three cheerful high school students (two girls and one boy, simple casual school outfits in amber, mint and coral) huddled around one open laptop, one pointing at the screen, full bodies
-poster|a small presentation poster on a wooden easel, the poster shows only simple abstract shapes: a bar chart, a pie chart and a few blank lines, no text
-teacher_desk|a tired but kind adult teacher (short dark hair, round glasses, indigo cardigan) sitting at a small wooden desk, one hand on the forehead, a tiny sweat drop, empty space on the desk to the right, front view
-paper_stack|a neat small stack of white paper sheets, slightly uneven, seen from the front at a slight angle, one sheet sticking out
-clock|a cute round wall clock with a coral rim and a cream face, small tick marks only, NO clock hands at all, tiny alarm bells on top
-students_waiting|two high school students standing side by side and waving one hand up as if asking a question, hopeful faces, simple casual outfits in amber and mint, full bodies
-teacher_stamp|a happy adult teacher (short dark hair, round glasses, indigo cardigan) holding up a big rubber approval stamp with a check mark shape on it, confident smile, full body standing
-feedback_note|a small folded paper note with a mint check mark shape and a small coral heart on it, slightly tilted, as if flying, with two tiny motion lines

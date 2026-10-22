@@ -31,7 +31,7 @@ content/widgets.js    눌러 보는 요소(한 회차 흐름, 이슈 표시, 실
 content/stats.js      수치(자동 생성, scripts/update_stats.py)
 content/dataflow.js   실제로 오가는 글(자동 생성, scripts/build_dataflow.py, 이름·학번·팀 이름은 ⟦가림⟧)
 content/scenes.css    도입 장면 애니메이션과 '실제로 오가는 글' 화면의 모양
-assets/art/           도입 장면 그림(scripts/gen_art.py, 프롬프트는 style.txt·subjects.txt)
+assets/art/           장면·인물 그림(3D 캐릭터: 선생님·학생 셋·팅커비스·모나). ref/는 캐릭터 시트, prompts/는 그림마다의 프롬프트(_style.txt가 공통 그림체)
 content/review.md     검토 문서 원본 → review/index.html
 captures/             화면 캡처(자동 생성, 개인정보 흐림)
 scripts/              캡처·집계·점검 스크립트
@@ -50,7 +50,7 @@ scripts/              캡처·집계·점검 스크립트
 5. 세특 근거 화면: `python3 scripts/capture_setuk.py [학번]`
 6. 실습실 화면: `python3 scripts/capture_lab.py` (시나리오 문장이 바뀌면 스크립트의 글귀도 고친다)
 6-1. 실제로 오가는 글: `python3 scripts/build_dataflow.py [팀ID] [--solar]` (기본 TE01, 녹음부터 올린 이슈까지 한 팀. `--solar`는 서버의 초안 함수를 맥에서 그대로 돌려 솔라에 한 번 보낸다. 선생님이 고친 기록은 서버에 처음 초안이 남지 않기 때문이다. 시트는 바꾸지 않는다. 가리지 못한 낱말이 있으면 멈춘다)
-6-2. 도입 그림(필요할 때만): `python3 scripts/gen_art.py` (OpenAI gpt-image-2.5-sunburst, 투명 배경. 키는 ai-chat-for-students/server/.env에서 읽고 출력하지 않는다)
+6-2. 그림(필요할 때만): `python3 scripts/gen_art.py raw/art/<이름>.png assets/art/prompts/<이름>.txt --ref <캐릭터 시트>…` (OpenAI gpt-image-2.5-sunburst. 같은 인물을 유지하려면 assets/art/ref/의 선생님·학생·팅커비스·모나 시트를 참고로 넣는다. 인물만 그릴 때는 `--size 1024x1024 --transparent`. 만든 PNG는 raw/에 두고 webp로 줄여 assets/art/에 넣는다. 키는 ai-chat-for-students/server/.env에서 읽고 출력하지 않는다)
 7. 내용: `content/slides.js`에서 진행 예정이던 회차를 실시로 바꾸고, 결과 장을 더한다(아래 목록)
 8. 검토 문서: `content/review.md`를 고친 뒤 `python3 scripts/build_review.py`
 9. 점검: `python3 -m http.server 4065` 를 띄우고 `python3 scripts/check_slides.py` → `raw/qa/`의 모든 장·단계 캡처를 눈으로 본다
@@ -72,6 +72,7 @@ scripts/              캡처·집계·점검 스크립트
 - 새로 찍은 캡처는 올리기 전에 한 장씩 눈으로 확인한다. 흐림은 글자 크기에 비례하지만, 큰 제목은 특히 다시 본다.
 - 구술 녹음·전사 원문 전체, 점수표, 선생님의 학생별 메모는 올리지 않는다.
 - 연결 정보·API 키·토큰은 이 저장소에 두지 않는다.
+- 그림 속 학생은 실제 학생이 아니라 만든 캐릭터다. 옥토캣 모나는 GitHub의 캐릭터로, 나오는 장에 출처를 적는다.
 
 ## 필요한 것
 

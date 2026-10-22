@@ -1,0 +1,3 @@
+Reference images: image 1 is the TEACHER character, image 2 is the three STUDENTS (A long hair girl, B boy, C ponytail girl), image 3 is the AI TA robot. Keep every character exactly on-model (face, hair, glasses, clothing, proportions, rendering style).
+Scene with gentle humor: late evening in the teachers' office. The teacher sits at his desk behind tall wobbly stacks of papers and three open laptops, an alarm clock (no numbers on its face) on the desk, rubbing his forehead with a tired but kind smile. Behind him, through a big window, many students wave their hands with empty speech bubbles containing only three dots. AI TA not present. Wide 3:2, teacher at center-left.
+{STYLE}

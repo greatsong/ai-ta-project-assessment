@@ -1,0 +1,3 @@
+Reference images: image 1 is the TEACHER character, image 2 is the three STUDENTS (A long hair girl, B boy, C ponytail girl), image 3 is the AI TA robot. Keep every character exactly on-model (face, hair, glasses, clothing, proportions, rendering style).
+Scene with gentle humor: in a school hallway, the teacher stands in front of a finished student presentation poster on an easel (the poster shows only simple charts and shapes), peering at it through a big magnifying glass with a puzzled face. Behind him, a row of four classroom doorways recedes into thick soft white fog, so the earlier weeks of the project cannot be seen. Students and AI TA not present. Wide 3:2, teacher and poster on the right half, fog on the left half.
+{STYLE}

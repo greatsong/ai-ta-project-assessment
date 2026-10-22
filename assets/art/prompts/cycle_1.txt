@@ -1,0 +1,3 @@
+Reference images: image 1 is the TEACHER character, image 2 is the three STUDENTS (A long hair girl, B boy, C ponytail girl), image 3 is the AI TA robot. Keep every character exactly on-model (face, hair, glasses, clothing, proportions, rendering style).
+Scene: a bright Korean high school classroom. The teacher sits at a table with the three students. Student A explains enthusiastically, pointing at a simple bar chart on an open laptop; Student B listens chin-in-hand; Student C takes notes. The teacher listens with a warm smile, holding his smartphone at chest height to record the conversation (a small red recording dot on the phone). Other student teams in soft focus in the background. The AI TA does not appear. Wide 3:2 composition, main group centered.
+{STYLE}

@@ -12,44 +12,38 @@
   window.SLIDES = [
   // ── 시작 ─────────────────────────────────────────────
   { sec: '시작', title: '표지', html: function (S) { return '' +
-    '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;padding-left:10px">' +
+    '<div style="flex:1;display:flex;align-items:center;gap:20px">' +
+    '<div style="flex:0 0 680px;display:flex;flex-direction:column;justify-content:center;gap:24px;padding-left:10px">' +
     '<div class="chip" style="align-self:flex-start;background:#fff0eb;border-color:#ffd9cc;color:var(--ai)">진행 중인 수업 사례 · 2026 2학기 『데이터 과학』</div>' +
-    '<h1 style="margin:0;font-size:76px;line-height:1.18;letter-spacing:-.03em;font-weight:800">AI TA와 함께 하는<br>과정중심 프로젝트 수업 평가<br><span style="color:var(--muted);font-weight:700;font-size:58px">사례 공유</span></h1>' +
-    '<div style="display:flex;gap:14px;align-items:center;font-size:26px;color:var(--muted)"><b style="color:var(--ink)">당곡고등학교 송석리</b><span>·</span><span>팀 프로젝트 구술 평가와 AI 조교 운영</span></div>' +
-    '<div style="display:flex;gap:10px;margin-top:12px"><span class="chip" style="color:var(--student)">학생 · 질문하고 검증하고 설명한다</span><span class="chip" style="color:var(--teacher)">교사 · 묻고 평가한다</span><span class="chip" style="color:var(--ai)">AI TA · 기록하고 초안을 쓴다</span></div>' +
-    '</div>'; },
+    '<h1 style="margin:0;font-size:70px;line-height:1.2;letter-spacing:-.03em;font-weight:800">AI TA와 함께 하는<br>과정중심<br>프로젝트 수업 평가<br><span style="color:var(--muted);font-weight:700;font-size:52px">사례 공유</span></h1>' +
+    '<div style="display:flex;gap:12px;align-items:center;font-size:24px;color:var(--muted);flex-wrap:wrap"><b style="color:var(--ink)">당곡고등학교 송석리</b><span>·</span><span>팀 프로젝트 구술 평가와 AI 조교 운영</span></div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><span class="chip" style="color:var(--student)">학생 · 질문하고 검증하고 설명한다</span><span class="chip" style="color:var(--teacher)">교사 · 묻고 평가한다</span><span class="chip" style="color:var(--ai)">AI TA · 기록하고 초안을 쓴다</span></div>' +
+    '</div>' +
+    '<div style="flex:1;min-width:0;height:100%;display:flex;align-items:center;justify-content:center"><img alt="" src="assets/art/cover.webp" style="max-width:100%;max-height:660px;object-fit:contain;animation:coverin .9s ease-out both"></div>' +
+    '</div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
     notes: '안녕하십니까. 당곡고등학교에서 데이터 과학을 가르치는 송석리입니다.\n오늘은 지금 진행 중인 팀 프로젝트 수업에서 AI를 조교, 곧 TA로 두고 과정 중심 평가를 운영하는 사례를 실제 화면으로 보여 드리겠습니다.\n화면의 학생 정보는 모두 흐리게 처리했습니다. 수치는 오른쪽 위에 적힌 시각에 시스템에서 바로 모은 값입니다.' },
 
   { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: function () {
-    var A = function (f, st) { return '<img alt="" src="assets/art/' + f + '.webp" style="' + st + '">'; };
-    var weeks = [1, 2, 3, 4].map(function (w) { return '<div class="wk"><b>' + w + '주</b><div class="fog"></div><span class="q" style="animation-delay:' + (w * 0.4) + 's">?</span></div>'; }).join('') + '<div class="wk" style="background:#fff"><b>5주</b></div>';
-    var piles = [0, 1, 2, 3, 4, 5].map(function (i) { return A('paper_stack', 'left:' + (122 + (i % 2) * 4) + 'px;top:' + (126 - i * 13) + 'px;height:36px;z-index:' + (3 + i) + ';animation-delay:' + (i * 0.7) + 's').replace('<img', '<img class="pile"'); }).join('');
+    var F = function (f, st) { return '<img alt="" src="assets/art/' + f + '.webp" style="' + (st || '') + '">'; };
     return ttl('프로젝트 수업의 오래된 두 어려움') +
     '<p class="lead"><b>AI가 결과물을 함께 만드는 지금</b>, 두 어려움은 더 커졌다.</p>' +
     '<div class="body" style="gap:26px">' +
-      '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:8px;padding:16px 22px"><h3 style="font-size:30px;margin:0">① 과정을 평가하기 어렵다</h3>' +
-        '<div class="scene"><div class="wks">' + weeks + '</div>' +
-          A('student_team', 'left:150px;top:30px;height:116px;opacity:.75;z-index:1') +
-          A('poster', 'right:12px;top:30px;height:110px;z-index:3') +
-          '<div class="sway" style="position:absolute;left:278px;top:150px;height:150px;width:82px">' + A('teacher_magnifier', 'left:0;top:0;height:150px') + '</div>' +
-          '<span class="scn-chip" style="left:0;top:250px;color:var(--teacher)">1~4주: 무엇을 왜 정했는지 보이지 않는다</span>' +
-          '<span class="scn-chip" style="right:0;top:174px">5주: 결과물만 남는다</span>' +
-        '</div>' +
+      '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:10px;padding:16px 20px"><h3 style="font-size:30px;margin:0">① 과정을 평가하기 어렵다</h3>' +
+        '<div class="pic" style="height:330px">' + F('pain_1', 'object-position:60% 40%') + '<div class="pic-fog"></div>' +
+          '<span class="scn-chip" style="left:14px;bottom:14px;color:var(--teacher)">1~4주: 무엇을 왜 정했는지 보이지 않는다</span>' +
+          '<span class="scn-chip" style="right:14px;top:14px">5주: 결과물만 남는다</span></div>' +
         '<p style="font-size:22px;color:var(--muted);margin:0">AI가 코드를 써 주면 학생의 몫은 더 보이지 않는다</p></div>' +
-      '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:8px;padding:16px 22px"><h3 style="font-size:30px;margin:0">② 학생마다 피드백하기 어렵다</h3>' +
-        '<div class="scene" style="height:255px">' + A('teacher_desk', 'left:8px;top:62px;height:192px;z-index:2') + piles +
-          '<div class="ring" style="position:absolute;right:8px;top:0;width:60px;height:70px">' + A('clock', 'left:0;top:0;height:70px') + '</div>' +
-          '<div class="bob" style="position:absolute;left:350px;top:84px;width:138px;height:170px">' + A('students_waiting', 'left:0;top:0;height:170px') + '</div>' +
-          '<div class="dots" style="left:328px;top:48px"><i></i><i></i><i></i></div>' +
-          '<span class="scn-chip" style="left:0;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span>' +
-        '</div>' +
+      '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:10px;padding:16px 20px"><h3 style="font-size:30px;margin:0">② 학생마다 피드백하기 어렵다</h3>' +
+        '<div class="pic" style="height:262px">' + F('pain_2', 'object-position:50% 45%') +
+          '<span class="scn-chip" style="left:14px;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span></div>' +
         '<div data-s="3" id="painCalc" class="nonext" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px"></div></div>' +
     '</div>' +
-    '<div data-s="4" style="margin-top:14px;background:var(--ink);color:#fff;border-radius:18px;padding:8px 26px;display:flex;align-items:center;gap:20px;font-size:28px;font-weight:700;position:relative;overflow:hidden;height:80px">' +
-      '<span><span style="color:#b9b3ff">기록</span>은 깃허브가</span>' +
-      '<img alt="" src="assets/art/robot.webp" style="height:66px;margin-left:40px"><span><span style="color:#ffb39f">정리</span>는 AI TA가</span>' +
-      '<img alt="" class="flynote" src="assets/art/feedback_note.webp" style="height:40px;position:absolute;left:720px;top:20px">' +
-      '<img alt="" src="assets/art/teacher_stamp.webp" style="height:66px;margin-left:auto"><span><span style="color:#ffd27a">결정</span>은 교사가</span></div>'; },
+    '<div data-s="4" class="pain-bar">' +
+      F('fig_mona', 'height:84px;margin:-14px -6px -14px -8px') + '<span><span style="color:#b9b3ff">기록</span>은 깃허브가</span>' +
+      F('fig_ai', 'height:84px;margin:-14px 0 -14px 40px') + '<span><span style="color:#ffb39f">정리</span>는 AI TA가</span>' +
+      '<img alt="" class="flynote" src="assets/art/fig_note.webp" style="height:46px;position:absolute;left:720px;top:17px">' +
+      F('fig_teacher_stamp', 'height:92px;margin:-14px 0 -14px auto') + '<span><span style="color:#ffd27a">결정</span>은 교사가</span></div>' +
+    '<div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
     notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 1주에서 4주까지 학생들이 무엇을 왜 정했는지는 안개 속에 있고, 교사가 보는 것은 5주의 결과물뿐입니다. 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다. 아래 계산기로 보시면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 기록은 깃허브가, 정리는 AI 조교가, 결정은 교사가 합니다.' },
 
   { sec: '시작', title: '무엇이 바뀌었나', widget: 'ba', steps: 1, html: '' +
@@ -59,12 +53,18 @@
     '<div id="baGrid" style="flex:1;min-height:0"></div>',
     notes: '같은 5주를 두 방식으로 비교해 보겠습니다. 지금까지는 평가도 피드백도 마지막 주 발표에 몰렸고, 과정은 결과물로만 남았습니다.\n(클릭) AI 조교와 깃허브를 쓰면 매주 구술 인터뷰가 있고, 그때마다 강점과 다음 단계 가이드가 팀 저장소 이슈로 돌아갑니다. 수업이 있는 날 저녁에는 저장소 변화에 댓글 초안이 생깁니다.\n교사가 하는 일도 바뀝니다. 받아 적고 정리하고 초안을 쓰는 일은 AI 조교가 하고, 교사는 묻고 판단하고 승인합니다.' },
 
-  { sec: '시작', title: '결정은 교사만', widget: 'gate', html: '' +
-    ttl('모든 결정은 교사를 거친다', '눌러 보기', 'live') +
-    '<p class="lead">AI TA가 만든 것은 모두 <b>초안</b>이다. 학생에게 가는 글, 점수, 세특은 교사가 정한다.</p>' +
-    '<div class="body nonext" id="gateBox" style="gap:22px;align-items:stretch"></div>' +
-    '<div data-s="1" style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;font-size:20px"><span class="chip">AI는 점수·등급·보완할 점을 쓰지 않는다</span><span class="chip">학생 저장소에는 교사가 \'올리기\'를 누른 글만</span><span class="chip">AI가 쓴 글에는 \'팅커비스)\' 표기</span></div>',
-    notes: '가장 중요한 원칙입니다. AI 조교가 만드는 것은 모두 초안입니다.\n왼쪽의 초안을 하나 눌러 보십시오. 교사에게 먼저 가고, 교사가 고쳐서 올리거나 버립니다. 버리면 학생에게 아무것도 가지 않습니다.\n점수와 등급은 교사만 매기고, AI가 쓰는 글에는 점수가 들어가지 않습니다. 학생 저장소에는 교사가 올리기를 누른 글만 올라가고, AI가 쓴 글에는 팅커비스라는 표기가 붙습니다.' },
+  { sec: '시작', title: '결정은 교사만', widget: 'gate', steps: 4, html: function () { var g = (window.DATAFLOW || {}).gate || {}; return '' +
+    ttl('모든 결정은 교사를 거친다', '한 팀의 실제 기록', 'live') +
+    '<p class="lead" style="margin-bottom:14px">AI TA가 만든 것은 모두 <b>초안</b>이다. 한 팀의 ' + (g.cpNo || '') + ' 인터뷰 전후를 다섯 초안으로 따라간다.</p>' +
+    '<div class="body nonext" id="gateBox"></div>' +
+    '<div class="gt-chips"><span class="chip">학생 저장소에는 교사가 올리기를 누른 글만</span><span class="chip">AI가 쓴 글에는 \'팅커비스)\' 표기</span><span class="chip">흐린 칸은 이름·학번·팀 이름</span></div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
+    notes: '가장 중요한 원칙입니다. AI 조교가 만드는 것은 모두 초안이고, 결정은 교사가 합니다. 한 팀의 실제 기록으로 따라가 보겠습니다.\n첫째, 3분 녹음을 받아 적은 글입니다. 학생에게는 보내지 않습니다. 노란 줄, 어떤 열을 쓰느냐는 질문에 학생이 바로 답한 장면이 강점의 근거가 됐습니다.\n둘째, 강점과 가이드 초안입니다. 첫 판은 잘한 점과 보완할 점 형식이었는데, 올리고 보니 고칠 곳이 너무 많아 아홉 팀 전부 회수했습니다. 평가하지 않고 장면과 의미, 다음에 할 일만 쓰도록 형식을 바꾼 둘째 판을 승인했습니다.\n셋째, 수업이 없는 날 바뀐 저장소를 읽고 만든 댓글 초안입니다. 지금 제 앱에서 기다리고 있습니다. 제가 올리기를 누르기 전에는 학생에게 가지 않습니다.\n넷째, 학생 log에서 다음 인터뷰 질문 후보를 만듭니다. 인터뷰에서 제가 쓴 질문만 남습니다.\n다섯째, 한 학생의 log, 구술, 이슈가 시간순으로 쌓입니다. 학기말에 제가 골라 세특을 씁니다. 점수와 등급은 어떤 초안에도 들어가지 않습니다.' },
+
+  { sec: '시작', title: '한 바퀴', widget: 'cycle', steps: 6, html: '' +
+    ttl('한 바퀴: 교실에서 다시 교실로', '한 팀의 실제 기록', 'live') +
+    '<p class="lead" style="margin-bottom:10px">구술 인터뷰가 <b>기록</b>이 되고, AI와 교사를 거쳐 <b>피드백</b>이 되고, 다음 작업과 다음 인터뷰로 이어진다.</p>' +
+    '<div class="body nonext" id="cyBox"></div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>',
+    notes: '이 수업이 도는 한 바퀴입니다. 한 팀의 실제 기록으로 보겠습니다.\n교실에서 제가 묻고 학생이 자기 말로 설명합니다. 녹음은 아이폰 앱이 맡습니다.\n녹음은 서버가 받아 적고, 학생은 인터뷰가 끝나고 네 시간 뒤 팀 log에 회귀로 하기로 한 결정과 AI 제안을 어떻게 받아들였는지 적었습니다.\nAI가 초안을 쓰고 제가 결정합니다. 첫 판은 회수했고, 형식을 바꾼 둘째 판을 승인했습니다.\n학생은 팀 저장소 이슈로 강점과 다음 단계 가이드를 받습니다. 가이드는 체크 목록이라 다음 작업이 됩니다.\n수업이 없는 날에도 저장소가 바뀌면 그날 확인해 댓글 초안을 만듭니다. 가운데 작은 고리입니다.\n그리고 다시 교실입니다. 다음 인터뷰에서는 학생 log에서 나온 질문을 씁니다. 이 한 바퀴를 다섯 번, 그리고 최종 문답으로 돕니다.' },
 
   { sec: '구조', title: '수업과 프로젝트', html: function (S) { return '' +
     ttl('수업과 팀 프로젝트', '2026 2학기') +

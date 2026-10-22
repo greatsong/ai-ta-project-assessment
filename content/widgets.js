@@ -192,49 +192,86 @@
 
   // 결정은 교사만: 초안을 누르면 교사에게 가고, 교사가 올리거나 버린다
   W.gate = function (el) {
-    var box = el.querySelector('#gateBox');
-    var AI = [
-      { t: '받아 적은 글(전사)', to: 2, by: 'Gemini' },
-      { t: '강점·가이드 초안', to: 0, by: 'Solar' },
-      { t: '저장소 댓글 초안', to: 0, by: '팅커비스' },
-      { t: 'log 질문 후보', to: 1, by: '팅커비스' },
-      { t: '세특 근거 모음', to: 3, by: '스크립트' }
+    var G = (window.DATAFLOW || {}).gate || {}, box = el.querySelector('#gateBox');
+    var art = function (n) { return '<img alt="" src="assets/art/' + n + '.webp">'; };
+    var fmt = function (t) {
+      t = String(t || '').replace(/\n-{3}\n<sub>[\s\S]*$/, '');
+      return esc(t).replace(/⟦가림⟧/g, '<span class="mk">가림가림</span>').replace(/^(#{1,3} .*)$/gm, '<span class="hd">$1</span>').replace(/^<span class="hd">#{1,3} /gm, '<span class="hd">');
+    };
+    var md = function (d) { return d ? d.slice(5).replace('-', '/') : ''; };
+    var min = Math.round((G.durationSec || 0) / 60);
+    var pic = function (n, h) { return '<div class="gt-art" style="height:' + (h || 170) + 'px"><img alt="" src="assets/art/' + n + '.webp"></div>'; };
+    var firstSentence = function (t) { var i = (t || '').indexOf('다. '); return i > 0 ? '<mark>' + fmt(t.slice(0, i + 2)) + '</mark>' + fmt(t.slice(i + 2)) : fmt(t); };
+    var X = [
+      { t: '받아 적은 글', by: 'Gemini', sub: '녹음 ' + min + '분 → ' + (G.transcript_lines || '') + '줄',
+        ai: '<div class="gt-cap">' + (G.cpNo || '') + ' 인터뷰 · ' + (G.transcript_lines || '') + '줄 가운데 세 줄</div><div class="gt-x">' +
+          (G.scene || []).map(function (l) { return '<span class="ln' + (l.hl ? ' hl' : '') + '">' + fmt(l.text) + '</span>'; }).join('') + '</div>' + pic('cycle_2', 190),
+        stamps: [{ c: 'keep', t: '보관', s: '학생에게 보내지 않음' }],
+        tc: '<p class="gt-say">받아 적은 글은 교사 계정의 구술 기록에만 남는다.</p><p class="gt-say">노란 줄이 강점의 근거가 됐다. 교사는 그 문안 전체를 읽고 승인했다.</p>',
+        to: 'stu', toT: '팀 저장소 이슈', toW: '학생이 본다',
+        out: '<div class="gt-cap">' + md(G.v2_date) + ' 올라간 이슈의 첫 강점</div><div class="gt-x">' + firstSentence(G.strength) + '</div>' + pic('cycle_4', 190) },
+      { t: '강점·가이드 초안', by: 'Solar', sub: '첫 판 회수 → 둘째 판 승인',
+        ai: '<div class="gt-cap">첫 판 · ' + esc(G.v1_title || '') + '</div><div class="gt-x">' + fmt(G.v1) + '</div>',
+        stamps: [{ c: 'no', t: '회수', s: md(G.v1_closed) + ' · ' + (G.v1_count || '') + '팀 전부' }, { c: 'ok', t: '승인', s: md(G.v2_date) + ' · 둘째 판' }],
+        tc: '<p class="gt-say"><q>수정할 곳이 너무 많네요.</q></p><div class="gt-rule">형식을 바꿨다. 평가하지 않는다 · 강점은 장면과 그 의미 · 가이드는 살펴보기 → 팀 논의 → 깃허브 기록 · AI 검증 안내를 붙인다</div>',
+        void: true, to: 'stu', toT: '팀 저장소 이슈 · 둘째 판', toW: '학생이 본다',
+        out: '<div class="gt-x">' + fmt(G.v2) + '</div>' },
+      { t: '저장소 댓글 초안', by: '팅커비스', sub: '바뀐 저장소를 읽고',
+        ai: '<div class="gt-cap">' + md(G.comment_date) + ' 저장소 확인 · log와 README의 변화</div><div class="gt-x">' + fmt(G.comment) + '</div>',
+        stamps: [{ c: 'wait', t: '대기', s: '교사가 읽는 중' }],
+        tc: '<p class="gt-say">교사가 앱에서 읽고 <b>올리기</b>를 누르기 전에는 학생에게 가지 않는다.</p><div class="gt-btns"><span>고치기</span><span>버리기</span><span class="p">올리기</span></div>',
+        to: 'none', toT: '팀 이슈의 댓글', toW: '아직 올리지 않음', arrow2: 'stop',
+        out: '<div class="gt-x" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--faint);font-size:17px"><img alt="" src="assets/art/fig_mona.webp" style="height:150px;opacity:.55;filter:grayscale(.4)">교사가 올리기를 누르면<br>이슈 아래 댓글로 붙는다</div>' },
+      { t: 'log 질문 후보', by: '팅커비스', sub: '학생 log에서 다음 질문',
+        ai: '<div class="gt-cap">학생 log의 결정과 AI 검증 기록에서' + (G.questions_example ? '<span class="gt-ex">예시 · 같은 규칙</span>' : '') + '</div><div class="gt-x">' +
+          (G.questions || []).map(function (q) { return '<span class="ln" style="margin-bottom:10px"><b>' + fmt(q.text) + '</b>\n<span style="color:var(--muted);font-size:13px">근거 ' + fmt(q.basis) + '</span></span>'; }).join('') + '</div>',
+        stamps: [{ c: 'ok', t: '선택', s: '인터뷰에서' }],
+        tc: '<p class="gt-say">다음 인터뷰에서 교사가 쓴 질문만 <b>사용</b>으로 남고, 나머지는 숨긴다.</p><p class="gt-say" style="color:var(--muted)">학생에게는 보이지 않는다.</p>',
+        to: 'tch', toT: (G.next || '다음') + ' 인터뷰', toW: '교사만',
+        out: '<div class="gt-cap">시작 질문</div><div class="gt-x">' + fmt(G.next_opener) + '\n\n<span style="color:var(--muted);font-size:13px">꼬리질문 아래에 후보가 함께 보인다</span></div>' + pic('cycle_1', 200) },
+      { t: '세특 근거 모음', by: '스크립트', sub: '학생 한 명의 시간순 기록',
+        ai: '<div class="gt-cap">한 학생의 근거 · 자동 수집</div><div class="gt-x">' +
+          (G.setuk || []).map(function (e) { return '<div class="gt-ev"><b>' + md(e.date) + ' · ' + esc(e.src) + '</b>' + fmt(e.text) + '</div>'; }).join('') + '</div>',
+        stamps: [{ c: 'wait', t: '학기말', s: '근거를 고른다' }],
+        tc: '<p class="gt-say">학기말에 교사가 근거를 고르고 세특 문장을 쓴다.</p><p class="gt-say" style="color:var(--muted)">항목 수준(■)은 교사만 보는 근거다.</p>',
+        to: 'none', toT: '학기말 세특', toW: '교사가 쓴다', arrow2: 'stop',
+        out: '<div class="gt-x" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--faint);font-size:17px"><img alt="" src="assets/art/fig_teacher_read.webp" style="height:170px;opacity:.6">학기말에<br>교사가 쓴다</div>' }
     ];
-    var DEST = [
-      { t: '팀 저장소 이슈·댓글', who: '학생이 본다', c: 'var(--student)' },
-      { t: '다음 구술의 꼬리질문', who: '교사만', c: 'var(--teacher)' },
-      { t: '구술 기록(시트)', who: '교사만', c: 'var(--teacher)' },
-      { t: '학기말 세특', who: '교사가 쓴다', c: 'var(--teacher)' }
-    ];
-    box.innerHTML = '<div class="col" style="flex:1;gap:10px"><div style="font-weight:800;color:var(--ai);font-size:22px">AI TA의 초안</div>' +
-      AI.map(function (a, i) { return '<button class="btn" type="button" data-a="' + i + '" style="text-align:left;border-left:8px solid var(--ai);display:flex;justify-content:space-between;align-items:center"><span>' + a.t + '</span><span class="chip" style="font-size:14px">' + a.by + '</span></button>'; }).join('') + '</div>' +
-      '<div class="col" style="flex:1.1;gap:10px"><div style="font-weight:800;color:var(--teacher);font-size:22px">교사</div><div id="gTeacher" class="card" style="flex:1;border:3px solid var(--teacher);display:flex;flex-direction:column;gap:12px;justify-content:center"></div>' +
-      '<div class="card" style="padding:12px 16px"><p style="color:var(--ink)"><b>점수·등급</b>은 교사만 매긴다. AI의 초안에는 들어가지 않는다.</p></div></div>' +
-      '<div class="col" style="flex:1;gap:10px"><div style="font-weight:800;color:var(--student);font-size:22px">나가는 곳</div>' +
-      DEST.map(function (d, i) { return '<div class="card" data-d="' + i + '" style="padding:12px 16px;transition:all .3s"><h3 style="font-size:21px;margin:0">' + d.t + '</h3><p style="font-size:16px">' + d.who + '</p><div class="gLog" style="font-size:15px;color:var(--ok);margin-top:4px"></div></div>'; }).join('') + '</div>';
-    var T = box.querySelector('#gTeacher'), sel = -1;
-    function idle() { T.innerHTML = '<p style="font-size:22px;color:var(--muted);text-align:center">왼쪽 초안을 누르면 여기로 온다</p>'; }
-    function pick(i) {
-      sel = i;
+    var TO = { stu: 'fig_mona', tch: 'fig_teacher_read', none: 'fig_teacher_read' };
+    box.className = 'gt';
+    box.innerHTML = '<div class="gt-nav">' + X.map(function (x, i) {
+        return '<button type="button" data-a="' + i + '"><span class="no">' + (i + 1) + '</span><b>' + x.t + ' <span class="chip" style="font-size:12px;padding:2px 8px">' + x.by + '</span></b><small>' + esc(x.sub) + '</small></button>'; }).join('') +
+        '<div class="fin">점수·등급은 <b>교사만</b> 매긴다. 어떤 초안에도 들어가지 않는다.</div></div>' +
+      '<div class="gt-flow"><div class="gt-h">' + art('fig_ai') + 'AI TA의 초안</div><span></span><div class="gt-h">' + art('fig_teacher_stamp') + '교사의 결정</div><span></span><div class="gt-h" id="gtOutH"></div>' +
+      '<div class="gt-c ai" id="gtA"></div><div class="gt-arrow" id="gtR1"><i></i></div><div class="gt-c tc" id="gtT"></div><div class="gt-arrow" id="gtR2"><i></i></div><div class="gt-c out" id="gtO"></div></div>';
+    var $ = function (id) { return box.querySelector('#' + id); }, timers = [];
+    var later = function (ms, f) { timers.push(setTimeout(f, ms)); };
+    function show(i) {
+      timers.forEach(clearTimeout); timers = [];
+      var x = X[i];
       box.querySelectorAll('[data-a]').forEach(function (b) { b.classList.toggle('on', +b.dataset.a === i); });
-      T.innerHTML = '<div style="font-size:16px;color:var(--muted)">검토 중</div><div style="font-size:26px;font-weight:800">' + AI[i].t + '</div><div style="font-size:18px;color:var(--muted)">읽고, 고치고, 정한다</div>' +
-        '<div style="display:flex;gap:10px;margin-top:6px"><button class="btn" type="button" data-g="ok" style="background:var(--teacher);color:#fff;border-color:var(--teacher)">고쳐서 올림</button><button class="btn" type="button" data-g="no">버림</button></div>';
+      ['gtA', 'gtT', 'gtO'].forEach(function (k) { $(k).classList.remove('in', 'void'); });
+      ['gtR1', 'gtR2'].forEach(function (k) { $(k).className = 'gt-arrow'; });
+      $('gtA').innerHTML = x.ai;
+      $('gtT').innerHTML = x.stamps.map(function (st, j) { return '<span class="stamp ' + st.c + '" data-st="' + j + '">' + st.t + ' <small>' + esc(st.s) + '</small></span>'; }).join('') + x.tc + pic(i === 3 ? 'cycle_1' : 'cycle_3', 210);
+      $('gtOutH').innerHTML = art(TO[x.to]) + '나간 곳<span class="who">' + x.toT + ' · ' + x.toW + '</span>';
+      $('gtO').className = 'gt-c out ' + x.to;
+      $('gtO').innerHTML = x.out;
+      [$('gtA'), $('gtT'), $('gtO')].forEach(function (c) { var g = c.querySelector('.gt-x'); if (g) g.scrollTop = 0; });
+      later(60, function () { $('gtA').classList.add('in'); });
+      later(450, function () { $('gtR1').classList.add('go'); $('gtT').classList.add('in'); });
+      x.stamps.forEach(function (st, j) {
+        later(900 + j * 900, function () {
+          $('gtT').querySelector('[data-st="' + j + '"]').classList.add('on');
+          if (st.c === 'no' && x.void) $('gtA').classList.add('void');
+        });
+      });
+      var t = 900 + x.stamps.length * 900;
+      later(t, function () { $('gtR2').classList.add(x.arrow2 || 'go'); $('gtO').classList.add('in'); });
     }
-    box.addEventListener('click', function (e) {
-      var a = e.target.closest('[data-a]'); if (a) { pick(+a.dataset.a); return; }
-      var g = e.target.closest('[data-g]'); if (!g || sel < 0) return;
-      var it = AI[sel];
-      if (g.dataset.g === 'ok') {
-        var d = box.querySelector('[data-d="' + it.to + '"]');
-        d.querySelector('.gLog').textContent = '✓ ' + it.t + ' (교사 승인)';
-        d.style.boxShadow = '0 0 0 4px ' + DEST[it.to].c; setTimeout(function () { d.style.boxShadow = ''; }, 900);
-        T.innerHTML = '<p style="font-size:22px;text-align:center"><b>' + it.t + '</b><br>→ ' + DEST[it.to].t + '</p>';
-      } else {
-        T.innerHTML = '<p style="font-size:22px;text-align:center"><b>' + it.t + '</b><br><span style="color:var(--muted)">버림: 아무 데도 나가지 않는다</span></p>';
-      }
-      box.querySelectorAll('[data-a]').forEach(function (b) { b.classList.remove('on'); }); sel = -1;
-    });
-    idle();
+    box.addEventListener('click', function (e) { var a = e.target.closest('[data-a]'); if (a) show(+a.dataset.a); });
+    el.addEventListener('step', function (e) { show(Math.min(X.length - 1, e.detail || 0)); });
+    show(0);
   };
 
   // 개인정보 데이터 지도
@@ -296,6 +333,80 @@
     }
     route.addEventListener('click', function (e) { var b = e.target.closest('[data-x]'); if (b) show(+b.dataset.x); });
     el.addEventListener('step', function (e) { show(Math.min(X.length - 1, e.detail || 0)); });
+    show(0);
+  };
+
+  // 한 바퀴: 교실 → 기록 → AI+교사 → 피드백 → 프로젝트 진행 → 다시 교실(한 팀의 실제 기록)
+  W.cycle = function (el) {
+    var G = (window.DATAFLOW || {}).gate || {}, C = G.cycle || {}, box = el.querySelector('#cyBox');
+    var fmt = function (t) { return esc(String(t || '').replace(/\n-{3}\n<sub>[\s\S]*$/, '')).replace(/⟦가림⟧/g, '<span class="mk">가림가림</span>'); };
+    var md = function (d) { return d ? d.slice(5).replace('-', '/') : ''; };
+    var who = function (w) { return w.map(function (x) { return '<span class="cy-who ' + ({ '학생': 's', '교사': 't', 'AI TA': 'a' })[x] + '">' + x + '</span>'; }).join(''); };
+    var stamp = function (c, t, s) { return '<span class="stamp on ' + c + '" style="font-size:20px;margin:2px 6px 2px 0;transform:rotate(-4deg)">' + t + ' <small>' + esc(s) + '</small></span>'; };
+    var N = [
+      { k: '교실', s: '구술 인터뷰', img: 'cycle_1', w: ['교사', '학생'], at: (C.interview_at || '') + ' · ' + Math.round((G.durationSec || 0) / 60) + '분',
+        body: '<div class="cy-x">' + (G.scene || []).map(function (l) { return '<span class="ln' + (l.hl ? ' hl' : '') + '">' + fmt(l.text) + '</span>'; }).join('') + '</div>' +
+          '<p class="cy-note">교사가 묻고 학생이 자기 말로 설명한다. 녹음은 교사의 아이폰 앱이 맡는다.</p>' },
+      { k: '기록', s: '받아 적기 · 깃허브 log', img: 'cycle_2', w: ['AI TA', '학생'], at: (C.first_log ? C.first_log.at : ''),
+        body: '<div class="cy-two"><div><b>녹음 → 받아 적은 글</b><span>Gemini · ' + (G.transcript_lines || '') + '줄 · 교사만 본다</span></div>' +
+          '<div><b>팀 log · ' + esc(C.first_log ? C.first_log.file.split('/').pop() : '') + '</b><span>학생이 쓴다 · 인터뷰 뒤 ' + esc(C.first_log ? C.first_log.at : '') + '</span></div></div>' +
+          '<div class="cy-x" style="margin-top:8px">' + fmt(C.first_log ? C.first_log.text : '') + '</div>' },
+      { k: 'AI + 교사', s: '초안 → 결정', img: 'cycle_3', w: ['AI TA', '교사'], at: md(G.v1_closed) + ' ~ ' + md(G.v2_date),
+        body: '<div class="cy-seq"><div><small>' + esc(C.v1_at || '') + '</small><b>Solar 첫 판</b><span>잘한 점 · 보완할 점</span></div>' + stamp('no', '회수', md(G.v1_closed) + ' · ' + (G.v1_count || '') + '팀') +
+          '<div><b>다시 설계</b><span>Claude가 저장소·데이터를 열어 확인 → Solar 집필</span></div>' + stamp('ok', '승인', md(G.v2_date)) + '</div>' +
+          '<p class="cy-note"><q>수정할 곳이 너무 많네요.</q> 평가하지 않고, 장면과 의미, 다음에 할 일만 쓰도록 형식을 바꿨다.</p>' },
+      { k: '피드백', s: '팀 저장소 이슈', img: 'cycle_4', w: ['학생'], at: C.v2_at || '',
+        body: '<div class="cy-issue"><div class="cy-it">' + fmt(G.v2_title) + '</div><b>인터뷰에서 보인 강점</b><p>' + fmt(G.strength) + '</p><b>다음 단계 가이드</b>' +
+          (C.guides || []).map(function (g) { return '<p class="ck">☐ ' + fmt(g) + '</p>'; }).join('') + '</div>' },
+      { k: '프로젝트 진행', s: '다음 작업 · 커밋', img: 'cycle_5', w: ['학생'], at: '다음 수업',
+        body: '<b class="cy-h">팀이 할 일(이슈의 체크 목록)</b>' + (C.guides || []).map(function (g) { return '<p class="ck" style="font-size:14.5px">☐ ' + fmt(g) + '</p>'; }).join('') +
+          '<div class="cy-state">' + ((C.after_feedback || {}).n ? '피드백 뒤 커밋 ' + C.after_feedback.n + '개 · 최근 ' + fmt(C.after_feedback.last) : '피드백 뒤 커밋은 아직 없다(' + esc(C.checked_at || '') + ' 확인). 다음 수업에서 이어진다.') + '</div>' +
+          '<div class="cy-loop"><b>수업이 없는 날</b> 저장소가 바뀌면 그날 확인 → 댓글 초안 → 교사가 올린다' + (G.comment_status ? ' · 지금 이 팀 댓글 초안 1건 <em>' + esc(G.comment_status) + '</em>' : '') + '</div>' +
+          (G.comment ? '<div class="cy-x" style="margin-top:8px;font-size:14px;max-height:150px;overflow:auto">' + fmt(G.comment) + '</div>' : '') }
+    ];
+    var NEXT = { k: '다시 교실', s: G.next || '다음 인터뷰', img: 'cycle_1', w: ['교사', '학생'], at: '다음 회차',
+      body: '<b class="cy-h">시작 질문</b><p>' + fmt(G.next_opener) + '</p><b class="cy-h">학생 log에서 나온 질문 후보' + (G.questions_example ? ' <span class="gt-ex">예시 · 같은 규칙</span>' : '') + '</b>' +
+        (G.questions || []).map(function (q) { return '<p class="ck">· ' + fmt(q.text) + '</p>'; }).join('') +
+        '<p class="cy-note">이 한 바퀴를 과정 인터뷰 다섯 번, 최종 문답 한 번 돈다.</p>' };
+    // 고리: 가운데 (350,320), 반지름 235, 위에서 시계 방향
+    var cx = 350, cy = 320, R = 235, P = N.map(function (n, i) { var a = (-90 + i * 72) * Math.PI / 180; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; });
+    var arc = function (i) { var a = P[(i + 4) % 5], b = P[i]; return 'M' + a[0] + ',' + a[1] + ' A' + R + ',' + R + ' 0 0,1 ' + b[0] + ',' + b[1]; };
+    var ring = 'M' + cx + ',' + (cy - R) + ' A' + R + ',' + R + ' 0 1,1 ' + (cx - 0.01) + ',' + (cy - R);
+    var chord = 'M' + P[4][0] + ',' + P[4][1] + ' Q' + (cx - 10) + ',' + (cy + 70) + ' ' + P[2][0] + ',' + P[2][1];
+    var svg = '<svg viewBox="0 0 700 640" class="cy-svg"><defs>' + N.map(function (n, i) { return '<clipPath id="cyc' + i + '"><circle cx="' + P[i][0] + '" cy="' + P[i][1] + '" r="70"/></clipPath>'; }).join('') + '</defs>' +
+      '<path d="' + ring + '" class="cy-ring"/><path d="' + ring + '" class="cy-flow"/>' +
+      N.map(function (n, i) { return '<path d="' + arc(i) + '" class="cy-seg" data-seg="' + i + '"/>'; }).join('') +
+      '<path d="' + chord + '" class="cy-chord" id="cyChord"/><text x="' + (cx - 30) + '" y="' + (cy + 62) + '" class="cy-chord-t">매일 저장소 확인</text>' +
+      '<circle r="9" class="cy-dot"><animateMotion dur="12s" repeatCount="indefinite" path="' + ring + '"/></circle>' +
+      '<circle r="7" class="cy-dot2"><animateMotion dur="4s" repeatCount="indefinite" path="' + chord + '"/></circle>' +
+      '<text x="' + cx + '" y="' + (cy - 40) + '" class="cy-c1">한 바퀴 = 한 회차</text><text x="' + cx + '" y="' + (cy - 8) + '" class="cy-c2">초안은 AI TA · 결정은 교사</text>' +
+      N.map(function (n, i) {
+        return '<g class="cy-node" data-n="' + (i + 1) + '"><circle cx="' + P[i][0] + '" cy="' + P[i][1] + '" r="74" class="cy-bg"/>' +
+          '<text x="' + P[i][0] + '" y="' + (P[i][1] + 8) + '" class="cy-num">' + (i + 1) + '</text>' +
+          '<image href="assets/art/' + n.img + '_sq.webp" x="' + (P[i][0] - 72) + '" y="' + (P[i][1] - 72) + '" width="144" height="144" preserveAspectRatio="xMidYMid slice" clip-path="url(#cyc' + i + ')" onerror="this.remove()"/>' +
+          '<circle cx="' + P[i][0] + '" cy="' + P[i][1] + '" r="74" class="cy-rim"/>' +
+          '<g class="cy-lab"><rect x="' + (P[i][0] - 70) + '" y="' + (P[i][1] + 52) + '" width="140" height="40" rx="20"/><text x="' + P[i][0] + '" y="' + (P[i][1] + 78) + '">' + (i + 1) + ' ' + n.k + '</text></g></g>';
+      }).join('') + '</svg>';
+    box.className = 'cy';
+    box.innerHTML = '<div class="cy-left">' + svg + '</div><div class="cy-panel" id="cyPanel"></div>';
+    var panel = box.querySelector('#cyPanel');
+    function overview() {
+      return '<div class="cy-ph"><span class="cy-no">한 팀</span><b>' + esc(G.cpNo || '') + ' 인터뷰 전후의 한 바퀴</b></div><div class="cy-tl">' +
+        N.map(function (n, i) { return '<div><span class="cy-tn">' + (i + 1) + '</span><b>' + n.k + '</b><span>' + esc(n.s) + '</span><em>' + esc(n.at) + '</em></div>'; }).join('') +
+        '<div><span class="cy-tn">↺</span><b>' + NEXT.k + '</b><span>' + esc(NEXT.s) + '</span><em></em></div></div>' +
+        '<p class="cy-note">흐린 칸은 이름·학번·팀 이름. 글은 모두 실제 기록이다.</p>';
+    }
+    function show(st) {
+      var n = st >= 1 && st <= 5 ? N[st - 1] : st === 6 ? NEXT : null;
+      box.querySelectorAll('.cy-node').forEach(function (g) { g.classList.toggle('on', st === +g.dataset.n || (st === 6 && g.dataset.n === '1')); });
+      box.querySelectorAll('.cy-seg').forEach(function (p) { p.classList.toggle('on', st >= 1 && st <= 5 && +p.dataset.seg === st - 1 && st > 1 || (st === 6 && p.dataset.seg === '0')); });
+      box.querySelector('#cyChord').classList.toggle('on', st === 5 || st === 6);
+      panel.classList.remove('in'); void panel.offsetWidth;
+      panel.innerHTML = n ? '<div class="cy-ban"><img alt="" src="assets/art/' + n.img + '.webp"></div><div class="cy-ph"><span class="cy-no">' + (st === 6 ? '↺' : st) + '</span><b>' + n.k + '</b><span class="cy-s">' + esc(n.s) + '</span>' + who(n.w) + '<em>' + esc(n.at) + '</em></div><div class="cy-body">' + n.body + '</div>' : overview();
+      panel.classList.add('in');
+    }
+    box.addEventListener('click', function (e) { var g = e.target.closest('.cy-node'); if (g) show(+g.dataset.n); });
+    el.addEventListener('step', function (e) { show(e.detail || 0); });
     show(0);
   };
 

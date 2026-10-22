@@ -1,0 +1,4 @@
+Reference images: image 1 is the TEACHER character, image 2 is the three STUDENTS, image 3 is the AI TA robot. Match their exact rendering style, proportions and lighting.
+Character design sheet for Mona the Octocat, GitHub's mascot, reimagined as a character in the same animated film: a cat-like head with two pointed ears, big friendly eyes and a small smile, a peach-colored face, a dark charcoal-black body that ends in five short curling octopus tentacles instead of legs. Cute, warm and clever. She is the friendly keeper of the team's project records.
+Layout on plain white background: front view, three-quarter view holding a small notebook with a few lines in one tentacle, and a close-up of the face. Same character.
+{STYLE}
