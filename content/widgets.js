@@ -397,12 +397,13 @@
 
   // 해결의 흐름: 교사 칸이 보이면 도장을 하나씩 찍는다
   W.solve = function (el) {
-    var timers = [];
+    var timers = [], done = false;
     el.addEventListener('step', function (e) {
-      timers.forEach(clearTimeout); timers = [];
-      var st = el.querySelectorAll('.fl-stamps .stamp');
-      st.forEach(function (s) { s.classList.remove('on'); });
-      if ((e.detail || 0) >= 3) st.forEach(function (s, i) { timers.push(setTimeout(function () { s.classList.add('on'); }, 450 + i * 550)); });
+      var st = el.querySelectorAll('.fl-stamps .stamp'), k = e.detail || 0;
+      if (k < 3) { timers.forEach(clearTimeout); timers = []; done = false; st.forEach(function (s) { s.classList.remove('on'); }); return; }
+      if (done) return;                       // 이미 찍혔으면 다음 단계에서 다시 찍지 않는다
+      done = true;
+      st.forEach(function (s, i) { timers.push(setTimeout(function () { s.classList.add('on'); }, 450 + i * 550)); });
     });
   };
 
