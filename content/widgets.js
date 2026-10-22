@@ -351,7 +351,7 @@
         body: '<div class="cy-two"><div><b>녹음 → 받아 적은 글</b><span>Gemini · ' + (G.transcript_lines || '') + '줄 · 교사만 본다</span></div>' +
           '<div><b>팀 log · ' + esc(C.first_log ? C.first_log.file.split('/').pop() : '') + '</b><span>학생이 쓴다 · 인터뷰 뒤 ' + esc(C.first_log ? C.first_log.at : '') + '</span></div></div>' +
           '<div class="cy-x" style="margin-top:8px">' + fmt(C.first_log ? C.first_log.text : '') + '</div>' },
-      { k: 'AI + 교사', s: '초안 → 결정', img: 'cycle_3', w: ['AI TA', '교사'], at: md(G.v1_closed) + ' ~ ' + md(G.v2_date),
+      { k: 'AI + 교사', s: '논의 → 결정', img: 'cycle_3', w: ['AI TA', '교사'], at: md(G.v1_closed) + ' ~ ' + md(G.v2_date),
         body: '<div class="cy-seq"><div><small>' + esc(C.v1_at || '') + '</small><b>Solar 첫 판</b><span>잘한 점 · 보완할 점</span></div>' + stamp('no', '회수', md(G.v1_closed) + ' · ' + (G.v1_count || '') + '팀') +
           '<div><b>다시 설계</b><span>Claude가 저장소·데이터를 열어 확인 → Solar 집필</span></div>' + stamp('ok', '승인', md(G.v2_date)) + '</div>' +
           '<p class="cy-note"><q>수정할 곳이 너무 많네요.</q> 평가하지 않고, 장면과 의미, 다음에 할 일만 쓰도록 형식을 바꿨다.</p>' },
