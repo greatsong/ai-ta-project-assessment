@@ -64,7 +64,7 @@
         '<div class="f2-st tc" data-s="3"><em>결정</em><div class="f2-pic"><img alt="" src="' + A('fig_teacher_read') + '"><span class="pb-talk"><i></i><i></i><em>⇄</em></span><img alt="" class="ai" src="' + A('fig_ai') + '"></div><b class="f2-w">교사</b>' +
           '<div class="fl-stamps"><span class="stamp ok">그대로 반영</span><span class="stamp wait">고쳐서 반영</span><span class="stamp no">반영하지 않음</span></div></div>' +
         arr('피드백', 4, 'st') +
-        '<div class="f2-st stu" data-s="4"><em>학생</em><div class="f2-scene"><img alt="" src="' + A('cycle_4') + '"></div><b class="f2-w">깃허브 이슈 · 댓글</b><p>가이드가 다음 작업이 된다</p></div>' +
+        '<div class="f2-st stu" data-s="4"><em>학생</em><div class="f2-scene"><img alt="" src="' + A('cycle_4') + '"></div><b class="f2-w">깃허브 이슈 · 댓글</b><p>피드백이 다음 가이드가 됩니다</p></div>' +
       '</div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
     notes: '먼저 해결의 흐름을 설명드리겠습니다. 입력은 세 갈래로 나뉩니다. 구술 인터뷰의 음성, 학생이 깃허브에 남긴 활동 기록, 그리고 교사의 관찰 내용입니다.\n이 세 가지 입력은 깃허브와 AI 조교가 정리합니다. AI 조교는 음성 녹음 파일을 텍스트로 옮기고, 저장소의 변화 이력을 요약하며, 학생의 강점과 다음 단계를 위한 가이드 초안을 작성합니다. 이 과정에서 학생별 근거는 시간순으로 모아 정리됩니다.\n정리된 결과는 교사에게 보고됩니다. 교사는 AI 조교와 내용을 함께 검토하며, 원문 그대로 반영할지, 수정해 반영할지, 혹은 반영하지 않을지 최종 판단합니다.\n교사가 확정한 내용만 깃허브의 이슈와 댓글을 통해 학생에게 전달됩니다. 학생은 전달된 가이드를 확인하며 스스로 점검하고, 다음 단계로 나아갑니다.' },
 
