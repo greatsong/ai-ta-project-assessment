@@ -114,6 +114,9 @@ def main():
         stt = page.locator('.card', has_text='녹음 전사').first
         if stt.count():
             snap('A8_설정_전사피드백.png', stt)
+        keep = page.locator('.card', has=page.locator('b', has_text='녹음 보관')).first
+        if keep.count():
+            snap('A9_녹음보관.png', keep)
         br.close()
     srv.shutdown()
     print('찍음', done)

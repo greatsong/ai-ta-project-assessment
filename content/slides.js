@@ -20,18 +20,32 @@
     '</div>'; },
     notes: '안녕하십니까. 당곡고등학교에서 데이터 과학을 가르치는 송석리입니다.\n오늘은 지금 진행 중인 팀 프로젝트 수업에서 AI를 조교, 곧 TA로 두고 과정 중심 평가를 운영하는 사례를 실제 화면으로 보여 드리겠습니다.\n화면의 학생 정보는 모두 흐리게 처리했습니다. 수치는 오른쪽 위에 적힌 시각에 시스템에서 바로 모은 값입니다.' },
 
-  { sec: '시작', title: '무엇을 평가할까', html: '' +
-    ttl('AI가 코드를 써 주는 프로젝트 수업, 무엇을 평가할까') +
-    '<p class="lead">학생은 AI와 함께 분석 코드를 만든다. 결과물만 보면 <b>누구의 판단인지</b> 알기 어렵다.</p>' +
-    '<div class="body" style="gap:24px;align-items:flex-start;flex:0 0 auto">' +
-      '<div class="card col" data-s="1"><h3>① 결과물</h3><p>코드와 보고서는 AI와 함께 만든다. 학생이 직접 판단한 부분은 결과물만으로 가려내기 어렵다.</p></div>' +
-      '<div class="card col" data-s="2"><h3>② 과정</h3><p>어떤 데이터를 왜 골랐는지, AI 제안 가운데 무엇을 버렸는지는 결과물에 남지 않는다.</p></div>' +
-      '<div class="card col" data-s="3"><h3>③ 피드백</h3><p>5주 프로젝트에서 발표 날 한 번 받는 피드백은 고칠 시간이 없다.</p></div>' +
+  { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: '' +
+    ttl('프로젝트 수업의 오래된 두 어려움') +
+    '<p class="lead"><b>AI가 결과물을 함께 만드는 지금</b>, 두 어려움은 더 커졌다.</p>' +
+    '<div class="body" style="gap:26px">' +
+      '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:12px"><h3 style="font-size:32px">① 과정을 평가하기 어렵다</h3><ul class="pts t"><li>누가 무엇을 왜 판단했는지는 결과물에 남지 않는다</li><li>AI가 코드를 써 주면 학생의 몫은 더 보이지 않는다</li><li>평가는 마지막 발표와 보고서에 몰린다</li></ul></div>' +
+      '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:12px"><h3 style="font-size:32px">② 학생마다 피드백하기 어렵다</h3><ul class="pts s"><li>팀마다 단계마다 돌려줄 시간이 없다</li><li>결국 발표 뒤 한 번, 고칠 시간이 없을 때</li></ul>' +
+        '<div data-s="3" id="painCalc" class="nonext" style="margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px"></div></div>' +
     '</div>' +
-    '<div data-s="4" style="margin-top:26px;background:var(--ink);color:#fff;border-radius:18px;padding:22px 28px;font-size:30px;font-weight:700">판단을 과정 중에 묻고, 기록하고, 바로 돌려준다 <span style="color:#ffb39f">→ 그 일을 AI가 조교로 돕는다</span></div>',
-    notes: '생성형 AI가 코드를 거의 다 써 주는 수업에서는 결과물만으로 학생의 몫을 가려내기 어렵습니다.\n그래서 세 가지를 바꾸었습니다. 결과물 대신 판단을 보고, 과정 중에 여러 번 묻고, 물은 결과를 바로 학생에게 돌려줍니다.\n이렇게 하면 교사가 할 일이 크게 늘어납니다. 그 늘어난 일 가운데 기록과 초안 작성을 AI에게 맡겼습니다.' },
+    '<div data-s="4" style="margin-top:20px;background:var(--ink);color:#fff;border-radius:18px;padding:20px 28px;font-size:30px;font-weight:700;display:flex;gap:26px;flex-wrap:wrap"><span><span style="color:#b9b3ff">기록</span>은 깃허브가</span><span><span style="color:#ffb39f">정리</span>는 AI TA가</span><span><span style="color:#ffd27a">결정</span>은 교사가</span></div>',
+    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 5주 동안 누가 무엇을 왜 판단했는지는 결과물에 남지 않고, 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 아래 계산기를 보시면, 팀마다 회차마다 피드백을 직접 쓰면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 기록은 깃허브가, 정리는 AI 조교가, 결정은 교사가 합니다.' },
 
-  { sec: '시작', title: '수업과 프로젝트', html: function (S) { return '' +
+  { sec: '시작', title: '무엇이 바뀌었나', widget: 'ba', steps: 1, html: '' +
+    ttl('AI TA와 깃허브로 바꾼 것', '눌러서 비교', 'live') +
+    '<p class="lead">같은 5주 프로젝트. 평가와 피드백이 <b>마지막 한 번에서 매주로</b> 옮겨 갔다.</p>' +
+    '<div style="display:flex;gap:18px;align-items:center;margin-bottom:16px"><div class="seg nonext" id="baSeg"><button class="btn on" data-v="0">지금까지</button><button class="btn" data-v="1">AI TA와 함께</button></div><div id="baCount" style="display:flex;gap:12px;flex:1;justify-content:flex-end"></div></div>' +
+    '<div id="baGrid" style="flex:1;min-height:0"></div>',
+    notes: '같은 5주를 두 방식으로 비교해 보겠습니다. 지금까지는 평가도 피드백도 마지막 주 발표에 몰렸고, 과정은 결과물로만 남았습니다.\n(클릭) AI 조교와 깃허브를 쓰면 매주 구술 인터뷰가 있고, 그때마다 강점과 다음 단계 가이드가 팀 저장소 이슈로 돌아갑니다. 수업이 있는 날 저녁에는 저장소 변화에 댓글 초안이 생깁니다.\n교사가 하는 일도 바뀝니다. 받아 적고 정리하고 초안을 쓰는 일은 AI 조교가 하고, 교사는 묻고 판단하고 승인합니다.' },
+
+  { sec: '시작', title: '결정은 교사만', widget: 'gate', html: '' +
+    ttl('모든 결정은 교사를 거친다', '눌러 보기', 'live') +
+    '<p class="lead">AI TA가 만든 것은 모두 <b>초안</b>이다. 학생에게 가는 글, 점수, 세특은 교사가 정한다.</p>' +
+    '<div class="body nonext" id="gateBox" style="gap:22px;align-items:stretch"></div>' +
+    '<div data-s="1" style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;font-size:20px"><span class="chip">AI는 점수·등급·보완할 점을 쓰지 않는다</span><span class="chip">학생 저장소에는 교사가 \'올리기\'를 누른 글만</span><span class="chip">AI가 쓴 글에는 \'팅커비스)\' 표기</span></div>',
+    notes: '가장 중요한 원칙입니다. AI 조교가 만드는 것은 모두 초안입니다.\n왼쪽의 초안을 하나 눌러 보십시오. 교사에게 먼저 가고, 교사가 고쳐서 올리거나 버립니다. 버리면 학생에게 아무것도 가지 않습니다.\n점수와 등급은 교사만 매기고, AI가 쓰는 글에는 점수가 들어가지 않습니다. 학생 저장소에는 교사가 올리기를 누른 글만 올라가고, AI가 쓴 글에는 팅커비스라는 표기가 붙습니다.' },
+
+  { sec: '구조', title: '수업과 프로젝트', html: function (S) { return '' +
     ttl('수업과 팀 프로젝트', '2026 2학기') +
     '<p class="lead">공통 수업 뒤 <b>5주 팀 프로젝트</b>. 평가는 코드가 아니라 <b>판단 4축</b>으로 한다.</p>' +
     '<div class="body"><div class="col" style="flex:1.1;gap:18px">' +
@@ -46,17 +60,6 @@
     notes: '두 학급이 공통 수업을 마친 뒤 5주 동안 2~3명씩 팀 프로젝트를 합니다.\n평가 언어는 판단 4축입니다. 질문 설정, 데이터 감식, 결과 해석, 한계 인식입니다.\n오른쪽이 구술 인터뷰 여섯 번입니다. 과정 다섯 번과 최종 포스터 문답이고, 지금은 첫 회차까지 실시했습니다. 표시는 시스템에서 바로 읽은 실시 현황입니다.' },
 
   // ── 구조 ─────────────────────────────────────────────
-  { sec: '구조', title: 'AI TA의 자리', html: '' +
-    ttl('AI TA의 자리', '설계 원칙') +
-    '<p class="lead">평가는 교사가 한다. AI는 <b>기록하고, 초안을 쓰고, 확인한다.</b> 학생에게 가는 글은 교사가 승인한 것뿐이다.</p>' +
-    '<div class="body" style="gap:22px">' +
-      '<div class="card col" data-s="1" style="border-top:6px solid var(--student)"><h3 style="color:#b46e00">학생</h3><ul class="pts s"><li>AI에게 묻고, 결과를 확인하고</li><li>AI 제안을 고치거나 버린 이유를 log에</li><li>회차마다 자기 말로 설명</li></ul></div>' +
-      '<div class="card col" data-s="2" style="border-top:6px solid var(--teacher)"><h3 style="color:var(--teacher)">교사</h3><ul class="pts t"><li>시작 질문과 꼬리질문</li><li>루브릭으로 평가</li><li>AI 초안을 읽고 고쳐 승인</li></ul></div>' +
-      '<div class="card col" data-s="3" style="border-top:6px solid var(--ai)"><h3 style="color:var(--ai)">AI TA</h3><ul class="pts"><li>녹음을 받아 적기</li><li>강점·다음 단계 가이드 초안</li><li>저장소 변화 확인, 세특 근거 모으기</li></ul></div>' +
-    '</div>' +
-    '<div data-s="4" style="margin-top:22px;display:flex;gap:14px;font-size:22px"><span class="chip">AI는 점수·등급·보완할 점을 쓰지 않는다</span><span class="chip">AI가 쓴 글에는 \'팅커비스)\' 표기</span><span class="chip">비밀 값·명단은 교사 계정에만</span></div>',
-    notes: '이 시스템의 첫 원칙입니다. 평가는 교사가 하고 AI는 조교 일을 합니다.\nAI가 쓰는 피드백에는 점수나 등급, 보완할 점을 쓰지 않습니다. 인터뷰에서 보인 강점과 다음 단계 가이드만 씁니다.\nAI가 쓴 글에는 팅커비스라는 이름을 붙여 누가 썼는지 드러냅니다. 팅커비스는 제가 쓰는 AI 조교의 이름입니다.' },
-
   { sec: '구조', title: 'AI TA는 넷', html: '' +
     ttl('AI TA는 한 명이 아니다', '역할 나누기') +
     '<p class="lead">일마다 잘하는 모델을 쓰고, <b>결과가 어디로 가는지</b>를 정해 둔다.</p>' +
@@ -74,6 +77,27 @@
     '<div class="body"><div class="col" style="flex:0 0 520px"><div id="flowNodes" style="display:grid;gap:10px"></div></div>' +
     '<div class="col" style="flex:1"><div id="flowPane" class="card" style="flex:1;display:flex;gap:22px;min-height:0"></div></div></div>',
     notes: '한 회차는 일곱 단계로 돕니다. 실습실 예시를 보고, 팀 저장소에서 작업하며 log를 쓰고, 구술 인터뷰를 하고, AI가 받아 적고 초안을 쓰고, 교사가 고쳐 이슈로 올리고, 수업이 없는 날에도 저장소를 확인하고, 그 기록이 세특 근거로 쌓입니다.\n이제 각 단계를 실제 화면으로 보겠습니다.' },
+
+  { sec: '개인정보', title: '데이터는 어디로 가나', widget: 'privacy', html: '' +
+    ttl('개인정보: 데이터는 어디로 가나', '눌러서 보기', 'live') +
+    '<p class="lead">데이터마다 <b>저장 위치, 보는 사람, 밖으로 나가는 곳, 보관</b>을 정해 두었다.</p>' +
+    '<div class="body nonext"><div class="col" style="flex:0 0 420px;gap:8px" id="pvList"></div><div class="col" style="flex:1" id="pvPane"></div></div>',
+    notes: '개인정보를 걱정하시는 분이 많을 것입니다. 데이터마다 어디에 저장되고, 누가 보고, 밖으로 어디에 나가는지 정리했습니다.\n밖으로 나가는 것은 세 곳입니다. 녹음은 받아 적기를 위해 구글 Gemini로, 받아 적은 글은 피드백 초안을 위해 Upstage로, 인터뷰 이슈 초안을 위해 Anthropic으로 갑니다. 요청에는 팀 이름과 질문이 함께 가고, 점수와 학생 명단은 보내지 않습니다. 다만 대화 중에 부른 이름은 받아 적은 글에 남을 수 있습니다.\n목소리 파일은 성적 확정과 이의 신청 기간까지만 두고, 그 뒤 교사 앱에서 한꺼번에 지웁니다. 그 뒤에는 받아 적은 글만 남습니다.\n세특 근거와 점수는 교사 계정과 교사 컴퓨터에만 있습니다.' },
+
+  { sec: '개인정보', title: '더 조심해야 하는 학교라면', html: '' +
+    ttl('더 조심해야 하는 학교라면') +
+    '<p class="lead">줄일 수 있는 것과 그때 잃는 것. <b>도입 전에 학교 개인정보 담당과 먼저 정한다.</b></p>' +
+    '<table class="t" style="font-size:21px"><thead><tr><th style="width:24%">줄이고 싶은 것</th><th style="width:44%">이렇게 바꾼다</th><th>잃는 것</th></tr></thead><tbody>' +
+      '<tr data-s="1"><td><b>목소리 보관</b></td><td>성적 확정·이의 신청 기간 뒤 교사 앱에서 녹음 일괄 삭제(이 사례의 방식)</td><td>그 뒤에는 다시 받아 적거나 녹음으로 확인할 수 없음</td></tr>' +
+      '<tr data-s="1"><td><b>녹음의 외부 전송</b></td><td>로컬 Whisper로 수업 뒤 교사 맥에서 받아 적기</td><td>처리 시간(9분 녹음에 약 2분), 화자 구분 없음</td></tr>' +
+      '<tr data-s="1"><td><b>전사 글의 외부 전송</b></td><td>피드백 초안 끄기(설정 하나), 강점·가이드는 교사가 직접</td><td>교사의 작성 시간</td></tr>' +
+      '<tr data-s="2"><td><b>녹음 자체</b></td><td>녹음 없이 루브릭과 교사 메모만 기록</td><td>장면이 담긴 근거, 초안</td></tr>' +
+      '<tr data-s="2"><td><b>공개 저장소</b></td><td>비공개 저장소에 교사 초대, 또는 클래스룸 제출</td><td>공개 작품 경험. 이슈를 올리려면 저장소 권한 필요</td></tr>' +
+      '<tr data-s="3"><td><b>교사 개인 계정</b></td><td>학교 구글 워크스페이스에 시트·드라이브</td><td>설치를 다시 해야 함</td></tr>' +
+      '<tr data-s="3"><td><b>모르고 기록되는 것</b></td><td>녹음·전사·외부 AI 전송·보관 기간을 안내문과 동의서로</td><td>없음</td></tr>' +
+    '</tbody></table>' +
+    '<div data-s="4" class="card" style="margin-top:16px"><p style="color:var(--ink)"><b>이 사례의 지금 운영</b>: 시트·드라이브는 교사 계정, 팀 저장소는 공개(학번·이름 공개 동의, 거부하면 닉네임 등록), 전사는 유료 등급 API, 녹음은 성적 확정·이의 신청 기간 뒤 앱에서 한꺼번에 지우고 받아 적은 글만 남긴다. 발표 화면은 찍기 직전에 흐리고 원본을 남기지 않았다.</p></div>',
+    notes: '개인정보에 더 민감한 학교라면 줄일 수 있는 것이 많습니다. 다만 줄일 때마다 잃는 것이 있어 함께 말씀드립니다.\n녹음을 밖으로 보내지 않으려면 로컬 Whisper로 수업 뒤에 받아 적으면 됩니다. 9분 녹음에 2분 정도 걸리고 화자 구분이 없습니다.\n피드백 초안은 설정 하나로 끌 수 있고, 녹음을 아예 하지 않고 메모만 남길 수도 있습니다. 공개 저장소 대신 비공개 저장소나 클래스룸 제출로 바꿀 수 있습니다.\n어떤 경우든 학교 계정으로 운영하고, 녹음과 외부 AI 전송과 보관 기간을 학생에게 미리 안내하는 것을 권합니다.' },
 
   // ── 장면 ─────────────────────────────────────────────
   { sec: '장면', title: '실습실', html: function (S) { return '' +

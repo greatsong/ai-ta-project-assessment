@@ -140,6 +140,128 @@
     }).join('');
   };
 
+
+  // 두 어려움: 교사가 피드백을 직접 쓰면 드는 시간(가정 계산)
+  W.pain = function (el) {
+    var box = el.querySelector('#painCalc');
+    var F = [{ k: 't', l: '팀', min: 4, max: 15, v: 12, u: '팀' }, { k: 'r', l: '회차', min: 1, max: 6, v: 6, u: '회' }, { k: 'm', l: '팀당 작성', min: 3, max: 20, v: 10, u: '분' }];
+    box.innerHTML = '<div style="font-size:18px;color:var(--muted);margin-bottom:8px">팀마다 회차마다 피드백을 <b style="color:var(--ink)">직접 쓴다면</b> (가정)</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">' + F.map(function (f) {
+        return '<label style="display:grid;gap:4px;font-size:17px">' + f.l + ' <b data-o="' + f.k + '" style="color:var(--student);font-size:20px">' + f.v + f.u + '</b><input type="range" id="pain_' + f.k + '" min="' + f.min + '" max="' + f.max + '" value="' + f.v + '" data-k="' + f.k + '" style="accent-color:#e08a00"></label>';
+      }).join('') + '</div><div id="painOut" style="margin-top:10px;font-size:22px"></div>';
+    function upd() {
+      var v = {}; F.forEach(function (f) { v[f.k] = +box.querySelector('[data-k="' + f.k + '"]').value; box.querySelector('[data-o="' + f.k + '"]').textContent = v[f.k] + f.u; });
+      var min = v.t * v.r * v.m;
+      box.querySelector('#painOut').innerHTML = '한 반에 <b style="font-size:34px;color:var(--ink)">' + (min / 60).toFixed(1) + '시간</b> <span style="color:var(--muted)">· 두 반이면 ' + (min * 2 / 60).toFixed(1) + '시간</span>';
+    }
+    box.addEventListener('input', upd); upd();
+  };
+
+  // 바꾼 것: 같은 5주를 지금까지 / AI TA와 함께로 비교
+  W.ba = function (el) {
+    var grid = el.querySelector('#baGrid'), seg = el.querySelector('#baSeg'), cnt = el.querySelector('#baCount');
+    var ROWS = [
+      { k: '평가', before: [0, 0, 0, 0, ['최종 발표·보고서']], after: [['① 주제·데이터'], ['② 살펴보기·전처리'], ['③ 모델 후보'], ['④ 지표', '⑤ 해석·한계'], ['최종 포스터 문답']], c: 'var(--teacher)' },
+      { k: '피드백', before: [0, 0, 0, 0, ['발표 뒤 한 번']], after: [['이슈: 강점·가이드', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['이슈', '저녁 댓글 초안'], ['최종 문답']], c: 'var(--student)' },
+      { k: '과정 기록', before: [['보이지 않음'], ['보이지 않음'], ['보이지 않음'], ['보이지 않음'], ['결과물']], after: [['커밋·log 4줄', '녹음·전사'], ['커밋·log', '녹음·전사'], ['커밋·log', '녹음·전사'], ['커밋·log', '녹음·전사'], ['포스터·README']], c: 'var(--ok)' },
+      { k: '교사', before: [['순회'], ['순회'], ['순회'], ['순회'], ['채점·피드백 작성']], after: [['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인'], ['묻고 판단·승인']], c: 'var(--teacher)' },
+      { k: 'AI TA', before: [0, 0, 0, 0, 0], after: [['받아 적기·초안'], ['받아 적기·초안'], ['저장소 확인'], ['근거 모으기'], ['근거 모으기']], c: 'var(--ai)' }
+    ];
+    var COUNT = [['평가 기회', '1', '6'], ['피드백', '1번', '매주'], ['과정 근거', '결과물', '시간순 기록']];
+    function draw(v) {
+      seg.querySelectorAll('[data-v]').forEach(function (b) { b.classList.toggle('on', +b.dataset.v === v); });
+      cnt.innerHTML = COUNT.map(function (c) { return '<div class="card" style="padding:10px 16px;min-width:150px"><div style="font-size:15px;color:var(--muted)">' + c[0] + '</div><div style="font-size:30px;font-weight:800;color:' + (v ? 'var(--ai)' : 'var(--ink)') + '">' + (v ? c[2] : c[1]) + '</div></div>'; }).join('');
+      var h = '<div style="display:grid;grid-template-columns:150px repeat(5,1fr);gap:8px;font-size:18px">';
+      h += '<div></div>' + [1, 2, 3, 4, 5].map(function (w) { return '<div style="text-align:center;color:var(--muted);font-weight:700">' + w + '주</div>'; }).join('');
+      ROWS.forEach(function (r, ri) {
+        h += '<div style="font-weight:800;font-size:21px;display:flex;align-items:center;color:' + r.c + '">' + r.k + '</div>';
+        (v ? r.after : r.before).forEach(function (cell, ci) {
+          var items = cell || [];
+          var faint = !v && items.length && /보이지 않음|순회/.test(items[0]);
+          h += '<div style="min-height:62px;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:5px;justify-content:center;background:' + (items.length && !faint ? 'var(--soft)' : 'transparent') + ';border:1px ' + (items.length ? 'solid' : 'dashed') + ' var(--line);opacity:0;transform:translateY(8px);transition:all .35s ' + (ri * 5 + ci) * 0.03 + 's" class="baCell">' +
+            items.map(function (x) { return '<span style="font-weight:' + (faint ? 400 : 700) + ';color:' + (faint ? 'var(--faint)' : 'var(--ink)') + '">' + x + '</span>'; }).join('') + '</div>';
+        });
+      });
+      grid.innerHTML = h + '</div>';
+      requestAnimationFrame(function () { requestAnimationFrame(function () { grid.querySelectorAll('.baCell').forEach(function (c) { c.style.opacity = 1; c.style.transform = 'none'; }); }); });
+    }
+    seg.addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (b) draw(+b.dataset.v); });
+    el.addEventListener('step', function (e) { draw(e.detail >= 1 ? 1 : 0); });
+    draw(window.DECK && window.DECK.cur().step >= 1 ? 1 : 0);
+  };
+
+  // 결정은 교사만: 초안을 누르면 교사에게 가고, 교사가 올리거나 버린다
+  W.gate = function (el) {
+    var box = el.querySelector('#gateBox');
+    var AI = [
+      { t: '받아 적은 글(전사)', to: 2, by: 'Gemini' },
+      { t: '강점·가이드 초안', to: 0, by: 'Solar' },
+      { t: '저장소 댓글 초안', to: 0, by: '팅커비스' },
+      { t: 'log 질문 후보', to: 1, by: '팅커비스' },
+      { t: '세특 근거 모음', to: 3, by: '스크립트' }
+    ];
+    var DEST = [
+      { t: '팀 저장소 이슈·댓글', who: '학생이 본다', c: 'var(--student)' },
+      { t: '다음 구술의 꼬리질문', who: '교사만', c: 'var(--teacher)' },
+      { t: '구술 기록(시트)', who: '교사만', c: 'var(--teacher)' },
+      { t: '학기말 세특', who: '교사가 쓴다', c: 'var(--teacher)' }
+    ];
+    box.innerHTML = '<div class="col" style="flex:1;gap:10px"><div style="font-weight:800;color:var(--ai);font-size:22px">AI TA의 초안</div>' +
+      AI.map(function (a, i) { return '<button class="btn" type="button" data-a="' + i + '" style="text-align:left;border-left:8px solid var(--ai);display:flex;justify-content:space-between;align-items:center"><span>' + a.t + '</span><span class="chip" style="font-size:14px">' + a.by + '</span></button>'; }).join('') + '</div>' +
+      '<div class="col" style="flex:1.1;gap:10px"><div style="font-weight:800;color:var(--teacher);font-size:22px">교사</div><div id="gTeacher" class="card" style="flex:1;border:3px solid var(--teacher);display:flex;flex-direction:column;gap:12px;justify-content:center"></div>' +
+      '<div class="card" style="padding:12px 16px"><p style="color:var(--ink)"><b>점수·등급</b>은 교사만 매긴다. AI의 초안에는 들어가지 않는다.</p></div></div>' +
+      '<div class="col" style="flex:1;gap:10px"><div style="font-weight:800;color:var(--student);font-size:22px">나가는 곳</div>' +
+      DEST.map(function (d, i) { return '<div class="card" data-d="' + i + '" style="padding:12px 16px;transition:all .3s"><h3 style="font-size:21px;margin:0">' + d.t + '</h3><p style="font-size:16px">' + d.who + '</p><div class="gLog" style="font-size:15px;color:var(--ok);margin-top:4px"></div></div>'; }).join('') + '</div>';
+    var T = box.querySelector('#gTeacher'), sel = -1;
+    function idle() { T.innerHTML = '<p style="font-size:22px;color:var(--muted);text-align:center">왼쪽 초안을 누르면 여기로 온다</p>'; }
+    function pick(i) {
+      sel = i;
+      box.querySelectorAll('[data-a]').forEach(function (b) { b.classList.toggle('on', +b.dataset.a === i); });
+      T.innerHTML = '<div style="font-size:16px;color:var(--muted)">검토 중</div><div style="font-size:26px;font-weight:800">' + AI[i].t + '</div><div style="font-size:18px;color:var(--muted)">읽고, 고치고, 정한다</div>' +
+        '<div style="display:flex;gap:10px;margin-top:6px"><button class="btn" type="button" data-g="ok" style="background:var(--teacher);color:#fff;border-color:var(--teacher)">고쳐서 올림</button><button class="btn" type="button" data-g="no">버림</button></div>';
+    }
+    box.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-a]'); if (a) { pick(+a.dataset.a); return; }
+      var g = e.target.closest('[data-g]'); if (!g || sel < 0) return;
+      var it = AI[sel];
+      if (g.dataset.g === 'ok') {
+        var d = box.querySelector('[data-d="' + it.to + '"]');
+        d.querySelector('.gLog').textContent = '✓ ' + it.t + ' (교사 승인)';
+        d.style.boxShadow = '0 0 0 4px ' + DEST[it.to].c; setTimeout(function () { d.style.boxShadow = ''; }, 900);
+        T.innerHTML = '<p style="font-size:22px;text-align:center"><b>' + it.t + '</b><br>→ ' + DEST[it.to].t + '</p>';
+      } else {
+        T.innerHTML = '<p style="font-size:22px;text-align:center"><b>' + it.t + '</b><br><span style="color:var(--muted)">버림: 아무 데도 나가지 않는다</span></p>';
+      }
+      box.querySelectorAll('[data-a]').forEach(function (b) { b.classList.remove('on'); }); sel = -1;
+    });
+    idle();
+  };
+
+  // 개인정보 데이터 지도
+  var PV = [
+    { t: '녹음(목소리)', where: '교사 구글 드라이브의 비공개 폴더(올리기 전까지는 교사 아이폰)', who: '교사', out: '받아 적기를 위해 녹음과 팀 이름·질문·방법이 Google Gemini API로. 유료 등급은 약관상 입력을 모델 개선에 쓰지 않는다(약관은 다시 확인)', keep: '성적 확정·이의 신청 기간까지. 그 뒤 교사 앱의 \'녹음 보관\'에서 한꺼번에 지우면 받아 적은 글만 남는다', less: '로컬 Whisper로 수업 뒤 교사 맥에서 받아 적으면 밖으로 나가지 않는다', img: 'A9_녹음보관.png' },
+    { t: '받아 적은 글·점수·메모', where: '교사 계정의 구글 시트', who: '교사', out: '피드백 초안을 위해 받아 적은 글과 팀 이름·질문·방법이 Upstage(Solar) API로, 인터뷰 이슈 초안을 위해 Anthropic(Claude)으로. 점수와 학생 명단은 보내지 않는다(대화 중 부른 이름은 받아 적은 글에 남을 수 있다)', keep: '학기 기록이 끝날 때까지', less: '피드백 초안을 끄면(설정 하나) 받아 적은 글은 밖으로 나가지 않는다' },
+    { t: '팀 저장소(README·log·코드)', where: '학생 계정의 깃허브 공개 저장소', who: '누구나', out: '수업 있는 날 저녁, 바뀐 내용 요약이 Anthropic(Claude)으로(초안 작성)', keep: '학생이 관리', less: '시작 전 학번·이름 공개 동의. 거부하면 닉네임을 설문으로 등록. 비공개 저장소나 클래스룸 제출로도 운영할 수 있다' },
+    { t: '이슈·댓글', where: '학생 저장소(공개)', who: '누구나', out: '없음', keep: '학생이 관리', less: '교사가 승인한 글만 올라간다. 점수·등급·보완할 점이 없고 AI 작성 표기가 붙는다' },
+    { t: '세특 근거', where: '교사 컴퓨터의 비공개 폴더(저장소에 올리지 않음)', who: '교사', out: '없음(모으는 일은 스크립트가 한다)', keep: '학기말 세특 작성까지', less: '항목 수준·이슈 문안은 판단 참고용이고 그대로 옮기지 않는다' },
+    { t: '연결 정보·API 키', where: 'Apps Script 스크립트 속성, 교사 기기의 앱 저장소', who: '교사', out: '없음', keep: '-', less: '화면·저장소·링크 주소에 남기지 않는다' },
+    { t: '이 발표의 화면', where: '공개 발표 자료', who: '누구나', out: '-', keep: '-', less: '찍기 직전에 학번·이름·팀 이름·저장소·학생 계정·점수를 흐리고, 흐리지 않은 원본은 남기지 않았다' }
+  ];
+  W.privacy = function (el) {
+    var list = el.querySelector('#pvList'), pane = el.querySelector('#pvPane');
+    list.innerHTML = PV.map(function (p, i) { return '<button class="btn" type="button" data-p="' + i + '" style="text-align:left;padding:12px 16px">' + p.t + '</button>'; }).join('');
+    function show(i) {
+      var p = PV[i];
+      list.querySelectorAll('[data-p]').forEach(function (b) { b.classList.toggle('on', +b.dataset.p === i); });
+      var row = function (k, v, c) { return '<div style="display:grid;grid-template-columns:170px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)"><b style="font-size:20px;color:' + (c || 'var(--muted)') + '">' + k + '</b><span style="font-size:22px;line-height:1.5">' + v + '</span></div>'; };
+      pane.innerHTML = '<div class="card" style="flex:1;background:#fff"><h3 style="font-size:30px;margin-bottom:6px">' + p.t + '</h3>' +
+        row('저장 위치', p.where) + row('볼 수 있는 사람', p.who) + row('밖으로 나가는 곳', p.out, p.out === '없음' || p.out === '-' ? 'var(--ok)' : 'var(--ai)') + row('보관', p.keep) + row('줄이는 방법', p.less, 'var(--teacher)') +
+        (p.img ? '<div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start"><img class="shot" alt="" src="captures/' + encodeURI(p.img) + '" style="max-height:170px"><span style="font-size:16px;color:var(--muted)">교사 앱 설정의 녹음 보관 카드</span></div>' : '') + '</div>';
+    }
+    list.addEventListener('click', function (e) { var b = e.target.closest('[data-p]'); if (b) show(+b.dataset.p); });
+    show(0);
+  };
+
   // 마지막 장의 QR(라이브러리가 없으면 주소만)
   W.qr = function (el) {
     var base = location.origin + location.pathname.replace(/index\.html$/, '');
