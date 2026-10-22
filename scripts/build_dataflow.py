@@ -139,6 +139,38 @@ def bullets(text, head):
     return [re.sub(r'^\s*-\s*(\[ \]\s*)?', '', x).strip() for x in body.splitlines() if re.match(r'^\s*-\s', x)]
 
 
+# '교사가 결정한다' 장에서 칸을 건너 이어 줄 문장(실제 글에 그대로 있어야 한다. 없으면 멈춘다)
+STORY = {
+    'TE03': {'v1': {'열을 더 분명히 적어야': 'bad1', '확인하지 못했습니다': 'bad2'},
+             'v2': {'어떤 열을 사용하느냐는 질문에': 'good1', 'README에 연결한 KOSIS 표는': 'good2'}},
+}
+
+
+def sentences(t):
+    return [x.strip() for x in re.split(r'(?<=다\.)\s+', t.strip()) if x.strip()]
+
+
+def excerpt(body, marks):
+    """이슈 본문 → [{h, items:[{text, mark, cut}]}]. 항목마다 첫 문장, 표시할 문장이 뒤에 있으면 그 문장까지"""
+    out, cur, found = [], None, set()
+    for line in body.splitlines():
+        if re.match(r'^#+\s', line):
+            cur = {'h': re.sub(r'^#+\s*', '', line).strip(), 'items': []}; out.append(cur)
+        elif re.match(r'^\s*-\s', line) and cur is not None:
+            t = re.sub(r'^\s*-\s*(\[ \]\s*)?', '', line).strip()
+            ss = sentences(t)
+            mark, upto = '', 0
+            for key, m in marks.items():
+                for i, x in enumerate(ss):
+                    if key in x:
+                        mark, upto = m, max(upto, i); found.add(key)
+            keep = ss[:upto + 1]
+            cur['items'].append({'text': ' '.join(keep), 'mark': mark, 'cut': len(keep) < len(ss), 'check': '[ ]' in line})
+    miss = set(marks) - found
+    assert not miss, '표시할 문장이 글에 없음: %s' % miss
+    return out
+
+
 def gate_flow(b, team_id):
     """'모든 결정은 교사를 거친다': 한 팀의 다섯 초안과 교사의 결정"""
     s0 = next(s for s in b['sessions'] if s['teamId'] == team_id)
@@ -154,7 +186,7 @@ def gate_flow(b, team_id):
     bg = lambda t: {t[i:i + 2] for i in range(len(t) - 1) if t[i:i + 2].strip() and len(t[i:i + 2].strip()) == 2}
     target = bg(strength)
     k = max(range(len(lines_)), key=lambda i: len(bg(lines_[i].split(':', 1)[-1]) & target) / (1 + len(bg(lines_[i])) ** .5)) if lines_ else 0
-    scene = [{'text': lines_[i], 'hl': i == k} for i in range(max(0, k - 1), min(len(lines_), k + 2))]
+    scene = [{'text': lines_[i], 'hl': i == k, 'praise': i == k + 1 and lines_[i].startswith('선생님')} for i in range(max(0, k - 1), min(len(lines_), k + 2))]
     # 회수한 첫 판
     recall = json.loads((ORAL / 'E반_1회차_이슈_회수기록.json').read_text(encoding='utf-8'))
     first = json.loads((ORAL / 'E반_1회차_이슈_미리보기.json').read_text(encoding='utf-8')).get(team_id, {})
@@ -212,6 +244,11 @@ def gate_flow(b, team_id):
         'questions': qs, 'questions_example': example,
         'setuk': setuk,
         'cycle': cycle,
+        'story': {'v1': excerpt(first.get('body', ''), STORY.get(team_id, {}).get('v1', {})),
+                  'v2': excerpt(v2_body, STORY.get(team_id, {}).get('v2', {})),
+                  'note': next((l.strip().lstrip('\\').strip() for l in v2_body.splitlines() if 'AI 제안은' in l), ''),
+                  'v1_at': kst(v1.get('created_at'), '%m/%d %H:%M'), 'v2_at': kst(v2.get('created_at'), '%m/%d %H:%M'),
+                  'interview_at': kst(sess['startedAt'], '%m/%d %H:%M')},
     }, extra
 
 

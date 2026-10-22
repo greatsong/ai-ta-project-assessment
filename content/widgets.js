@@ -407,6 +407,48 @@
     });
   };
 
+  // 모든 결정은 교사를 거친다: 교실 → AI 첫 초안 → 교사의 결정 → 학생이 받은 글(한 팀의 실제 기록)
+  W.story = function (el) {
+    var G = (window.DATAFLOW || {}).gate || {}, T = G.story || {}, box = el.querySelector('#stBox');
+    var A = function (f) { return 'assets/art/' + f + '.webp'; };
+    var fmt = function (t) { return esc(t || '').replace(/⟦가림⟧/g, '<span class="mk">가림가림</span>'); };
+    var BADGE = { bad1: ['1', 'r', '교사가 인정한 답을 고치라고 했다'], bad2: ['2', 'o', '녹취에 없으므로 확인하지 못했다고 썼다'],
+                  good1: ['1', 'g', '동일한 장면이 강점으로 다시 쓰였다'], good2: ['2', 'b', '저장소를 열어 보고 찾은 사실이 들어갔다'] };
+    var bd = function (m) { var b = BADGE[m]; return b ? '<span class="bd ' + b[1] + '">' + b[0] + '</span>' : ''; };
+    var issue = function (secs, v1) {
+      return secs.map(function (sec) {
+        return '<div class="st-h">' + esc(sec.h) + '</div>' + sec.items.map(function (it) {
+          var t = fmt(it.text); if (v1) t = t.replace(/([가-힣]+야 합니다)/g, '<u class="must">$1</u>');
+          return '<div class="st-it ' + (it.mark ? 'mk-' + it.mark : 'dim') + '">' + (it.check ? '<span class="ck">☐</span>' : '<span class="ck">·</span>') + '<span>' + bd(it.mark) + t + (it.cut ? ' …' : '') + '</span></div>' +
+            (it.mark ? '<div class="st-lab ' + BADGE[it.mark][1] + '">' + BADGE[it.mark][2] + '</div>' : '');
+        }).join('');
+      }).join('');
+    };
+    var head = function (img, t, sub, round) { return '<div class="st-head"><img alt="" class="' + (round ? 'rd' : '') + '" src="' + A(img) + '"><div><b>' + t + '</b><small>' + sub + '</small></div></div>'; };
+    box.innerHTML =
+      '<div class="st-p" data-s="0">' + head('cycle_1_sq', '교실에서', (T.interview_at || '') + ' 구술 인터뷰', true) +
+        '<div class="st-body tr">' + (G.scene || []).map(function (l) { return '<p class="' + (l.hl ? 'ans' : l.praise ? 'praise' : '') + '">' + (l.praise ? '<span class="bd g">1</span>' : '') + fmt(l.text) + '</p>'; }).join('') +
+        '<div class="st-lab g">교사가 인정한 답</div></div></div>' +
+      '<i class="st-arr" data-s="1"></i>' +
+      '<div class="st-p ai" data-s="1">' + head('fig_ai', 'AI 조교의 첫 초안', (T.v1_at || '') + ' · 녹취만 보고 작성') +
+        '<div class="st-flag">형식이 마치 평가처럼 읽혔다</div><div class="st-body">' + issue(T.v1 || [], true) + '</div></div>' +
+      '<i class="st-arr" data-s="2"></i>' +
+      '<div class="st-p tc" data-s="2">' + head('fig_teacher_stamp', '교사의 결정', '다시 읽고 정한다') +
+        '<div class="st-body"><span class="stamp no" id="stRecall">회수 <small>' + (G.v1_closed || '').slice(5).replace('-', '/') + ' · ' + (G.v1_count || '') + '팀 전부</small></span>' +
+        '<p class="st-quote">"수정할 곳이 너무 많네요."</p>' +
+        '<div class="st-rule"><b>새 기준</b><ul><li>평가하지 않고 강점은 실제 장면과 의미로 쓴다.</li><li>가이드에는 저장소와 데이터를 확인한 사실만 쓴다.</li><li>살펴보기, 팀 논의, 깃허브 기록 순서를 따른다.</li><li>AI 제안은 반드시 검증한 뒤 반영한다는 안내를 붙인다.</li></ul></div>' +
+        '<span class="stamp ok" id="stOk">승인 <small>' + (T.v2_at || '').split(' ')[0] + ' · 둘째 판</small></span></div></div>' +
+      '<i class="st-arr" data-s="3"></i>' +
+      '<div class="st-p st" data-s="3">' + head('fig_students', '학생이 받은 글', (T.v2_at || '') + ' · 팀 저장소 이슈') +
+        '<div class="st-body gh">' + issue(T.v2 || [], false) + '<div class="st-note">' + fmt(T.note) + '</div></div></div>';
+    function upd(k) {
+      box.querySelector('#stRecall').classList.toggle('on', k >= 2);
+      box.querySelector('#stOk').classList.toggle('on', k >= 3);
+    }
+    el.addEventListener('step', function (e) { upd(e.detail || 0); });
+    upd(0);
+  };
+
   // 마지막 장의 QR(라이브러리가 없으면 주소만)
   W.qr = function (el) {
     var base = location.origin + location.pathname.replace(/index\.html$/, '');
