@@ -186,13 +186,19 @@
     notes: '다른 교과로 옮길 때 그대로 쓰는 부분이 생각보다 큽니다. 구술 앱과 서버, 받아 적기와 초안, log 형식, 세특 근거 모으기는 처음부터 과목과 무관하게 만들었습니다. 교과마다 바꾸는 것은 회차와 질문을 담은 루브릭 팩, 실습실 시나리오, 기록 매체입니다.\n카드 가운데의 파란 글이 그 교과에서 구술 인터뷰로 물을 질문의 예입니다. 정보는 코드가 틀린 것을 어떻게 알았는지, 과학은 통제한 변인과 그렇지 못한 변인을 묻습니다. 사회는 AI가 만든 통계와 출처를 원문과 대조하는 장면이 가장 중요해지고, 국어와 영어는 AI 제안을 받아들이지 않은 곳을 자기 말로 설명하게 하는 구술이 생성형 AI 대필 문제에 직접 대응하는 방법이 됩니다.\n도입은 세 단계로 권합니다. 1단계 구술 기록은 구글 계정과 아이폰, 받아 적기용 키만 있으면 됩니다.' },
 
   // ── 앞으로 ─────────────────────────────────────────────
-  { sec: '앞으로', title: '앞으로', widget: 'qr', html: function (S) { return '' +
-    ttl('앞으로') +
-    '<div class="body"><div class="col" style="flex:1.3;gap:16px">' +
-      '<div class="card"><h3>한계</h3><ul class="pts t" style="margin-top:6px"><li>진행 중: 한 학급 첫 회차까지 실시<small>효과는 아직 측정 전. 오늘은 설계와 운영 가능성까지</small></li><li>매일 저장소 확인은 교사의 맥과 AI 로그인에 기댄다</li><li>녹음의 외부 전송, 공개 저장소는 학교와 먼저 정한다</li></ul></div>' +
-      '<div class="card" data-s="1"><h3>다음</h3><ul class="pts" style="margin-top:6px"><li>루브릭 편집기와 설치 마법사: 다른 선생님이 바로 쓰도록</li><li>교과 융합: 같은 저장소를 두고 교과마다 자기 루브릭으로 구술</li><li>연구: 회차마다 설명이 나아지는가, AI 검증 기록이 늘어나는가, 교사 부담, 학생이 느끼는 공정성</li></ul></div>' +
-      '<p style="font-size:19px;color:var(--muted)">이 발표 자료는 프로젝트가 끝나면 같은 주소에서 전체 결과로 갱신합니다.</p>' +
-    '</div><div class="col" style="flex:1;align-items:center;gap:10px"><div style="display:flex;gap:20px;justify-content:center;padding-top:10px" id="qrs"></div><img alt="" src="assets/art/cover.webp" style="max-height:330px;max-width:100%;object-fit:contain;margin-top:auto"></div></div>' + credit; },
-    notes: '한계를 말씀드리고 마치겠습니다. 아직 진행 중이라 효과는 측정하지 않았습니다. 오늘은 설계와 운영 가능성까지 말씀드렸습니다. 매일 확인 루틴은 제 컴퓨터 환경에 기대고 있고, 녹음과 공개 저장소는 학교와 먼저 협의해야 합니다.\n다음으로는 다른 선생님이 바로 쓸 수 있게 루브릭 편집기와 설치 마법사를 만들고, 교과 융합 프로젝트에서 교과마다 자기 루브릭으로 구술하는 방식을 해 보려 합니다. 연구로는 회차별 설명의 변화, AI 검증 기록의 추이, 교사 부담, 학생 인식을 보겠습니다.\n이 발표 자료는 프로젝트가 끝나면 같은 주소에서 전체 결과로 갱신하겠습니다. 감사합니다.' }
+  { sec: '앞으로', title: '앞으로', widget: 'qr', html: function (S) {
+    var nx = function (n, imgs, h, a) {
+      return '<div class="nx"><span class="nx-n">' + n + '</span><div class="nx-pic">' + imgs.map(function (f) { return '<img alt="" src="assets/art/' + f + '.webp">'; }).join('') + '</div>' +
+        '<div class="nx-t"><b>' + h + '</b><p>' + a + '</p></div></div>';
+    };
+    return ttl('앞으로') +
+    '<p class="lead">진행 중인 사례입니다. 프로젝트가 끝나면 <b>같은 주소에서 전체 결과로</b> 갱신합니다.</p>' +
+    '<div class="body nxb"><div class="col" style="flex:1;gap:14px;min-width:0">' +
+      nx(1, ['fig_students'], '효과를 확인한다', '회차마다 설명이 나아지는가 · AI 검증 기록이 늘어나는가 · 학생이 공정하다고 느끼는가 · 교사 부담은 얼마인가') +
+      nx(2, ['fig_teacher_read'], '다른 선생님도 바로 쓰도록', '루브릭 편집기와 설치 마법사') +
+      nx(3, ['fig_sub_info', 'fig_sub_sci'], '교과를 잇는다', '같은 저장소를 두고 교과마다 자기 루브릭으로 구술') +
+      '<div class="lim" data-s="1"><span>지금의 한계</span><i>첫 회차까지 실시, 효과는 측정 전</i><i>매일 저장소 확인은 교사의 맥에 기댄다</i><i>녹음 전송·공개 저장소는 학교와 먼저 정한다</i></div>' +
+    '</div><div class="qrp"><img alt="" class="qrp-art" src="assets/art/cover.webp"><div id="qrs"></div></div></div>' + credit; },
+    notes: '앞으로 할 일입니다. 먼저 효과를 확인하겠습니다. 회차별 설명의 변화, AI 검증 기록의 추이, 학생이 느끼는 공정성, 교사 부담을 보려 합니다.\n다음으로 다른 선생님이 바로 쓸 수 있게 루브릭 편집기와 설치 마법사를 만들고, 교과 융합 프로젝트에서 교과마다 자기 루브릭으로 구술하는 방식을 해 보려 합니다.\n한계도 말씀드립니다. 아직 진행 중이라 효과는 측정하지 않았고, 오늘은 설계와 운영 가능성까지 말씀드렸습니다. 매일 확인 루틴은 제 컴퓨터 환경에 기대고 있고, 녹음과 공개 저장소는 학교와 먼저 협의해야 합니다.\n이 발표 자료는 프로젝트가 끝나면 같은 주소에서 전체 결과로 갱신하겠습니다. 오른쪽 QR로 발표 자료와 검토 문서, 실습실을 바로 여실 수 있습니다. 감사합니다.' }
   ];
 })();

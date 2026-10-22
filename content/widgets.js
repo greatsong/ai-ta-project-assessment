@@ -455,7 +455,7 @@
     var base = location.origin + location.pathname.replace(/index\.html$/, '');
     var L = [{ t: '이 발표 자료', u: base }, { t: '검토 문서', u: base + 'review/' }, { t: '데이터 과학 실습실', u: 'https://2026dgds.streamlit.app' }];
     var box = el.querySelector('#qrs');
-    box.innerHTML = L.map(function (l, i) { return '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:190px"><div id="qr' + i + '" style="background:#fff;padding:10px;border:1px solid var(--line);border-radius:12px;min-height:170px;min-width:170px"></div><b style="font-size:19px">' + l.t + '</b><a href="' + l.u + '" target="_blank" rel="noopener" style="font-size:12.5px;color:var(--muted);word-break:break-all;text-align:center">' + l.u.replace(/^https?:\/\//, '') + '</a></div>'; }).join('');
-    if (window.QRCode && /^https?:/.test(location.protocol)) L.forEach(function (l, i) { new window.QRCode(el.querySelector('#qr' + i), { text: l.u, width: 150, height: 150 }); });
+    box.innerHTML = L.map(function (l, i) { return '<div class="qr1"><div id="qr' + i + '" class="qr1-c"></div><b>' + l.t + '</b><a href="' + l.u + '" target="_blank" rel="noopener">' + l.u.replace(/^https?:\/\//, '') + '</a></div>'; }).join('');
+    if (window.QRCode && /^https?:/.test(location.protocol)) L.forEach(function (l, i) { new window.QRCode(el.querySelector('#qr' + i), { text: l.u, width: 128, height: 128 }); });
   };
 })();

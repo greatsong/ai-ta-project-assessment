@@ -445,3 +445,22 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 .sb-pic { height: 150px; } .sb-pic img { max-height: 132px; }
 .sb q { font-size: 21px; min-height: 3em; }
 .sb dl { margin: 16px 20px 20px; }
+
+/* 앞으로(다시 만든 판) */
+.nxb { gap: 26px; align-items: stretch; }
+.nx { display: flex; align-items: center; gap: 18px; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 14px 22px 14px 16px; box-shadow: 0 8px 22px rgba(31,29,43,.05); }
+.nx-n { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 22px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+.nx-pic { flex: 0 0 120px; height: 104px; display: flex; align-items: center; justify-content: center; gap: 2px; background: linear-gradient(180deg, #f3f1fb, #fbfaff); border-radius: 16px; }
+.nx-pic img { max-height: 92px; max-width: 100%; object-fit: contain; }
+.nx-pic img + img { max-width: 50%; } .nx-pic img:first-child:not(:last-child) { max-width: 50%; }
+.nx-t b { display: block; font-size: 29px; font-weight: 900; letter-spacing: -.02em; }
+.nx-t p { margin: 4px 0 0; font-size: 19px; line-height: 1.45; color: var(--muted); word-break: keep-all; }
+.lim { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: auto; padding: 12px 14px; background: var(--soft); border: 1px dashed #d8d4ec; border-radius: 16px; }
+.lim span { font-size: 15px; font-weight: 900; color: var(--muted); margin-right: 4px; }
+.lim i { font-style: normal; font-size: 16px; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; }
+.qrp { flex: 0 0 560px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; background: linear-gradient(180deg, #fff, #f6f5fb); border: 1px solid var(--line); border-radius: 24px; padding: 14px 18px 18px; }
+.qrp-art { max-height: 300px; max-width: 100%; object-fit: contain; margin-bottom: auto; }
+#qrs { display: flex; gap: 14px; justify-content: center; }
+.qr1 { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 164px; }
+.qr1-c { background: #fff; padding: 9px; border: 1px solid var(--line); border-radius: 12px; min-width: 146px; min-height: 146px; }
+.qr1 b { font-size: 17px; } .qr1 a { font-size: 11.5px; color: var(--muted); word-break: break-all; text-align: center; }
