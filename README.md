@@ -56,6 +56,7 @@ scripts/              캡처·집계·점검 스크립트
 9. 점검: `python3 -m http.server 4065` 를 띄우고 `python3 scripts/check_slides.py` → `raw/qa/`의 모든 장·단계 캡처를 눈으로 본다
 10. `index.html`의 `?v=` 번호를 올린다(브라우저가 예전 파일을 쓰지 않게)
 11. 개인정보 점검(아래) 뒤 커밋·푸시하면 GitHub Pages가 갱신된다
+12. PDF(배포 뒤): `python3 scripts/build_pdf.py` → `raw/AI조교_과정중심_프로젝트평가.pdf`. 공개 주소에서 찍어 QR이 실제 주소를 가리킨다. 장마다 마지막 단계 한 쪽, 9장(실제로 오가는 글)은 여섯 경로를 한 쪽씩
 
 ### 끝난 뒤 더할 장(지금은 빈 자리)
 
