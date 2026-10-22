@@ -246,3 +246,4 @@
 .fl-next img { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 2px solid #ffd27a; flex: none; }
 .fl-next b { font-size: 19px; display: block; } .fl-next small { font-size: 14px; color: #c9c6d8; }
 .fl-in .fl-card span { display: block; word-break: keep-all; }
+.pain-h { font-size: 28px; line-height: 1.28; margin: 0; letter-spacing: -.01em; }
