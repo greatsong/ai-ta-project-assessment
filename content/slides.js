@@ -46,32 +46,23 @@
     ''; },
     notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, AI가 코드와 보고서를 함께 작성하면 결과물만으로는 학생의 이해 정도를 확인할 수 없습니다. 그래서 학생이 자기 말로 설명하는 구술평가가 필요하다는 점에는 모두 공감하시지만, 실제 운영에 들어가면 즉시 막히는 지점이 생깁니다. 한 반에 열두 팀 정도를 짧은 수업 시간 안에 모두 면담해야 하고, 회차별로 무엇을 물을지, 대화를 어떻게 기록해 근거로 남길지, 그 결과를 이후 피드백으로 어떻게 연결할지까지 막막해지기 때문입니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다.' },
 
-  { sec: '해법', title: '해결의 흐름', widget: 'solve', steps: 5, html: function () {
+  { sec: '해법', title: '해결의 흐름', widget: 'solve', steps: 4, html: function () {
     var A = function (f) { return 'assets/art/' + f + '.webp'; };
-    var merge = '<svg class="fl-merge" viewBox="0 0 64 600" preserveAspectRatio="none">' +
-      ['M0,125 C34,125 30,300 64,300', 'M0,320 C30,320 34,300 64,300', 'M0,515 C34,515 30,300 64,300'].map(function (d, i) {
-        return '<path d="' + d + '"/><circle r="5"><animateMotion dur="1.8s" begin="' + (i * 0.4) + 's" repeatCount="indefinite" path="' + d + '"/></circle>'; }).join('') + '</svg>';
+    var arr = function (t, k, c) { return '<div class="f2-arr ' + (c || '') + '" data-s="' + k + '"><span>' + t + '</span><i></i></div>'; };
     return ttl('음성·기록·관찰이 피드백이 되기까지', '해결의 흐름', 'live') +
-      '<p class="lead" style="margin-bottom:16px">세 가지 입력을 깃허브와 AI 조교가 정리하고, 교사가 검토한 내용만 학생의 피드백으로 전달됩니다.</p>' +
-      '<div class="body nonext fl">' +
-        '<div class="fl-col fl-in" data-s="1"><h4>입력 <b>세 갈래</b></h4>' +
-          '<div class="fl-card"><img alt="" src="' + A('cycle_1_sq') + '"><div><b>음성</b><span>구술 인터뷰 녹음<br>팀당 3분, 회차마다</span></div></div>' +
-          '<div class="fl-card"><img alt="" src="' + A('cycle_2_sq') + '"><div><b>깃허브 기록</b><span>README·log·커밋<br>결정과 AI 검증</span></div></div>' +
-          '<div class="fl-card"><img alt="" class="fig" src="' + A('fig_teacher_read') + '"><div><b>교사의 관찰</b><span>루브릭 수준 · 메모<br>인터뷰 중 꼬리질문</span></div></div></div>' +
-        '<div data-s="2">' + merge + '</div>' +
-        '<div class="fl-col fl-org" data-s="2"><h4>정리 <b>깃허브 + AI 조교</b></h4><div class="fl-big">' +
-          '<div class="fl-figs"><img alt="" src="' + A('fig_mona') + '" style="height:110px"><img alt="" src="' + A('fig_ai') + '"></div>' +
-          '<ul class="fl-list"><li><b>녹음</b> → 받아 적은 글</li><li><b>저장소 변화</b> → 요약</li><li><b>강점 · 다음 단계 가이드</b> 초안</li><li><b>학생별 근거</b> 시간순 모음</li></ul></div></div>' +
-        '<div class="fl-arr" data-s="3"><span>보고</span><i></i></div>' +
-        '<div class="fl-col fl-tc" data-s="3"><h4>교사 <b>논의하고 결정</b></h4><div class="fl-big">' +
-          '<div class="fl-figs"><img alt="" src="' + A('fig_teacher_read') + '"><span class="pb-talk"><i></i><i></i><em>⇄</em></span><img alt="" class="ai" src="' + A('fig_ai') + '"></div>' +
-          '<div class="fl-stamps"><span class="stamp ok">그대로 반영</span><span class="stamp wait">고쳐서 반영</span><span class="stamp no">반영하지 않음</span></div>' +
-          '<p style="font-size:15px;color:var(--muted);margin:2px 0 0">점수·등급은 교사만 매긴다</p></div></div>' +
-        '<div class="fl-arr to-st" data-s="4"><span>피드백</span><i></i></div>' +
-        '<div class="fl-col fl-st" data-s="4"><h4>학생 <b>깃허브 이슈 · 댓글</b></h4><div class="fl-big">' +
-          '<div class="scene-img"><img alt="" src="' + A('cycle_4') + '"></div>' +
-          '<div class="fl-issue"><div class="t"><img alt="" src="' + A('fig_mona') + '">팅커비스) 구술 인터뷰 ① 이후</div><b>인터뷰에서 보인 강점</b>어떤 열을 쓰느냐는 질문에 바로 답했습니다…<b>다음 단계 가이드</b>☐ 표를 길게 바꿔 막대그래프로 살펴보기<br>☐ 빈칸·기호를 팀원과 정해 log에 기록하기</div>' +
-          '<div class="fl-next" data-s="5"><img alt="" src="' + A('cycle_5_sq') + '"><div><b>다음 단계로</b><small>다음 작업 → 다음 인터뷰</small></div></div></div></div>' +
+      '<p class="lead" style="margin-bottom:18px">세 가지 입력을 깃허브와 AI 조교가 정리하고, 교사가 검토한 내용만 학생의 피드백으로 전달됩니다.</p>' +
+      '<div class="body nonext f2">' +
+        '<div class="f2-st in" data-s="1"><em>입력</em>' +
+          '<div class="f2-in"><img alt="" src="' + A('cycle_1_sq') + '"><b>음성</b></div>' +
+          '<div class="f2-in"><img alt="" src="' + A('cycle_2_sq') + '"><b>깃허브 기록</b></div>' +
+          '<div class="f2-in"><img alt="" class="fig" src="' + A('fig_teacher_read') + '"><b>교사의 관찰</b></div></div>' +
+        arr('모아서', 2) +
+        '<div class="f2-st org" data-s="2"><em>정리</em><div class="f2-pic"><img alt="" src="' + A('fig_mona') + '" style="height:120px"><img alt="" src="' + A('fig_ai') + '"></div><b class="f2-w">깃허브 + AI 조교</b><p>받아 적고, 요약하고, 초안을 쓴다</p></div>' +
+        arr('보고', 3) +
+        '<div class="f2-st tc" data-s="3"><em>결정</em><div class="f2-pic"><img alt="" src="' + A('fig_teacher_read') + '"><span class="pb-talk"><i></i><i></i><em>⇄</em></span><img alt="" class="ai" src="' + A('fig_ai') + '"></div><b class="f2-w">교사</b>' +
+          '<div class="fl-stamps"><span class="stamp ok">그대로 반영</span><span class="stamp wait">고쳐서 반영</span><span class="stamp no">반영하지 않음</span></div></div>' +
+        arr('피드백', 4, 'st') +
+        '<div class="f2-st stu" data-s="4"><em>학생</em><div class="f2-scene"><img alt="" src="' + A('cycle_4') + '"></div><b class="f2-w">깃허브 이슈 · 댓글</b><p>가이드가 다음 작업이 된다</p></div>' +
       '</div><div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
     notes: '먼저 해결의 흐름을 설명드리겠습니다. 입력은 세 갈래로 나뉩니다. 구술 인터뷰의 음성, 학생이 깃허브에 남긴 활동 기록, 그리고 교사의 관찰 내용입니다.\n이 세 가지 입력은 깃허브와 AI 조교가 정리합니다. AI 조교는 음성 녹음 파일을 텍스트로 옮기고, 저장소의 변화 이력을 요약하며, 학생의 강점과 다음 단계를 위한 가이드 초안을 작성합니다. 이 과정에서 학생별 근거는 시간순으로 모아 정리됩니다.\n정리된 결과는 교사에게 보고됩니다. 교사는 AI 조교와 내용을 함께 검토하며, 원문 그대로 반영할지, 수정해 반영할지, 혹은 반영하지 않을지 최종 판단합니다.\n교사가 확정한 내용만 깃허브의 이슈와 댓글을 통해 학생에게 전달됩니다. 학생은 전달된 가이드를 확인하며 스스로 점검하고, 다음 단계로 나아갑니다.' },
 

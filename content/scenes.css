@@ -334,3 +334,31 @@ u.must { text-decoration: none; border-bottom: 2px solid var(--ai); color: #b834
 .keep2 .hl { background: #fff0eb; border-color: #ffd9cc; }
 .sub4 { flex: 0 1 auto; align-items: stretch; }
 .sub4 q { margin-top: 10px; }
+
+/* 해결의 흐름(간결판) */
+.f2 { display: grid; grid-template-columns: minmax(0,1fr) 78px minmax(0,1fr) 78px minmax(0,1fr) 78px minmax(0,1fr); gap: 0 !important; align-items: center; align-content: center; min-height: 0; padding-top: 14px; }
+.f2-st { height: 500px; }
+.f2-in b { white-space: nowrap; }
+.f2-st { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; border-radius: 24px; padding: 34px 16px 20px; background: var(--soft); border: 1px solid var(--line); min-height: 0; }
+.f2-st > em { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 18px; font-weight: 900; color: #fff; background: var(--ink); border-radius: 99px; padding: 4px 16px; white-space: nowrap; }
+.f2-st.org { background: #f2faf8; border-color: #cfe9e3; } .f2-st.org > em { background: #0f9d76; }
+.f2-st.tc { background: #f5f4ff; border: 2px solid var(--teacher); } .f2-st.tc > em { background: var(--teacher); }
+.f2-st.stu { background: #fffaf0; border-color: #f3dcae; } .f2-st.stu > em { background: #d98a00; }
+.f2-in { display: flex; align-items: center; gap: 14px; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; }
+.f2-in img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; flex: none; }
+.f2-in img.fig { object-fit: contain; background: #eef3f1; padding: 3px; }
+.f2-in b { font-size: 25px; }
+.f2-pic { display: flex; align-items: flex-end; justify-content: center; height: 170px; }
+.f2-pic img { height: 160px; display: block; } .f2-pic img.ai { height: 116px; transform: scaleX(-1); }
+.f2-w { font-size: 26px; font-weight: 900; }
+.f2-st p { margin: 0; font-size: 19px; color: var(--muted); }
+.f2-scene { width: 100%; height: 210px; border-radius: 16px; overflow: hidden; }
+.f2-scene img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+.f2-st .fl-stamps { gap: 8px; } .f2-st .fl-stamps .stamp { font-size: 21px; }
+.f2-arr { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.f2-arr span { font-size: 18px; font-weight: 900; color: var(--teacher); }
+.f2-arr i { position: relative; width: 60px; height: 8px; border-radius: 8px; background: #e3e0f1; overflow: hidden; }
+.f2-arr i::after { content: ''; position: absolute; top: 0; left: -40%; width: 40%; height: 100%; border-radius: 8px; background: var(--teacher); animation: dfgo 1.1s linear infinite; }
+.f2-arr.st span { color: #b46e00; } .f2-arr.st i::after { background: var(--student); }
+@media (prefers-reduced-motion: reduce) { .f2-arr i::after { animation: none; left: 30%; } .f2 .pic > img { animation: none; } }
+.f2-st .fl-stamps { display: flex; flex-direction: column; align-items: center; width: 100%; }
