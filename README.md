@@ -29,6 +29,9 @@ deck/                 엔진: 16:9 무대, 단계 공개, 섹션 칩, 노트, �
 content/slides.js     슬라이드 내용(문장·캡처 배치·발표자 노트). 고칠 때는 주로 이 파일
 content/widgets.js    눌러 보는 요소(한 회차 흐름, 이슈 표시, 실시 현황표, 시간·비용 계산기, 탭, 도입 단계)
 content/stats.js      수치(자동 생성, scripts/update_stats.py)
+content/dataflow.js   실제로 오가는 글(자동 생성, scripts/build_dataflow.py, 이름·학번·팀 이름은 ⟦가림⟧)
+content/scenes.css    도입 장면 애니메이션과 '실제로 오가는 글' 화면의 모양
+assets/art/           도입 장면 그림(scripts/gen_art.py, 프롬프트는 style.txt·subjects.txt)
 content/review.md     검토 문서 원본 → review/index.html
 captures/             화면 캡처(자동 생성, 개인정보 흐림)
 scripts/              캡처·집계·점검 스크립트
@@ -46,6 +49,8 @@ scripts/              캡처·집계·점검 스크립트
 4. 깃허브 화면: `scripts/capture_github.py`의 `SHOTS`에서 보여 줄 이슈·log를 고른 뒤 실행
 5. 세특 근거 화면: `python3 scripts/capture_setuk.py [학번]`
 6. 실습실 화면: `python3 scripts/capture_lab.py` (시나리오 문장이 바뀌면 스크립트의 글귀도 고친다)
+6-1. 실제로 오가는 글: `python3 scripts/build_dataflow.py [팀ID] [--solar]` (기본 TE01, 녹음부터 올린 이슈까지 한 팀. `--solar`는 서버의 초안 함수를 맥에서 그대로 돌려 솔라에 한 번 보낸다. 선생님이 고친 기록은 서버에 처음 초안이 남지 않기 때문이다. 시트는 바꾸지 않는다. 가리지 못한 낱말이 있으면 멈춘다)
+6-2. 도입 그림(필요할 때만): `python3 scripts/gen_art.py` (OpenAI gpt-image-2.5-sunburst, 투명 배경. 키는 ai-chat-for-students/server/.env에서 읽고 출력하지 않는다)
 7. 내용: `content/slides.js`에서 진행 예정이던 회차를 실시로 바꾸고, 결과 장을 더한다(아래 목록)
 8. 검토 문서: `content/review.md`를 고친 뒤 `python3 scripts/build_review.py`
 9. 점검: `python3 -m http.server 4065` 를 띄우고 `python3 scripts/check_slides.py` → `raw/qa/`의 모든 장·단계 캡처를 눈으로 본다

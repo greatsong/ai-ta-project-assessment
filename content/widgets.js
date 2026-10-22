@@ -145,14 +145,14 @@
   W.pain = function (el) {
     var box = el.querySelector('#painCalc');
     var F = [{ k: 't', l: '팀', min: 4, max: 15, v: 12, u: '팀' }, { k: 'r', l: '회차', min: 1, max: 6, v: 6, u: '회' }, { k: 'm', l: '팀당 작성', min: 3, max: 20, v: 10, u: '분' }];
-    box.innerHTML = '<div style="font-size:18px;color:var(--muted);margin-bottom:8px">팀마다 회차마다 피드백을 <b style="color:var(--ink)">직접 쓴다면</b> (가정)</div>' +
-      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">' + F.map(function (f) {
-        return '<label style="display:grid;gap:4px;font-size:17px">' + f.l + ' <b data-o="' + f.k + '" style="color:var(--student);font-size:20px">' + f.v + f.u + '</b><input type="range" id="pain_' + f.k + '" min="' + f.min + '" max="' + f.max + '" value="' + f.v + '" data-k="' + f.k + '" style="accent-color:#e08a00"></label>';
-      }).join('') + '</div><div id="painOut" style="margin-top:10px;font-size:22px"></div>';
+    box.innerHTML = '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span style="font-size:16px;color:var(--muted)">피드백을 <b style="color:var(--ink)">직접 쓴다면</b>(가정)</span><span id="painOut" style="font-size:20px;margin-left:auto"></span></div>' +
+      '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:6px">' + F.map(function (f) {
+        return '<label style="display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap;min-width:0">' + f.l + ' <b data-o="' + f.k + '" style="color:var(--student);font-size:18px;min-width:42px">' + f.v + f.u + '</b><input type="range" id="pain_' + f.k + '" min="' + f.min + '" max="' + f.max + '" value="' + f.v + '" data-k="' + f.k + '" style="accent-color:#e08a00;flex:1;min-width:0"></label>';
+      }).join('') + '</div>';
     function upd() {
       var v = {}; F.forEach(function (f) { v[f.k] = +box.querySelector('[data-k="' + f.k + '"]').value; box.querySelector('[data-o="' + f.k + '"]').textContent = v[f.k] + f.u; });
       var min = v.t * v.r * v.m;
-      box.querySelector('#painOut').innerHTML = '한 반에 <b style="font-size:34px;color:var(--ink)">' + (min / 60).toFixed(1) + '시간</b> <span style="color:var(--muted)">· 두 반이면 ' + (min * 2 / 60).toFixed(1) + '시간</span>';
+      box.querySelector('#painOut').innerHTML = '한 반 <b style="font-size:30px;color:var(--ink)">' + (min / 60).toFixed(1) + '시간</b> <span style="color:var(--muted)">· 두 반 ' + (min * 2 / 60).toFixed(1) + '시간</span>';
     }
     box.addEventListener('input', upd); upd();
   };
@@ -259,6 +259,43 @@
         (p.img ? '<div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start"><img class="shot" alt="" src="captures/' + encodeURI(p.img) + '" style="max-height:170px"><span style="font-size:16px;color:var(--muted)">교사 앱 설정의 녹음 보관 카드</span></div>' : '') + '</div>';
     }
     list.addEventListener('click', function (e) { var b = e.target.closest('[data-p]'); if (b) show(+b.dataset.p); });
+    show(0);
+  };
+
+  // 실제로 오가는 글: 한 팀의 기록이 보낸 글과 받은 글(content/dataflow.js, scripts/build_dataflow.py가 만든다)
+  W.dflow = function (el) {
+    var D = window.DATAFLOW || {}, Wt = D.watch || {}, se = D.session || {};
+    var fmt = function (t) {
+      return esc(t || '(없음)').replace(/⟦가림⟧/g, '<span class="mk">가림가림</span>')
+        .replace(/^(\[[^\]\n]{1,14}\])/gm, '<span class="lb">$1</span>').replace(/^(#{1,3} .*|인터뷰에서 보인 강점|다음 단계 가이드.*)$/gm, '<span class="hd">$1</span>');
+    };
+    var X = [
+      { g: 0, n: '교사 앱 → 구술 서버', s: '교사 구글 계정', k: 'in', sT: '기록 한 줄 + 녹음', sent: D.app_to_server, bT: '교사 계정에 남는 것', bk: 't',
+        back: '[시트 「기록」 탭의 칸]\n' + (D.session_cols || '') + '\n\n[드라이브]\n비공개 폴더에 녹음 파일. 성적 확정 뒤 교사 앱에서 한꺼번에 지우고 받아 적은 글만 남긴다.\n\n[다음]\n저장하면 서버가 받아 적기와 초안 쓰기를 차례로 시작한다. 교사 앱은 기다리지 않고 다음 팀으로 넘어간다.\n\n루브릭 수준(■)은 이 흐름의 어떤 AI 요청에도 들어가지 않는다.', offL: '밖으로 나가는 것', off: '없음' },
+      { g: 0, n: '서버 → Gemini', s: '받아 적기 · ' + (D.gemini_model || ''), k: 'ext', sT: '녹음 + 받아쓰기 지시', sent: D.gemini_sent, bT: '받아 적은 대화', back: D.gemini_back, off: '점수 · 학생 명단' },
+      { g: 0, n: '서버 → Solar', s: '초안 · ' + (D.solar_model || ''), k: 'ext', sT: '회차 · 다음 회차 · 팀 질문 + 받아 적은 대화', sent: D.solar_sent, bT: '강점 · 가이드 초안 (교사 참고용)', back: D.solar_back,
+        off: '점수 · 학생 명단 · 녹음', note: '이 초안은 학생에게 바로 가지 않는다.' + (D.solar_date ? ' 같은 기록으로 지금 서버가 만드는 초안을 ' + D.solar_date + '에 다시 받아 보였다.' : '') },
+      { g: 0, n: '교사 → 팀 저장소', s: '깃허브 이슈', k: 'in', sT: '녹취만 본 초안 (Solar)', sk: 't', sent: D.solar_back, bT: '학생이 받은 이슈 (교사 승인)', bL: '올라간 것', back: D.issue_body,
+        offL: '올리지 않는 것', off: '점수 · 받아 적은 대화', note: '올린 글은 클로드가 저장소와 데이터를 직접 열어 확인한 사실로 다시 설계하고 솔라가 쓴 뒤, 교사가 팀별 전체 문안을 읽고 승인했다.' },
+      { g: 1, n: '맥 → Claude', s: '저장소 변화 읽기', k: 'ext', sT: '바뀐 저장소 (커밋 · 파일 차이 · log)', sent: Wt.claude_sent, bT: '설계서 (강점 재료 · 가이드 재료)', back: Wt.claude_back, off: '점수 · 녹음', note: Wt.when ? Wt.when + ' 저장소 확인에서 바뀐 한 팀' : '' },
+      { g: 1, n: '맥 → Solar', s: '댓글 쓰기 · solar-pro4', k: 'ext', sT: '설계서로 만든 집필 요청', sent: Wt.solar_sent, bT: '댓글 초안 (교사 승인 전)', back: Wt.solar_back, off: '점수 · 녹음', note: '교사가 앱에서 읽고 올리기를 누를 때만 학생 저장소에 댓글로 올라간다.' }
+    ];
+    var route = el.querySelector('#dfRoute'), pane = el.querySelector('#dfPane'), foot = el.querySelector('#dfFoot');
+    route.className = 'dfr';
+    route.innerHTML = '<span class="grp" style="grid-column:1/span 4">인터뷰 날 · ' + esc((se.cpNo || '') + ' ' + (se.cpTitle || '')) + ' · 녹음 ' + Math.round((se.durationSec || 0) / 60) + '분</span>' +
+      '<span class="sep" style="grid-column:5"></span><span class="grp" style="grid-column:6/span 2">수업이 없는 날 · 18시 저장소 확인</span>' +
+      X.map(function (x, i) { return '<button type="button" class="' + x.k + '" data-x="' + i + '" style="grid-column:' + (i < 4 ? i + 1 : i + 2) + '"><b>' + (i + 1) + '. ' + x.n + '</b><span class="pipe"><i></i></span><small>' + esc(x.s) + '</small></button>'; }).join('');
+    var len = function (t) { return (t || '').length.toLocaleString() + '자'; };
+    function show(i) {
+      var x = X[i];
+      route.querySelectorAll('[data-x]').forEach(function (b) { b.classList.toggle('on', +b.dataset.x === i); });
+      pane.innerHTML = '<div class="dfp"><div class="dfh"><span class="dir' + (x.sk ? ' ' + x.sk : '') + '">' + (x.sk ? '교사가 읽은 것' : '보내는 것') + '</span><b>' + x.sT + '</b><span class="n">' + len(x.sent) + '</span></div><div class="dfx">' + fmt(x.sent) + '</div></div>' +
+        '<div class="dfp"><div class="dfh"><span class="dir back' + (x.bk ? ' ' + x.bk : '') + '">' + (x.bL || (x.bk ? '남는 것' : '돌아오는 것')) + '</span><b>' + x.bT + '</b><span class="n">' + (x.bk ? '' : len(x.back)) + '</span></div><div class="dfx">' + fmt(x.back) + '</div></div>';
+      foot.className = 'dff';
+      foot.innerHTML = '<span class="off"><em>' + (x.offL || '보내지 않는 것') + '</em> ' + x.off + '</span>' + (x.note ? '<span>' + x.note + '</span>' : '');
+    }
+    route.addEventListener('click', function (e) { var b = e.target.closest('[data-x]'); if (b) show(+b.dataset.x); });
+    el.addEventListener('step', function (e) { show(Math.min(X.length - 1, e.detail || 0)); });
     show(0);
   };
 

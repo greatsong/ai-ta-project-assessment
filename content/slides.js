@@ -20,16 +20,37 @@
     '</div>'; },
     notes: '안녕하십니까. 당곡고등학교에서 데이터 과학을 가르치는 송석리입니다.\n오늘은 지금 진행 중인 팀 프로젝트 수업에서 AI를 조교, 곧 TA로 두고 과정 중심 평가를 운영하는 사례를 실제 화면으로 보여 드리겠습니다.\n화면의 학생 정보는 모두 흐리게 처리했습니다. 수치는 오른쪽 위에 적힌 시각에 시스템에서 바로 모은 값입니다.' },
 
-  { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: '' +
-    ttl('프로젝트 수업의 오래된 두 어려움') +
+  { sec: '시작', title: '두 가지 어려움', widget: 'pain', html: function () {
+    var A = function (f, st) { return '<img alt="" src="assets/art/' + f + '.webp" style="' + st + '">'; };
+    var weeks = [1, 2, 3, 4].map(function (w) { return '<div class="wk"><b>' + w + '주</b><div class="fog"></div><span class="q" style="animation-delay:' + (w * 0.4) + 's">?</span></div>'; }).join('') + '<div class="wk" style="background:#fff"><b>5주</b></div>';
+    var piles = [0, 1, 2, 3, 4, 5].map(function (i) { return A('paper_stack', 'left:' + (122 + (i % 2) * 4) + 'px;top:' + (126 - i * 13) + 'px;height:36px;z-index:' + (3 + i) + ';animation-delay:' + (i * 0.7) + 's').replace('<img', '<img class="pile"'); }).join('');
+    return ttl('프로젝트 수업의 오래된 두 어려움') +
     '<p class="lead"><b>AI가 결과물을 함께 만드는 지금</b>, 두 어려움은 더 커졌다.</p>' +
     '<div class="body" style="gap:26px">' +
-      '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:12px"><h3 style="font-size:32px">① 과정을 평가하기 어렵다</h3><ul class="pts t"><li>누가 무엇을 왜 판단했는지는 결과물에 남지 않는다</li><li>AI가 코드를 써 주면 학생의 몫은 더 보이지 않는다</li><li>평가는 마지막 발표와 보고서에 몰린다</li></ul></div>' +
-      '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:12px"><h3 style="font-size:32px">② 학생마다 피드백하기 어렵다</h3><ul class="pts s"><li>팀마다 단계마다 돌려줄 시간이 없다</li><li>결국 발표 뒤 한 번, 고칠 시간이 없을 때</li></ul>' +
-        '<div data-s="3" id="painCalc" class="nonext" style="margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px"></div></div>' +
+      '<div class="card col" data-s="1" style="border-top:8px solid var(--teacher);gap:8px;padding:16px 22px"><h3 style="font-size:30px;margin:0">① 과정을 평가하기 어렵다</h3>' +
+        '<div class="scene"><div class="wks">' + weeks + '</div>' +
+          A('student_team', 'left:150px;top:30px;height:116px;opacity:.75;z-index:1') +
+          A('poster', 'right:12px;top:30px;height:110px;z-index:3') +
+          '<div class="sway" style="position:absolute;left:278px;top:150px;height:150px;width:82px">' + A('teacher_magnifier', 'left:0;top:0;height:150px') + '</div>' +
+          '<span class="scn-chip" style="left:0;top:250px;color:var(--teacher)">1~4주: 무엇을 왜 정했는지 보이지 않는다</span>' +
+          '<span class="scn-chip" style="right:0;top:174px">5주: 결과물만 남는다</span>' +
+        '</div>' +
+        '<p style="font-size:22px;color:var(--muted);margin:0">AI가 코드를 써 주면 학생의 몫은 더 보이지 않는다</p></div>' +
+      '<div class="card col" data-s="2" style="border-top:8px solid var(--student);gap:8px;padding:16px 22px"><h3 style="font-size:30px;margin:0">② 학생마다 피드백하기 어렵다</h3>' +
+        '<div class="scene" style="height:255px">' + A('teacher_desk', 'left:8px;top:62px;height:192px;z-index:2') + piles +
+          '<div class="ring" style="position:absolute;right:8px;top:0;width:60px;height:70px">' + A('clock', 'left:0;top:0;height:70px') + '</div>' +
+          '<div class="bob" style="position:absolute;left:350px;top:84px;width:138px;height:170px">' + A('students_waiting', 'left:0;top:0;height:170px') + '</div>' +
+          '<div class="dots" style="left:328px;top:48px"><i></i><i></i><i></i></div>' +
+          '<span class="scn-chip" style="left:0;top:14px;color:#b46e00">팀마다, 회차마다, 학생마다</span>' +
+        '</div>' +
+        '<div data-s="3" id="painCalc" class="nonext" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px"></div></div>' +
     '</div>' +
-    '<div data-s="4" style="margin-top:20px;background:var(--ink);color:#fff;border-radius:18px;padding:20px 28px;font-size:30px;font-weight:700;display:flex;gap:26px;flex-wrap:wrap"><span><span style="color:#b9b3ff">기록</span>은 깃허브가</span><span><span style="color:#ffb39f">정리</span>는 AI TA가</span><span><span style="color:#ffd27a">결정</span>은 교사가</span></div>',
-    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 5주 동안 누가 무엇을 왜 판단했는지는 결과물에 남지 않고, 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 아래 계산기를 보시면, 팀마다 회차마다 피드백을 직접 쓰면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 기록은 깃허브가, 정리는 AI 조교가, 결정은 교사가 합니다.' },
+    '<div data-s="4" style="margin-top:14px;background:var(--ink);color:#fff;border-radius:18px;padding:8px 26px;display:flex;align-items:center;gap:20px;font-size:28px;font-weight:700;position:relative;overflow:hidden;height:80px">' +
+      '<span><span style="color:#b9b3ff">기록</span>은 깃허브가</span>' +
+      '<img alt="" src="assets/art/robot.webp" style="height:66px;margin-left:40px"><span><span style="color:#ffb39f">정리</span>는 AI TA가</span>' +
+      '<img alt="" class="flynote" src="assets/art/feedback_note.webp" style="height:40px;position:absolute;left:720px;top:20px">' +
+      '<img alt="" src="assets/art/teacher_stamp.webp" style="height:66px;margin-left:auto"><span><span style="color:#ffd27a">결정</span>은 교사가</span></div>'; },
+    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 1주에서 4주까지 학생들이 무엇을 왜 정했는지는 안개 속에 있고, 교사가 보는 것은 5주의 결과물뿐입니다. 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다. 아래 계산기로 보시면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 기록은 깃허브가, 정리는 AI 조교가, 결정은 교사가 합니다.' },
 
   { sec: '시작', title: '무엇이 바뀌었나', widget: 'ba', steps: 1, html: '' +
     ttl('AI TA와 깃허브로 바꾼 것', '눌러서 비교', 'live') +
@@ -77,6 +98,12 @@
     '<div class="body"><div class="col" style="flex:0 0 520px"><div id="flowNodes" style="display:grid;gap:10px"></div></div>' +
     '<div class="col" style="flex:1"><div id="flowPane" class="card" style="flex:1;display:flex;gap:22px;min-height:0"></div></div></div>',
     notes: '한 회차는 일곱 단계로 돕니다. 실습실 예시를 보고, 팀 저장소에서 작업하며 log를 쓰고, 구술 인터뷰를 하고, AI가 받아 적고 초안을 쓰고, 교사가 고쳐 이슈로 올리고, 수업이 없는 날에도 저장소를 확인하고, 그 기록이 세특 근거로 쌓입니다.\n이제 각 단계를 실제 화면으로 보겠습니다.' },
+
+  { sec: '개인정보', title: '실제로 오가는 글', widget: 'dflow', steps: 5, html: function () { var se = (window.DATAFLOW || {}).session || {}; return '' +
+    ttl('실제로 오가는 글', '실제 기록', 'live') +
+    '<p class="lead" style="margin-bottom:14px"><b>보낸 글과 받은 글</b> 그대로. 1~4는 한 팀의 ' + (se.cpNo || '') + ' 인터뷰, 5~6은 다른 팀의 저장소 변화. 흐린 칸은 이름·학번·팀 이름.</p>' +
+    '<div class="body nonext" style="flex-direction:column;gap:12px"><div id="dfRoute"></div><div id="dfPane" style="flex:1;display:flex;gap:16px;min-height:0"></div><div id="dfFoot"></div></div>'; },
+    notes: '앞의 흐름을 실제 글로 보겠습니다. 한 팀의 첫 인터뷰 기록이 어디로 무엇을 보내고 무엇을 받는지 그대로 옮겼습니다.\n교사 앱은 기록과 녹음을 교사 계정의 시트와 드라이브에 둡니다. 서버는 녹음과 받아쓰기 지시를 Gemini에 보내 대화를 받아 적고, 그 대화와 회차 정보를 Solar에 보내 강점과 가이드 초안을 받습니다. 어디에도 점수와 학생 명단은 보내지 않습니다.\n네 번째를 보시면 녹취만 본 초안과 학생이 실제로 받은 이슈가 다릅니다. 올린 글은 저장소와 데이터를 직접 열어 확인한 사실로 다시 썼고, 교사가 전체 문안을 읽고 승인했습니다.\n수업이 없는 날에는 맥이 바뀐 저장소를 Claude에 보여 주고 설계서를 받은 뒤, Solar가 댓글 초안을 씁니다. 이 초안도 교사가 올리기를 눌러야 학생에게 갑니다.' },
 
   { sec: '개인정보', title: '데이터는 어디로 가나', widget: 'privacy', html: '' +
     ttl('개인정보: 데이터는 어디로 가나', '눌러서 보기', 'live') +

@@ -1,0 +1,54 @@
+/* 두 어려움 장의 움직이는 장면(그림: assets/art, gpt-image-2.5-sunburst) */
+.scene { position: relative; height: 300px; flex: none; }
+.scene img { position: absolute; display: block; }
+.wks { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 10px; }
+.wk { flex: 1; height: 150px; border-radius: 14px; background: var(--soft); border: 1px solid var(--line); position: relative; overflow: hidden; }
+.wk b { position: absolute; left: 10px; top: 6px; font-size: 15px; color: var(--muted); z-index: 3; }
+.fog { position: absolute; inset: 0; z-index: 2; background: radial-gradient(circle at 30% 40%, rgba(255,255,255,.95), rgba(255,255,255,.75) 60%, rgba(240,238,248,.9)); backdrop-filter: blur(2px); animation: fogdrift 6s ease-in-out infinite alternate; }
+@keyframes fogdrift { from { transform: translateX(-6px); } to { transform: translateX(6px); } }
+.q { position: absolute; z-index: 4; font-size: 34px; font-weight: 800; color: var(--teacher); left: 50%; top: 52%; transform: translate(-50%, -50%); animation: qbob 2.4s ease-in-out infinite; }
+@keyframes qbob { 0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(-6deg); opacity: .55; } 50% { transform: translate(-50%, -50%) translateY(-14px) rotate(6deg); opacity: 1; } }
+.sway { animation: sway 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.bob { animation: bob 2.2s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.ring { animation: ring 2.6s ease-in-out infinite; transform-origin: 50% 20%; }
+@keyframes ring { 0%, 60%, 100% { transform: rotate(0); } 64% { transform: rotate(12deg); } 68% { transform: rotate(-12deg); } 72% { transform: rotate(10deg); } 76% { transform: rotate(-10deg); } 80% { transform: rotate(0); } }
+.pile { animation: pile 7s ease-out infinite; opacity: 0; }
+@keyframes pile { 0% { opacity: 0; transform: translateY(-40px) scale(.6); } 6% { opacity: 1; transform: translateY(0) scale(1); } 88% { opacity: 1; } 96%, 100% { opacity: 0; } }
+.scn-chip { position: absolute; font-size: 16px; font-weight: 700; padding: 5px 11px; border-radius: 99px; background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(31,29,43,.08); white-space: nowrap; }
+.dots { position: absolute; background: #fff; border: 2px solid var(--ink); border-radius: 18px; padding: 6px 12px; display: flex; gap: 5px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); animation: dot 1.2s infinite; }
+.dots i:nth-child(2) { animation-delay: .2s; } .dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes dot { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.flynote { animation: fly 4s ease-in-out infinite; }
+@keyframes fly { 0% { transform: translateX(0) rotate(-8deg); opacity: 0; } 15% { opacity: 1; } 50% { transform: translateX(150px) translateY(-10px) rotate(6deg); } 85% { opacity: 1; } 100% { transform: translateX(300px) rotate(-4deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .fog, .q, .sway, .bob, .ring, .pile, .dots i, .flynote { animation: none !important; opacity: 1; } }
+
+/* 실제로 오가는 글(dflow) */
+.dfr { display: grid; grid-template-columns: repeat(4, 1fr) 14px repeat(2, 1fr); gap: 8px; align-items: stretch; }
+.dfr .grp { grid-row: 1; font-size: 14px; font-weight: 800; color: var(--faint); letter-spacing: .02em; }
+.dfr .sep { grid-row: 1 / span 2; border-left: 2px dashed var(--line); margin: 0 auto; }
+.dfr button { grid-row: 2; text-align: left; border: 1px solid var(--line); background: #fff; border-radius: 14px; padding: 9px 12px; cursor: pointer; font: inherit; color: var(--ink); }
+.dfr button b { display: block; font-size: 17px; line-height: 1.25; }
+.dfr button small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+.dfr button.on { border-color: var(--ink); box-shadow: 0 6px 18px rgba(31,29,43,.12); }
+.dfr .pipe { display: block; position: relative; height: 4px; margin: 7px 0 2px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.dfr button.on .pipe { background: #f3e9e5; }
+.dfr button.on .pipe i { position: absolute; top: 0; left: -30%; width: 30%; height: 100%; border-radius: 4px; background: var(--ai); animation: dfgo 1.4s linear infinite; }
+.dfr button.on.ext .pipe i { background: var(--ai); } .dfr button.on.in .pipe i { background: var(--teacher); }
+@keyframes dfgo { to { left: 100%; } }
+.dfp { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px 14px; }
+.dfh { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.dfh .dir { font-size: 14px; font-weight: 800; padding: 3px 10px; border-radius: 99px; background: #fff0eb; color: var(--ai); }
+.dfh .dir.back { background: #e7f7f1; color: var(--ok); }
+.dfh .dir.t { background: #eeecff; color: var(--teacher); }
+.dfh b { font-size: 19px; }
+.dfh .n { margin-left: auto; font-size: 13px; color: var(--faint); }
+.dfx { flex: 1; min-height: 0; overflow: auto; white-space: pre-wrap; word-break: keep-all; overflow-wrap: anywhere; font-size: 15px; line-height: 1.62; background: var(--soft); border-radius: 12px; padding: 12px 14px; color: #2c2a3a; }
+.dfx .lb { color: var(--teacher); font-weight: 800; }
+.dfx .hd { font-weight: 800; color: var(--ink); }
+.mk { display: inline-block; filter: blur(3.2px); background: #cfc8ea; color: #5546e8; border-radius: 5px; padding: 0 3px; line-height: 1.25; user-select: none; }
+.dff { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 17px; color: var(--muted); }
+.dff .off { background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; font-weight: 700; color: var(--ink); }
+.dff .off em { font-style: normal; color: var(--ok); }
