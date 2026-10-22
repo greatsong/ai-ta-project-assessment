@@ -39,12 +39,12 @@
         '<div data-s="3" id="painCalc" class="nonext" style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px"></div></div>' +
     '</div>' +
     '<div data-s="4" class="pain-bar">' +
-      F('fig_mona', 'height:84px;margin:-14px -6px -14px -8px') + '<span><span style="color:#b9b3ff">기록</span>은 깃허브가</span>' +
-      F('fig_ai', 'height:84px;margin:-14px 0 -14px 40px') + '<span><span style="color:#ffb39f">정리</span>는 AI TA가</span>' +
-      '<img alt="" class="flynote" src="assets/art/fig_note.webp" style="height:46px;position:absolute;left:720px;top:17px">' +
-      F('fig_teacher_stamp', 'height:92px;margin:-14px 0 -14px auto') + '<span><span style="color:#ffd27a">결정</span>은 교사가</span></div>' +
+      '<span class="pb-lead">학생의<br>문제해결과정</span>' +
+      '<div class="pb-seg">' + F('fig_students', 'height:78px') + F('fig_mona', 'height:62px;margin-left:-22px') + '<span><b style="color:#b9b3ff">기록</b><small>구술 평가 + 깃허브</small></span></div><i class="pb-arr"></i>' +
+      '<div class="pb-seg">' + F('fig_mona', 'height:62px') + F('fig_ai', 'height:78px;margin-left:-14px') + '<span><b style="color:#7fe0cf">정리</b><small>깃허브 + AI TA</small></span></div><i class="pb-arr"></i>' +
+      '<div class="pb-seg">' + F('fig_teacher_stamp', 'height:84px') + F('fig_ai', 'height:70px;margin-left:-18px') + '<span><b style="color:#ffd27a">피드백</b><small>선생님 + AI TA</small></span></div></div>' +
     '<div class="credit">옥토캣 모나는 GitHub의 캐릭터</div>'; },
-    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 1주에서 4주까지 학생들이 무엇을 왜 정했는지는 안개 속에 있고, 교사가 보는 것은 5주의 결과물뿐입니다. 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다. 아래 계산기로 보시면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 기록은 깃허브가, 정리는 AI 조교가, 결정은 교사가 합니다.' },
+    notes: '프로젝트 수업을 해 보신 선생님들은 두 가지 어려움을 아실 겁니다.\n첫째, 과정을 평가하기 어렵습니다. 1주에서 4주까지 학생들이 무엇을 왜 정했는지는 안개 속에 있고, 교사가 보는 것은 5주의 결과물뿐입니다. 생성형 AI가 코드를 써 주면서 학생의 몫은 더 보이지 않게 되었습니다.\n둘째, 학생마다 피드백하기 어렵습니다. 팀마다 회차마다 피드백을 직접 쓰면 종이가 쌓이고 시간이 모자랍니다. 아래 계산기로 보시면 한 반에만 몇 시간이 듭니다.\n그래서 일을 셋으로 나누었습니다. 학생의 문제해결과정은 구술 평가와 깃허브에 기록하고, 정리는 깃허브와 AI 조교가, 피드백은 교사와 AI 조교가 함께 합니다. 학생에게 무엇을 보낼지는 교사가 정합니다.' },
 
   { sec: '시작', title: '무엇이 바뀌었나', widget: 'ba', steps: 1, html: '' +
     ttl('AI TA와 깃허브로 바꾼 것', '눌러서 비교', 'live') +
