@@ -10,8 +10,10 @@ import argparse, base64, json, sys, time
 from pathlib import Path
 import requests
 
+from _common import project_dir
+
 ROOT = Path(__file__).resolve().parent.parent
-ENV = Path('/Users/greatsong/greatsong-project/ai-chat-for-students/server/.env')
+ENV = project_dir('ai-chat-for-students') / 'server' / '.env'
 MODEL = 'gpt-image-2.5-sunburst'
 
 

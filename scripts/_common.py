@@ -4,7 +4,18 @@ import json, os, re
 from pathlib import Path
 
 DECK = Path(__file__).resolve().parent.parent
-DS_ROOT = Path(os.environ.get('DS_ROOT', '/Users/greatsong/greatsong-project/2026-ds-danggok'))
+def project_dir(name):
+    """다른 프로젝트 폴더. greatsong-project/paths.json(폴더 재편 스크립트가 관리)에서 찾는다."""
+    import json, os, pathlib
+    root = os.environ.get("GREATSONG_ROOT") or next(
+        (p for p in pathlib.Path(__file__).resolve().parents if (p / "paths.json").is_file()), None)
+    if root is None:
+        raise FileNotFoundError("greatsong-project/paths.json을 찾지 못했습니다. GREATSONG_ROOT를 지정하세요.")
+    root = pathlib.Path(root)
+    return root / json.loads((root / "paths.json").read_text(encoding="utf-8"))[name]
+
+
+DS_ROOT = Path(os.environ.get('DS_ROOT') or project_dir('2026-ds-danggok'))
 CAPTURES = DECK / 'captures'
 CONFIG = DS_ROOT / '_private' / 'oral' / 'config.json'
 
