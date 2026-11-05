@@ -1,13 +1,13 @@
 // 자동 생성 — scripts/update_stats.py. 직접 고치지 않는다
 window.STATS = {
- "updated": "2026-10-22 08:58",
+ "updated": "2026-11-05 10:05",
  "oral": {
   "classes": [
    "B반",
    "E반"
   ],
   "teams": {
-   "B반": 0,
+   "B반": 11,
    "E반": 12
   },
   "rounds": [
@@ -16,32 +16,23 @@ window.STATS = {
     "no": "①",
     "title": "주제 선정·데이터 수집",
     "done": {
-     "B반": 0,
+     "B반": 11,
      "E반": 10
     }
    },
    {
     "id": "c2",
     "no": "②",
-    "title": "데이터 살펴보기·전처리",
+    "title": "데이터 시각화·인사이트",
     "done": {
-     "B반": 0,
-     "E반": 0
+     "B반": 11,
+     "E반": 11
     }
    },
    {
-    "id": "c3",
-    "no": "③",
-    "title": "모델 후보·베이스라인",
-    "done": {
-     "B반": 0,
-     "E반": 0
-    }
-   },
-   {
-    "id": "c4",
-    "no": "④",
-    "title": "평가지표·결과",
+    "id": "c34",
+    "no": "③④",
+    "title": "모델·평가지표(1명씩)",
     "done": {
      "B반": 0,
      "E반": 0
@@ -66,36 +57,36 @@ window.STATS = {
     }
    }
   ],
-  "sessions": 10,
-  "transcribed": 10,
-  "feedback_ready": 10,
-  "issues_posted": 9,
+  "sessions": 43,
+  "transcribed": 43,
+  "feedback_ready": 43,
+  "issues_posted": 20,
   "drafts": {
-   "초안": 1,
+   "초안": 31,
    "올림": 0,
    "올리기 대기": 0
   },
-  "questions": 0,
-  "minutes_recorded": 22.0
+  "questions": 37,
+  "minutes_recorded": 103.9
  },
  "setuk": {
-  "rows": 32,
-  "students": 24,
+  "rows": 138,
+  "students": 48,
   "by_source": {
-   "구술": 24,
-   "log": 8
+   "구술": 93,
+   "log": 45
   }
  },
  "lab": {
-  "pages": 6,
-  "steps": 100,
+  "pages": 7,
+  "steps": 135,
   "wrong_scenes": 5,
   "oral_cards": 2
  },
  "rubric": {
-  "rounds": 6,
-  "items": 21,
+  "rounds": 5,
+  "items": 19,
   "individual_items": 8,
-  "followups": 30
+  "followups": 31
  }
 };
