@@ -20,12 +20,13 @@ CAPTURES = DECK / 'captures'
 CONFIG = DS_ROOT / '_private' / 'oral' / 'config.json'
 
 # 찍기 직전에 화면의 개인정보 글자를 흐린다: 학번(5자리 숫자)과 명단에서 모은 이름·팀 이름·저장소 주소
+# 학번 규칙은 소수(12345.6)만 빼고, 파일 이름 속 학번(log/04_20321.md)과 마침표 앞 학번도 잡는다
 BLUR_JS = r"""(terms) => {
   let css = document.getElementById('__blurcss');
   if (!css) { css = document.createElement('style'); css.id = '__blurcss'; document.head.appendChild(css); }
   css.textContent = '.__b{filter:blur(0.42em)!important} .__bb{filter:blur(0.5em)!important}';
   const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const re = new RegExp('(' + ['(?<![\\d.])\\d{5}(?![\\d.])'].concat(terms.filter(Boolean).map(esc)).join('|') + ')', 'g');
+  const re = new RegExp('(' + ['(?<!\\d)(?<!\\d\\.)\\d{5}(?!\\d|\\.\\d)'].concat(terms.filter(Boolean).map(esc)).join('|') + ')', 'g');
   // 입력칸은 같은 모양의 글 상자로 바꿔 그 안의 이름만 흐린다
   document.querySelectorAll('textarea').forEach(ta => {
     const cs = getComputedStyle(ta), d = document.createElement('div');

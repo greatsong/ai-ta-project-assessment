@@ -27,7 +27,7 @@
 index.html            발표 자료(엔진과 내용을 불러온다)
 deck/                 엔진: 16:9 무대, 단계 공개, 섹션 칩, 노트, 전체 보기, 확대
 content/slides.js     슬라이드 내용(문장·캡처 배치·발표자 노트). 고칠 때는 주로 이 파일
-content/widgets.js    눌러 보는 요소(한 회차 흐름, 이슈 표시, 실시 현황표, 시간·비용 계산기, 탭, 도입 단계)
+content/widgets.js    눌러 보는 요소. 지금 장에서 사용하는 것은 solve(해결의 흐름 도장), story(교사 결정), marks(이슈 표시), dflow(실제로 오가는 글), qr(마지막 장). 나머지(rounds·flow·grid·calc·tabs·levels·privacy·gate·cycle)는 예전 24장 구성에서 사용했고 지금은 어느 장에서도 부르지 않는다
 content/stats.js      수치(자동 생성, scripts/update_stats.py)
 content/dataflow.js   실제로 오가는 글(자동 생성, scripts/build_dataflow.py, 이름·학번·팀 이름은 ⟦가림⟧)
 content/scenes.css    도입 장면 애니메이션과 '실제로 오가는 글' 화면의 모양

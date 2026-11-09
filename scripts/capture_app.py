@@ -39,7 +39,9 @@ def main():
     conn = base64.urlsafe_b64encode(json.dumps({'u': cfg['url'], 't': cfg['token']}).encode()).decode().rstrip('=')
     site = build_site()
     socketserver.TCPServer.allow_reuse_address = True
-    srv = socketserver.TCPServer(('127.0.0.1', 4097), functools.partial(Quiet, directory=str(site)))
+    # 포트는 운영체제가 비어 있는 것을 고른다(고정 포트는 다른 프로젝트의 개발 서버와 겹칠 수 있다)
+    srv = socketserver.TCPServer(('127.0.0.1', 0), functools.partial(Quiet, directory=str(site)))
+    port = srv.server_address[1]
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     CAPTURES.mkdir(exist_ok=True)
     done = []
@@ -47,7 +49,7 @@ def main():
         br = p.chromium.launch()
         ctx = br.new_context(viewport={'width': 400, 'height': 860}, device_scale_factor=2, locale='ko-KR')
         page = ctx.new_page()
-        page.goto('http://127.0.0.1:4097/teacher/oral/#connect=' + conn)
+        page.goto('http://127.0.0.1:%d/teacher/oral/#connect=' % port + conn)
         page.wait_for_timeout(9000)
         b = page.locator('#clsSeg button', has_text=CLS)
         if b.count():
@@ -77,16 +79,21 @@ def main():
         # 다음 회차의 첫 팀을 열어 인터뷰 화면을 본다
         page.locator('#cpRow button').nth(CP_DONE).click()
         page.wait_for_timeout(800)
-        page.locator('#view button.team').first.click()
-        page.wait_for_timeout(1500)
-        snap('A2_인터뷰_참석녹음.png')
-        page.set_viewport_size({'width': 400, 'height': 2400})
-        page.wait_for_timeout(600)
-        snap('A3_인터뷰_질문.png', card('질문'))
-        snap('A4_인터뷰_루브릭.png', card('루브릭'))
-        page.set_viewport_size({'width': 400, 'height': 860})
-        page.locator('text=목록').first.click()
-        page.wait_for_timeout(800)
+        # 아직 하지 않은 팀만 연다. 끝난 팀을 열면 저장된 기록(항목 수준)이 그대로 보인다
+        fresh = page.locator('#view button.team:not(.done)')
+        if fresh.count():
+            fresh.first.click()
+            page.wait_for_timeout(1500)
+            snap('A2_인터뷰_참석녹음.png')
+            page.set_viewport_size({'width': 400, 'height': 2400})
+            page.wait_for_timeout(600)
+            snap('A3_인터뷰_질문.png', card('질문'))
+            snap('A4_인터뷰_루브릭.png', card('루브릭'))
+            page.set_viewport_size({'width': 400, 'height': 860})
+            page.locator('text=목록').first.click()
+            page.wait_for_timeout(800)
+        else:
+            print('경고: 이 회차는 모든 팀이 끝나 인터뷰 화면(A2~A4)을 찍지 않았다. 아직 하지 않은 회차 번호를 준다')
         # 현황판과 기록 상세(강점·가이드 초안, 전사)
         page.locator('#tabs button[data-tab="board"]').click()
         page.wait_for_timeout(1000)

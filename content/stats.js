@@ -1,6 +1,6 @@
 // 자동 생성 — scripts/update_stats.py. 직접 고치지 않는다
 window.STATS = {
- "updated": "2026-11-05 10:05",
+ "updated": "2026-11-10 07:18",
  "oral": {
   "classes": [
    "B반",
@@ -70,18 +70,18 @@ window.STATS = {
   "minutes_recorded": 103.9
  },
  "setuk": {
-  "rows": 138,
+  "rows": 148,
   "students": 48,
   "by_source": {
    "구술": 93,
-   "log": 45
+   "log": 55
   }
  },
  "lab": {
   "pages": 7,
-  "steps": 135,
-  "wrong_scenes": 5,
-  "oral_cards": 2
+  "steps": 133,
+  "wrong_scenes": 2,
+  "oral_cards": 3
  },
  "rubric": {
   "rounds": 5,

@@ -90,19 +90,22 @@ with sync_playwright() as p:
     shot(page, 'C3j_자기설명_확인받기.png', [msg(page, '구술 인터뷰에서 설명할 수 있게 내 말로'), msg(page, '원리와 학습이 정하는 것')])
     shot(page, 'C4b_구술대비_선정모델.png', [Box(page, '구술 인터뷰 대비')])
     ctx.close()
-    # C5 학생 안내(③ 회차 절), C6 샘플 저장소 log
+    # C5 학생 안내(② 회차 절), C6 샘플 저장소 log
     ctx = b.new_context(viewport={'width': 1280, 'height': 900}, device_scale_factor=2, locale='ko-KR')
     page = ctx.new_page()
     page.goto('https://greatsong.github.io/ds-danggok-2026/oral.html', wait_until='networkidle')
     page.wait_for_timeout(1500)
     # 차시 표기는 발표 자료에 남기지 않는다(교사 결정: 일정이 바뀔 수 있음)
     page.evaluate("""() => document.querySelectorAll('.when').forEach(e => e.remove())""")
-    # ③④를 한 회차로 합친 뒤(2026-11-05) 절 id가 c3에서 c34로 바뀌었다. 다시 찍으면 발표 자료의 이동량(frame의 '0:-39%')도 새 그림에 맞춘다
-    sec = page.locator('section#c34')
+    # 고정 머리줄이 절 한가운데에 찍히지 않게 고정을 푼다
+    page.evaluate("""() => document.querySelectorAll('body *').forEach(e => { const p = getComputedStyle(e).position; if (p === 'sticky' || p === 'fixed') e.style.position = 'static'; })""")
+    # ① 교실 장의 교사 앱 화면(A3·A4)과 같은 회차(②)의 절을 찍는다. 회차를 바꾸면 SEC와 발표 자료의 이동량(frame의 '0:-38%', 루브릭 제목 위치)을 함께 맞춘다
+    SEC = 'c2'
+    sec = page.locator('section#' + SEC)
     if sec.count():
         sec.screenshot(path=str(OUT / 'C5_학생안내_체크리스트루브릭.png')); done.append('C5')
     else:
-        print('경고: 학생 안내에서 ③④ 절(section#c34)을 찾지 못해 C5를 찍지 않았다')
+        print('경고: 학생 안내에서 section#%s 절을 찾지 못해 C5를 찍지 않았다' % SEC)
     page.goto('https://github.com/greatsong/ds-sample-1-regression/blob/main/log/07.md', wait_until='networkidle')
     page.wait_for_timeout(2500)
     art = page.locator('article.markdown-body').first

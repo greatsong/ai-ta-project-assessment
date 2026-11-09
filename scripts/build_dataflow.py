@@ -17,19 +17,19 @@
 """
 import json, os, re, subprocess, sys, tempfile
 from pathlib import Path
-from _common import DECK, DS_ROOT, api, roster_terms
+from _common import DECK, DS_ROOT, api, project_dir, roster_terms
 
 WATCH = DS_ROOT / '_private' / 'oral' / 'watch'
 ORAL = DS_ROOT / '_private' / 'oral'
 EVIDENCE = DS_ROOT / '_private' / 'setuk_store' / 'evidence.jsonl'
 CACHE = DS_ROOT / '_private' / 'oral' / 'dataflow_solar_cache.json'
-ENV = DS_ROOT.parent / 'ai-chat-for-students' / 'server' / '.env'
+ENV = project_dir('ai-chat-for-students') / 'server' / '.env'
 MASK = '⟦가림⟧'
 
 
 def masker(terms):
     terms = sorted(set(t for t in terms if t and len(t) >= 2), key=len, reverse=True)
-    pat = re.compile('(' + '|'.join([r'(?<![\d.])\d{5}(?![\d.])'] + [re.escape(t) for t in terms]) + ')')
+    pat = re.compile('(' + '|'.join([r'(?<!\d)(?<!\d\.)\d{5}(?!\d|\.\d)'] + [re.escape(t) for t in terms]) + ')')
     return lambda s: pat.sub(MASK, s) if isinstance(s, str) else s
 
 

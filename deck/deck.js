@@ -112,6 +112,13 @@
   document.addEventListener('keydown', function (e) {
     if (e.target.closest && e.target.closest('input, textarea, select')) return;
     var k = e.key;
+    // 확대 창·전체 보기가 열려 있으면 뒤의 장을 넘기지 않고 창을 닫는다
+    if (zoom.classList.contains('on') || ov.classList.contains('on')) {
+      if (k === 'Escape' || k === 'ArrowRight' || k === 'ArrowLeft' || k === ' ' || k === 'Enter' || k === 'Backspace' || (zoom.classList.contains('on') && /^(o|O|ㅐ)$/.test(k))) {
+        e.preventDefault(); zoom.classList.remove('on'); ov.classList.remove('on'); return;
+      }
+      if (zoom.classList.contains('on') && /^(PageDown|PageUp|Home|End)$/.test(k)) return;   // 확대한 긴 그림은 스크롤
+    }
     if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter') { e.preventDefault(); next(); }
     else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); prev(); }
     else if (k === 'Home') go(0, 0);
@@ -126,6 +133,14 @@
   stage.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
   stage.addEventListener('touchend', function (e) { if (tx === null) return; var d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) (d < 0 ? next : prev)(); tx = null; });
 
-  var m = location.hash.match(/#\/(\d+)(?:\/(\d+))?/);
-  go(m ? +m[1] - 1 : 0, m && m[2] ? +m[2] : 0);
+  function fromHash() {
+    var m = location.hash.match(/#\/(\d+)(?:\/(\d+))?/);
+    return m ? [+m[1] - 1, m[2] ? +m[2] : 0] : null;
+  }
+  // 주소창에서 #/쪽/단계만 바꿔도 그 자리로 간다(render의 replaceState는 이 이벤트를 부르지 않는다)
+  window.addEventListener('hashchange', function () {
+    var h = fromHash(); if (h && (h[0] !== cur || h[1] !== step)) go(h[0], h[1]);
+  });
+  var h0 = fromHash();
+  go(h0 ? h0[0] : 0, h0 ? h0[1] : 0);
 })();
