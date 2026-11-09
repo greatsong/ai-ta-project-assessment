@@ -69,18 +69,25 @@ with sync_playwright() as p:
     page.wait_for_timeout(1500)
     page.screenshot(path=str(OUT / 'C1_실습실_첫화면.png')); done.append('C1')
     page.set_viewport_size({'width': 1280, 'height': 9000})
-    # C2 모델 후보: 추천 표, 모델마다 묻기
+    # C2 모델 후보: 추천 표, 궁금해서 이어 묻기(랜덤 포레스트는 왜 여러 그루), 대화 속 앱 둘, 구술 대비 카드
     lab_page(page, '모델_후보')
-    shot(page, 'C2a_모델추천표.png', [msg(page, '이런 문제에 어울리는 모델을 2~3개 추천해'), msg(page, '분류 문제에 많이 쓰는 모델 세 가지')])
-    shot(page, 'C2b_모델마다_묻기.png', [msg(page, '분류에 써도 돼?'), msg(page, '나무가 많으면 항상 더 좋은 거야?'), msg(page, '대신 나무가 많아 예측 이유를')])
-    shot(page, 'C3a_AI오류_학생검증.png', [msg(page, '정확도가 1.0이라는 게 이상해'), msg(page, '시험용 데이터로 다시 계산하는 코드')])
-    shot(page, 'C3b_검증기록_log.png', [Box(page, '검증 기록 남기기')])
+    shot(page, 'C2a_모델추천표.png', [msg(page, '이 문제에 적합한 모델 세 개를 추천해 줘'), msg(page, '추천 모델은 로지스틱 회귀, 결정 트리, 랜덤 포레스트이며')])
+    shot(page, 'C2b_모델마다_묻기.png', [msg(page, '왜 여러 그루를 만드는 거야'), msg(page, '나무마다 학습용 데이터에서 사람을 무작위로 다시 뽑으며')])
+    shot(page, 'C3a_베이스라인_찍기앱.png', [msg(page, '아무것도 배우지 않는 모델을 왜 굳이'), msg(page, '베이스라인은 아무 정보 없이 찍었을 때의 결과')])
+    shot(page, 'C3b_가중치_토글앱.png', [msg(page, '왜 환자를 거의 못 찾는 거야'), msg(page, '해결 방법은 가중치')])
     shot(page, 'C4a_구술대비_모델후보.png', [Box(page, '구술 인터뷰 대비')])
-    # 모델 원리: 손 계산, S자 곡선, 계수 오해 바로잡기, 자기 설명 확인받기, 대비 카드
+    # 평가지표: 탭 앱(혼동행렬·네 모델 비교), 자기 말로 확인(정밀도·재현율), 재현율로 최종 모델 고르기
+    lab_page(page, '평가지표')
+    shot(page, 'C3c_평가_탭앱.png', [msg(page, '모델을 골라 가며 평가 결과를'), msg(page, '분류 모델은 혼동행렬부터')])
+    shot(page, 'C3d_자기말_정밀도재현율.png', [msg(page, '정밀도와 재현율이 헷갈려서'), msg(page, '두 정의가 서로 바뀌었습니다')])
+    shot(page, 'C3e_재현율로_선택.png', [msg(page, '어떤 지표로 최종 모델을 골라야'), msg(page, '재현율이 높은 순서로 보여 줍니다')])
+    # 모델 원리(랜덤 포레스트): 나무 100그루 앱, 앱을 만져 보고 생긴 궁금증, 하이퍼파라미터 슬라이더, 과대적합 그래프, 자기 설명 확인받기, 대비 카드
     lab_page(page, '모델_원리')
-    shot(page, 'C3c_원리_손계산.png', [msg(page, '한 단계씩 직접 계산해 줘'), msg(page, '로지스틱 회귀가 시험용 데이터의 첫 번째 환자')])
-    shot(page, 'C3d_계수오해_바로잡기.png', [msg(page, 'age의 계수 1.855는 무슨 뜻이야'), msg(page, '1.855%p씩'), msg(page, '확률이 언제나 같은 만큼 오르지는 않을 것 같아'), msg(page, '앞의 설명이 틀렸습니다')])
-    shot(page, 'C3e_자기설명_확인받기.png', [msg(page, '내가 이해한 대로 말해 볼게'), msg(page, '원리는 대부분 맞지만')])
+    shot(page, 'C3f_원리_나무100그루앱.png', [msg(page, '나무 한 그루씩 골라서'), msg(page, '첫 번째 환자(실제 뇌졸중 환자)에서 시작합니다')])
+    shot(page, 'C3g_궁금증_나이구간.png', [msg(page, '왜 어떤 구간은 그대로이고'), msg(page, '482개 가운데 118개')])
+    shot(page, 'C3h_하이퍼파라미터_슬라이더.png', [msg(page, '랜덤 포레스트에는 어떤 하이퍼파라미터가'), msg(page, '바꿔 볼 것 네 가지는')])
+    shot(page, 'C3i_과대적합_그래프.png', [msg(page, '깊이를 15로 올려 봤어'), msg(page, '깊이 1부터 20까지 랜덤 포레스트를')])
+    shot(page, 'C3j_자기설명_확인받기.png', [msg(page, '구술 인터뷰에서 설명할 수 있게 내 말로'), msg(page, '원리와 학습이 정하는 것')])
     shot(page, 'C4b_구술대비_선정모델.png', [Box(page, '구술 인터뷰 대비')])
     ctx.close()
     # C5 학생 안내(③ 회차 절), C6 샘플 저장소 log
@@ -90,9 +97,12 @@ with sync_playwright() as p:
     page.wait_for_timeout(1500)
     # 차시 표기는 발표 자료에 남기지 않는다(교사 결정: 일정이 바뀔 수 있음)
     page.evaluate("""() => document.querySelectorAll('.when').forEach(e => e.remove())""")
-    sec = page.locator('section#c3')
+    # ③④를 한 회차로 합친 뒤(2026-11-05) 절 id가 c3에서 c34로 바뀌었다. 다시 찍으면 발표 자료의 이동량(frame의 '0:-39%')도 새 그림에 맞춘다
+    sec = page.locator('section#c34')
     if sec.count():
         sec.screenshot(path=str(OUT / 'C5_학생안내_체크리스트루브릭.png')); done.append('C5')
+    else:
+        print('경고: 학생 안내에서 ③④ 절(section#c34)을 찾지 못해 C5를 찍지 않았다')
     page.goto('https://github.com/greatsong/ds-sample-1-regression/blob/main/log/07.md', wait_until='networkidle')
     page.wait_for_timeout(2500)
     art = page.locator('article.markdown-body').first
